@@ -31,7 +31,7 @@ import java.util.UUID;
 /**
  *
  */
-public interface ISummonFlameBaseEntity {
+public interface ISummonFlameEntity {
     public void doLivingEffects();
     void doDeathEffects();
 

@@ -18,14 +18,12 @@
 package mod.gottsch.fabric.mageflame.core.item;
 
 import mod.gottsch.fabric.mageflame.MageFlame;
-import mod.gottsch.fabric.mageflame.core.entity.creature.ISummonFlameBaseEntity;
+import mod.gottsch.fabric.mageflame.core.entity.creature.ISummonFlameEntity;
 import mod.gottsch.fabric.mageflame.core.entity.creature.SummonFlameBaseEntity;
 import mod.gottsch.fabric.mageflame.core.registry.SummonFlameRegistry;
 import net.minecraft.entity.*;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.NbtList;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
@@ -78,44 +76,34 @@ public interface ISummonFlameItem {
 		if (!level.isClient) {
 			// select the first available spawn pos from origin (coords)
 			Vec3d spawnPos = selectSpawnPos(level, coords, direction);
-			MageFlame.LOGGER.debug("attempting to spawn summon flame at -> {} ...", spawnPos);
+			// MageFlame.LOGGER.debug("attempting to spawn summon flame at -> {} ...", spawnPos);
 
-
-//			Entity entity = EntityType.loadEntityWithPassengers(nbtCompound, level, (entityx) -> {
-//				entityx.refreshPositionAndAngles(entity.getX(), entity.getY(), entity.getZ(), entityx.getYaw(), entityx.getPitch());
-//				return entityx;
-//			});
-//			entity.refreshPositionAndAngles(entity.getX(), entity.getY(), entity.getZ(), world.random.nextFloat() * 360.0F, 0.0F);
-//			if (entity == null) {
-//				this.updateSpawns(world, pos);
-//				return;
-//			}
 
 			// determine if the entity can spawn
 			if(SpawnRestriction.canSpawn(entityType, level, SpawnReason.SPAWNER, new BlockPos(coords), level.getRandom())) {
-				MageFlame.LOGGER.debug("placement is good");
+				// MageFlame.LOGGER.debug("placement is good");
 				// create entity
 				MobEntity mob = entityType.create(level);
 				if (mob != null) {
-					MageFlame.LOGGER.debug("new entity is created -> {}", mob.getUuidAsString());
+					// MageFlame.LOGGER.debug("new entity is created -> {}", mob.getUuidAsString());
 					mob.setPos(spawnPos.x, spawnPos.y, spawnPos.z);
-					((ISummonFlameBaseEntity)mob).setOwner(owner);
+					((ISummonFlameEntity)mob).setOwner(owner);
 					
-					MageFlame.LOGGER.debug("is owner registered -> {}", SummonFlameRegistry.isRegistered(owner.getUuid()));
+					// MageFlame.LOGGER.debug("is owner registered -> {}", SummonFlameRegistry.isRegistered(owner.getUuid()));
 					// check and remove existing owner's entity, regardless if existing entity is located
 					if (SummonFlameRegistry.isRegistered(owner.getUuid())) {
 						// unregister existing entity for player
 						UUID existingUuid = SummonFlameRegistry.unregister(owner.getUuid());
-						MageFlame.LOGGER.debug("owner is registered to entity -> {}", existingUuid.toString());
+						// MageFlame.LOGGER.debug("owner is registered to entity -> {}", existingUuid.toString());
 						Entity existingMob = level.getEntity(existingUuid);
 						if (existingMob != null) {
-							MageFlame.LOGGER.debug("located and killing exisiting entity -> {}", existingUuid.toString());
+							// MageFlame.LOGGER.debug("located and killing exisiting entity -> {}", existingUuid.toString());
 							((SummonFlameBaseEntity)existingMob).kill();
 						}
 					}
 
 					// registry entity
-					MageFlame.LOGGER.debug("registering entity -> {} to owner -> {}", mob.getUuidAsString(), owner.getUuidAsString());
+					// MageFlame.LOGGER.debug("registering entity -> {} to owner -> {}", mob.getUuidAsString(), owner.getUuidAsString());
 					SummonFlameRegistry.register(owner.getUuid(), mob.getUuid());
 					
 					// add entity into the level (ie EntityJoinWorldEvent)

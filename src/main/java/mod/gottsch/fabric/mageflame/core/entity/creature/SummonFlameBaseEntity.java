@@ -18,7 +18,6 @@
 package mod.gottsch.fabric.mageflame.core.entity.creature;
 
 import mod.gottsch.fabric.mageflame.MageFlame;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
@@ -41,7 +40,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -53,7 +51,7 @@ import java.util.UUID;
  * @author Mark Gottschling Jan 21, 2023
  *
  */
-public abstract class SummonFlameBaseEntity extends FlyingEntity implements ISummonFlameBaseEntity {
+public abstract class SummonFlameBaseEntity extends FlyingEntity implements ISummonFlameEntity {
     private static final TrackedData<Optional<UUID>> DATA_OWNER_UUID;
 
     public static final String OWNER = "owner";
@@ -167,6 +165,10 @@ public abstract class SummonFlameBaseEntity extends FlyingEntity implements ISum
      */
     @Override
     public void updateLightBlocks() {
+        if (this.dead) {
+            return;
+        }
+//        // MageFlame.LOGGER.debug("entity updating light blocks -> {}", this.getUuidAsString());
         // initial setup
         if (getCurrentLightCoords() == null) {
             if (!updateLightCoords()) {
@@ -252,10 +254,7 @@ public abstract class SummonFlameBaseEntity extends FlyingEntity implements ISum
     protected boolean testPlacement(BlockPos pos) {
         BlockState state = this.world.getBlockState(pos);
         // check block
-        if (state.isAir()) {
-            return true;
-        }
-        return false;
+        return state.isAir();
     }
 
     @Override
@@ -265,7 +264,7 @@ public abstract class SummonFlameBaseEntity extends FlyingEntity implements ISum
 
     /**
      *
-     * @param damageSource
+     * @param damageSource the source of the damage
      */
     public void kill(DamageSource damageSource) {
         this.damage(damageSource, Float.MAX_VALUE);
@@ -276,7 +275,9 @@ public abstract class SummonFlameBaseEntity extends FlyingEntity implements ISum
         setInvisible(true);
 
         // set dead
-//        this.dead = true;
+        this.dead = true;
+
+        // MageFlame.LOGGER.debug("kill - current light coords -> {}, last light coords -> {}", getCurrentLightCoords(), getLastLightCoords());
 
         // remove light blocks
         if (getCurrentLightCoords() != null && world.getBlockState(getCurrentLightCoords()).getBlock() == getFlameBlock()) {
@@ -285,9 +286,6 @@ public abstract class SummonFlameBaseEntity extends FlyingEntity implements ISum
         if (getLastLightCoords() != null && world.getBlockState(getLastLightCoords()).getBlock() == getFlameBlock()) {
             world.setBlockState(getLastLightCoords(), Blocks.AIR.getDefaultState());
         }
-//        remove(RemovalReason.KILLED);
-//        super.die(damageSource);
-//		this.world.broadcastEntityEvent(this, (byte)3);
     }
 
     /**
@@ -303,13 +301,9 @@ public abstract class SummonFlameBaseEntity extends FlyingEntity implements ISum
         }
 
         if (this.getCurrentLightCoords() != null) {
-//            NbtCompound coordsTag = new NbtCompound();
-//            tag.put(CURRENT_LIGHT_COORDS, getCurrentLightCoords().save(coordsTag));
             nbt.put(CURRENT_LIGHT_COORDS, saveCoords(getCurrentLightCoords()));
         }
         if (this.getLastLightCoords() != null) {
-            NbtCompound coordsTag = new NbtCompound();
-//            tag.put(LAST_LIGHT_COORDS, getLastLightCoords().save(coordsTag));
             nbt.put(LAST_LIGHT_COORDS, saveCoords(getLastLightCoords()));
         }
 

@@ -148,6 +148,6 @@ public class Registration {
 
         ServerEntityEvents.ENTITY_LOAD.register(new SummonFlameServerEntityLoadHandler());
 
-        MageFlame.LOGGER.info("Hello Fabric world!");
+        // MageFlame.LOGGER.debug("Hello Fabric world!");
     }
 }

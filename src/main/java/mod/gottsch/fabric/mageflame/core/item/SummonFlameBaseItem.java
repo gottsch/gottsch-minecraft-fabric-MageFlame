@@ -102,10 +102,10 @@ public abstract class SummonFlameBaseItem extends Item implements ISummonFlameIt
 		Vec3d spawnPos = getByPlayerPos(player);
 
 		// spawn entity
-		MageFlame.LOGGER.debug("using summon flame item...");
+		// MageFlame.LOGGER.debug("using summon flame item...");
 		Optional<MobEntity> mob = spawn((ServerWorld)level, new Random(), player, getSummonFlameEntity(), spawnPos);
 		if (mob.isPresent()) {
-			MageFlame.LOGGER.debug("summon flame is present...");
+			// MageFlame.LOGGER.debug("summon flame is present...");
 			// reduce scroll stack size ie consume
 			heldStack.decrement(1);
 			return TypedActionResult.consume(heldStack);
