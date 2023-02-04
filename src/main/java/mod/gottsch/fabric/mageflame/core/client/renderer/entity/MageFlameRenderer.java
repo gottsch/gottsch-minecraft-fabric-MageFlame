@@ -1,8 +1,6 @@
 package mod.gottsch.fabric.mageflame.core.client.renderer.entity;
 
-import mod.gottsch.fabric.mageflame.core.client.model.entity.CubeEntityModel;
 import mod.gottsch.fabric.mageflame.core.client.model.entity.FlameBallModel;
-import mod.gottsch.fabric.mageflame.core.entity.creature.CubeEntity;
 import mod.gottsch.fabric.mageflame.core.entity.creature.MageFlameEntity;
 import mod.gottsch.fabric.mageflame.core.setup.ClientSetup;
 import net.minecraft.client.render.entity.EntityRendererFactory;

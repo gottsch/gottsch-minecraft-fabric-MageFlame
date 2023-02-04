@@ -38,15 +38,16 @@ public class SummonFlameBlock extends Block implements ISummonFlameBlock {
      * @param settings
      */
     public SummonFlameBlock(AbstractBlock.Settings settings) {
+
         super(settings);
     }
 
-    @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (!world.isClient) {
-            player.sendMessage(Text.of("Hello, world!"), false);
-        }
-
-        return ActionResult.SUCCESS;
-    }
+//    @Override
+//    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+//        if (!world.isClient) {
+//            player.sendMessage(Text.of("Hello, world!"), false);
+//        }
+//
+//        return ActionResult.SUCCESS;
+//    }
 }

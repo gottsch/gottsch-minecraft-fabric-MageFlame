@@ -39,8 +39,8 @@ public class SummonFlameRegistry {
 	
 	/**
 	 * 
-	 * @param key the name key for the enum set. ex "rarity" for the Rarity enum.
-	 * @param ienum
+	 * @param uuid the name key for the enum set. ex "rarity" for the Rarity enum.
+	 * @param entityId
 	 */
 	public static void register(UUID uuid, UUID entityId) {
 		if (!REGISTRY.containsKey(entityId)) {
@@ -50,8 +50,7 @@ public class SummonFlameRegistry {
 	
 	/**
 	 * 
-	 * @param key
-	 * @param ienum
+	 * @param uuid
 	 * @return
 	 */
 	public static boolean isRegistered(UUID uuid) {
@@ -60,19 +59,18 @@ public class SummonFlameRegistry {
 		}
 		return false;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param uuid
 	 */
-	public static void unregister(UUID uuid) {
-		REGISTRY.remove(uuid);
+	public static UUID unregister(UUID uuid) {
+		return REGISTRY.remove(uuid);
 	}
 	
 	/**
 	 * 
-	 * @param key
-	 * @param enumKey
+	 * @param uuid
 	 * @return
 	 */
 	public static UUID get(UUID uuid) {

@@ -17,6 +17,7 @@
  */
 package mod.gottsch.fabric.mageflame.core.client.model.entity;
 
+import mod.gottsch.fabric.mageflame.core.entity.creature.SummonFlameBaseEntity;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.EntityModel;
@@ -27,7 +28,7 @@ import net.minecraft.util.math.MathHelper;
 /**
  *
  */
-public class LargeFlameBallModel<T extends Entity> extends EntityModel<T> {
+public class LargeFlameBallModel<T extends SummonFlameBaseEntity> extends EntityModel<T> {
 	private final ModelPart main;
 	private final float bodyY;
 
@@ -52,7 +53,7 @@ public class LargeFlameBallModel<T extends Entity> extends EntityModel<T> {
 	}
 
 	@Override
-	public void setAngles(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+	public void setAngles(SummonFlameBaseEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		bob(this.main, bodyY, ageInTicks);
 	}
 

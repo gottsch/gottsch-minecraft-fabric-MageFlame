@@ -20,6 +20,6 @@ public class GreaterRevelationRenderer<T extends GreaterRevelationEntity> extend
 
     @Override
     public Identifier getTexture(GreaterRevelationEntity entity) {
-        return new Identifier("mageflame", "textures/entity/lesser_revelation.png");
+        return new Identifier("mageflame", "textures/entity/greater_revelation.png");
     }
 }

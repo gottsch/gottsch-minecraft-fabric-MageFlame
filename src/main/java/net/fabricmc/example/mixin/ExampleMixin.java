@@ -1,6 +1,6 @@
 package net.fabricmc.example.mixin;
 
-import mod.gottsch.fabric.mageflame.core.MageFlame;
+import mod.gottsch.fabric.mageflame.MageFlame;
 import net.minecraft.client.gui.screen.TitleScreen;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

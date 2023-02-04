@@ -19,7 +19,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "mod.gottsch.fabric.mageflame.core.MageFlame"
+      "mod.gottsch.fabric.mageflame.MageFlame"
     ],
     "client": [
       "mod.gottsch.fabric.mageflame.core.setup.ClientSetup"

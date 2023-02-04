@@ -15,17 +15,10 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Mage Flame.  If not, see <http://www.gnu.org/licenses/lgpl>.
  */
-package mod.gottsch.fabric.mageflame.core;
+package mod.gottsch.fabric.mageflame;
 
 import mod.gottsch.fabric.mageflame.core.setup.Registration;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.Block;
-import net.minecraft.block.Material;
-import net.minecraft.item.Item;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,7 +29,6 @@ public class MageFlame implements ModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger(MageFlame.MOD_ID);
 
 	public static final String MOD_ID = "mageflame";
-
 
 	@Override
 	public void onInitialize() {
