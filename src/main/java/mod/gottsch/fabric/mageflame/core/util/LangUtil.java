@@ -22,9 +22,7 @@ import java.util.function.Consumer;
 
 import mod.gottsch.fabric.mageflame.MageFlame;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 import org.apache.commons.lang3.StringUtils;
 
@@ -45,10 +43,10 @@ public class LangUtil {
 	 */
 	public static void appendAdvancedHoverText(String modid, List<Text> tooltip, Consumer<List<Text>> consumer) {
 		if (!Screen.hasShiftDown()) {
-			tooltip.add(new LiteralText(NEWLINE));
+			tooltip.add(Text.literal(NEWLINE));
 			// TODO how do make this call to tooltip generic for any mod because it would require the modid
-			tooltip.add(new TranslatableText(tooltip(modid, "hold_shift")).formatted(Formatting.GRAY));
-			tooltip.add(new LiteralText(LangUtil.NEWLINE));
+			tooltip.add(Text.translatable(tooltip(modid, "hold_shift")).formatted(Formatting.GRAY));
+			tooltip.add(Text.literal(LangUtil.NEWLINE));
 		}
 		else {
 			consumer.accept(tooltip);

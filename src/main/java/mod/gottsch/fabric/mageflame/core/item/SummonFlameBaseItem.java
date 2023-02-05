@@ -17,7 +17,6 @@
  */
 package mod.gottsch.fabric.mageflame.core.item;
 
-import mod.gottsch.fabric.mageflame.MageFlame;
 import mod.gottsch.fabric.mageflame.core.util.LangUtil;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.mob.MobEntity;
@@ -55,7 +54,7 @@ public abstract class SummonFlameBaseItem extends Item implements ISummonFlameIt
 
 	@Override
 	public Text getName() {
-		return new TranslatableText(this.getTranslationKey()).formatted(Formatting.AQUA);
+		return Text.literal(this.getTranslationKey()).formatted(Formatting.AQUA);
 	}
 	
 	@Override
@@ -76,11 +75,11 @@ public abstract class SummonFlameBaseItem extends Item implements ISummonFlameIt
 	}
 	
 	public void appendLore(ItemStack stack, World level, List<Text> tooltip, TooltipContext flag, String key) {
-		TranslatableText lore = new TranslatableText(LangUtil.tooltip(key));
-		tooltip.add(new LiteralText(" "));
+		MutableText lore = Text.translatable(LangUtil.tooltip(key));
+		tooltip.add(Text.literal(" "));
 		for (String s : lore.getString().split("~")) {	
-			tooltip.add(new TranslatableText(LangUtil.INDENT2)
-					.append(new LiteralText(s).formatted(Formatting.GOLD, Formatting.ITALIC)));
+			tooltip.add(Text.translatable(LangUtil.INDENT2)
+					.append(Text.literal(s).formatted(Formatting.GOLD, Formatting.ITALIC)));
 		}
 	}
 

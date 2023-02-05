@@ -44,7 +44,6 @@ public class SummonFlameServerEntityLoadHandler implements ServerEntityEvents.Lo
         }
 
         if (entity instanceof ISummonFlameEntity) {
-            entity.sendSystemMessage(Text.of("Hello"), UUID.randomUUID());
             // MageFlame.LOGGER.debug("entity is joing the level -> {}", entity.getClass().getSimpleName());
 
             SummonFlameBaseEntity flameEntity = (SummonFlameBaseEntity)entity;
