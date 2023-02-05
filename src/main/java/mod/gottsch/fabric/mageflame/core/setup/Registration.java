@@ -54,17 +54,17 @@ public class Registration {
     public static final String WINGED_TORCH = "winged_torch";
 
     // blocks
-    public static final Block MAGE_FLAME_BLOCK = new SummonFlameBlock(FabricBlockSettings.of(Material.AIR).noCollision().lightLevel((state) -> {
+    public static final Block MAGE_FLAME_BLOCK = new SummonFlameBlock(FabricBlockSettings.of(Material.AIR).noCollision().luminance((state) -> {
         return 11;
-    }).dropsNothing().air());
+    }).dropsNothing());
 
-    public static final Block LESSER_REVELATION_BLOCK = new SummonFlameBlock(FabricBlockSettings.of(Material.AIR).noCollision().lightLevel((state) -> {
+    public static final Block LESSER_REVELATION_BLOCK = new SummonFlameBlock(FabricBlockSettings.of(Material.AIR).noCollision().luminance((state) -> {
         return 13;
-    }).dropsNothing().air());
+    }).dropsNothing());
 
-    public static final Block GREATER_REVELATION_BLOCK = new SummonFlameBlock(FabricBlockSettings.of(Material.AIR).noCollision().lightLevel((state) -> {
+    public static final Block GREATER_REVELATION_BLOCK = new SummonFlameBlock(FabricBlockSettings.of(Material.AIR).noCollision().luminance((state) -> {
         return 15;
-    }).dropsNothing().air());
+    }).dropsNothing());
 
     // items
     private static final Item MAGE_FLAME_SCROLL = new MageFlameScroll(new FabricItemSettings().group(ItemGroup.MISC));
@@ -75,7 +75,7 @@ public class Registration {
     // entities
     public static final EntityType<MageFlameEntity> MAGE_FLAME_ENTITY = Registry.register(
             Registry.ENTITY_TYPE,
-            new Identifier("mageflame", "mage_flame"),
+            new Identifier(MageFlame.MOD_ID, MAGE_FLAME),
             FabricEntityTypeBuilder.create(
                             SpawnGroup.CREATURE, MageFlameEntity::new)
                     .dimensions(EntityDimensions.fixed(0.125f, 0.125f))
@@ -84,7 +84,7 @@ public class Registration {
 
     public static final EntityType<LesserRevelationEntity> LESSER_REVELATION_ENTITY = Registry.register(
             Registry.ENTITY_TYPE,
-            new Identifier("mageflame", "lesser_revelation"),
+            new Identifier(MageFlame.MOD_ID, LESSER_REVELATION),
             FabricEntityTypeBuilder.create(
                             SpawnGroup.CREATURE, LesserRevelationEntity::new)
                     .dimensions(EntityDimensions.fixed(0.125f, 0.125f))
@@ -93,7 +93,7 @@ public class Registration {
 
     public static final EntityType<GreaterRevelationEntity> GREATER_REVELATION_ENTITY = Registry.register(
             Registry.ENTITY_TYPE,
-            new Identifier("mageflame", "greater_revelation"),
+            new Identifier(MageFlame.MOD_ID, GREATER_REVELATION),
             FabricEntityTypeBuilder.create(
                             SpawnGroup.CREATURE, GreaterRevelationEntity::new)
                     .dimensions(EntityDimensions.fixed(0.1875f, 0.1875f))
@@ -102,7 +102,7 @@ public class Registration {
 
     public static final EntityType<WingedTorchEntity> WINGED_TORCH_ENTITY = Registry.register(
             Registry.ENTITY_TYPE,
-            new Identifier("mageflame", "winged_torch"),
+            new Identifier(MageFlame.MOD_ID, WINGED_TORCH),
             FabricEntityTypeBuilder.create(
                             SpawnGroup.CREATURE, WingedTorchEntity::new)
                     .dimensions(EntityDimensions.fixed(0.375F, 0.25F))

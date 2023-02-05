@@ -155,7 +155,6 @@ public abstract class SummonFlameBaseEntity extends FlyingEntity implements ISum
                     return;
                 }
             }
-
             updateLightBlocks();
         }
     }
