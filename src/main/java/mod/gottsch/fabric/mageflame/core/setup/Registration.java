@@ -56,15 +56,15 @@ public class Registration {
     // blocks
     public static final Block MAGE_FLAME_BLOCK = new SummonFlameBlock(FabricBlockSettings.of(Material.AIR).noCollision().luminance((state) -> {
         return 11;
-    }).dropsNothing());
+    }).dropsNothing().nonOpaque());
 
     public static final Block LESSER_REVELATION_BLOCK = new SummonFlameBlock(FabricBlockSettings.of(Material.AIR).noCollision().luminance((state) -> {
         return 13;
-    }).dropsNothing());
+    }).dropsNothing().nonOpaque());
 
     public static final Block GREATER_REVELATION_BLOCK = new SummonFlameBlock(FabricBlockSettings.of(Material.AIR).noCollision().luminance((state) -> {
         return 15;
-    }).dropsNothing());
+    }).dropsNothing().nonOpaque());
 
     // items
     private static final Item MAGE_FLAME_SCROLL = new MageFlameScroll(new FabricItemSettings().group(ItemGroup.MISC));
