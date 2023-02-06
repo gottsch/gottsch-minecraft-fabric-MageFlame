@@ -23,7 +23,9 @@ import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -50,10 +52,10 @@ public class MageFlameScroll extends SummonFlameBaseItem {
 	@Override
 	public void appendBaseText(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
 		
-		tooltip.add(Text.translatable(LangUtil.tooltip("mage_flame.desc")).formatted(Formatting.YELLOW));
-		tooltip.add(Text.literal(" "));
-		tooltip.add(Text.translatable(LangUtil.tooltip("light_level"), Registration.MAGE_FLAME_BLOCK.getDefaultState().getLuminance()));
-		tooltip.add(Text.translatable(LangUtil.tooltip("lifespan"), ticksToTime(12000))); //Config.SERVER.mageFlameLifespan.get())));
+		tooltip.add(new TranslatableText(LangUtil.tooltip("mage_flame.desc")).formatted(Formatting.YELLOW));
+		tooltip.add(new LiteralText(" "));
+		tooltip.add(new TranslatableText(LangUtil.tooltip("light_level"), Registration.MAGE_FLAME_BLOCK.getDefaultState().getLuminance()));
+		tooltip.add(new TranslatableText(LangUtil.tooltip("lifespan"), ticksToTime(12000))); //Config.SERVER.mageFlameLifespan.get())));
 	}
 
 	@Override

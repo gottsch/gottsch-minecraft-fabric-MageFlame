@@ -54,7 +54,7 @@ public abstract class SummonFlameBaseItem extends Item implements ISummonFlameIt
 
 	@Override
 	public Text getName() {
-		return Text.literal(this.getTranslationKey()).formatted(Formatting.AQUA);
+		return new LiteralText(this.getTranslationKey()).formatted(Formatting.AQUA);
 	}
 	
 	@Override
@@ -75,11 +75,11 @@ public abstract class SummonFlameBaseItem extends Item implements ISummonFlameIt
 	}
 	
 	public void appendLore(ItemStack stack, World level, List<Text> tooltip, TooltipContext flag, String key) {
-		MutableText lore = Text.translatable(LangUtil.tooltip(key));
-		tooltip.add(Text.literal(" "));
+		MutableText lore = new TranslatableText(LangUtil.tooltip(key));
+		tooltip.add(new LiteralText(" "));
 		for (String s : lore.getString().split("~")) {	
-			tooltip.add(Text.translatable(LangUtil.INDENT2)
-					.append(Text.literal(s).formatted(Formatting.GOLD, Formatting.ITALIC)));
+			tooltip.add(new TranslatableText(LangUtil.INDENT2)
+					.append(new LiteralText(s).formatted(Formatting.GOLD, Formatting.ITALIC)));
 		}
 	}
 
