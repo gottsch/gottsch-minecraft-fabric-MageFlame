@@ -21,12 +21,12 @@ package mod.gottsch.fabric.mageflame.core.spatial;
 
 // TODO TEMP until GottschCore for Fabric is made
 
-import net.minecraft.client.util.math.Vector3d;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
+import org.joml.Vector3d;
 
 /**
  * This class is a wrapper for Minecraft positional classes and calculations.

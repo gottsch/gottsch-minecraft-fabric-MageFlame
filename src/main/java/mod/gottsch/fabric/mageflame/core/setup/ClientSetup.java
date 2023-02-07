@@ -11,7 +11,6 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
-import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.minecraft.client.particle.FlameParticle;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.screen.PlayerScreenHandler;
@@ -26,21 +25,10 @@ public class ClientSetup implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
 
-        EntityRendererRegistry.register(Registration.MAGE_FLAME_ENTITY, (context) -> {
-            return new MageFlameRenderer(context);
-        });
-
-        EntityRendererRegistry.register(Registration.LESSER_REVELATION_ENTITY, (context) -> {
-            return new LesserRevelationRenderer(context);
-        });
-
-        EntityRendererRegistry.register(Registration.GREATER_REVELATION_ENTITY, (context) -> {
-            return new GreaterRevelationRenderer(context);
-        });
-
-        EntityRendererRegistry.register(Registration.WINGED_TORCH_ENTITY, (context) -> {
-            return new WingedTorchRenderer<>(context);
-        });
+        EntityRendererRegistry.register(Registration.MAGE_FLAME_ENTITY, MageFlameRenderer::new);
+        EntityRendererRegistry.register(Registration.LESSER_REVELATION_ENTITY, LesserRevelationRenderer::new);
+        EntityRendererRegistry.register(Registration.GREATER_REVELATION_ENTITY, GreaterRevelationRenderer::new);
+        EntityRendererRegistry.register(Registration.WINGED_TORCH_ENTITY, WingedTorchRenderer::new);
 
         EntityModelLayerRegistry.registerModelLayer(FLAME_BALL_LAYER, FlameBallModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(LARGE_FLAME_BALL_LAYER, LargeFlameBallModel::getTexturedModelData);
@@ -50,9 +38,9 @@ public class ClientSetup implements ClientModInitializer {
          * Modify the namespace and particle id accordingly.
          *
          * This is only used if you plan to add your own textures for the particle. Otherwise, remove  this.*/
-        ClientSpriteRegistryCallback.event(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE).register(((atlasTexture, registry) -> {
-            registry.register(new Identifier(MageFlame.MOD_ID, "particle/revelation_particle"));
-        }));
+//        ClientSpriteRegistryCallback.event(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE).register(((atlasTexture, registry) -> {
+//            registry.register(new Identifier(MageFlame.MOD_ID, "particle/revelation_particle"));
+//        }));
 
         /* Registers our particle client-side.
          * First argument is our particle's instance, created previously on ExampleMod.

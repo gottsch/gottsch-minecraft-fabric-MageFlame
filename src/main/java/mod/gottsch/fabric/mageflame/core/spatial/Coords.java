@@ -19,9 +19,9 @@
  */
 package mod.gottsch.fabric.mageflame.core.spatial;
 
-import net.minecraft.client.util.math.Vector3d;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.*;
+import org.joml.Vector3d;
 import oshi.annotation.concurrent.Immutable;
 
 /**
