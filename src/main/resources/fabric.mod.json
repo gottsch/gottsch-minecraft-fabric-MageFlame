@@ -27,6 +27,7 @@
   },
 
   "mixins": [
+   "mageflame.mixins.json"
   ],
 
   "depends": {
