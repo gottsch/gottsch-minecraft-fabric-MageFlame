@@ -54,17 +54,38 @@ public class Registration {
     public static final String WINGED_TORCH = "winged_torch";
 
     // blocks
-    public static final Block MAGE_FLAME_BLOCK = new SummonFlameBlock(FabricBlockSettings.of(Material.AIR).noCollision().luminance((state) -> {
+    public static final Block MAGE_FLAME_BLOCK = new SummonFlameBlock(
+            FabricBlockSettings
+                    .of(Material.AIR)
+                    .strength(-1.0F, 3600000.8F)
+                    .noCollision()
+                    .dropsNothing()
+                    .nonOpaque()
+                    .luminance((state) -> {
         return 11;
-    }).dropsNothing());
+    }));
 
-    public static final Block LESSER_REVELATION_BLOCK = new SummonFlameBlock(FabricBlockSettings.of(Material.AIR).noCollision().luminance((state) -> {
+    public static final Block LESSER_REVELATION_BLOCK = new SummonFlameBlock(
+            FabricBlockSettings
+                    .of(Material.AIR)
+                    .strength(-1.0F, 3600000.8F)
+                    .noCollision()
+                    .dropsNothing()
+                    .nonOpaque()
+                    .luminance((state) -> {
         return 13;
-    }).dropsNothing());
+    }));
 
-    public static final Block GREATER_REVELATION_BLOCK = new SummonFlameBlock(FabricBlockSettings.of(Material.AIR).noCollision().luminance((state) -> {
+    public static final Block GREATER_REVELATION_BLOCK = new SummonFlameBlock(
+            FabricBlockSettings
+                    .of(Material.AIR)
+                    .strength(-1.0F, 3600000.8F)
+                    .noCollision()
+                    .dropsNothing()
+                    .nonOpaque()
+                    .luminance((state) -> {
         return 15;
-    }).dropsNothing());
+    }));
 
     // items
     private static final Item MAGE_FLAME_SCROLL = new MageFlameScroll(new FabricItemSettings().group(ItemGroup.MISC));

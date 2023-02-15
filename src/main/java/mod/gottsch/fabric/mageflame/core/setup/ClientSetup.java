@@ -30,13 +30,9 @@ public class ClientSetup implements ClientModInitializer {
             return new MageFlameRenderer(context);
         });
 
-        EntityRendererRegistry.register(Registration.LESSER_REVELATION_ENTITY, (context) -> {
-            return new LesserRevelationRenderer(context);
-        });
+        EntityRendererRegistry.register(Registration.LESSER_REVELATION_ENTITY, LesserRevelationRenderer::new);
 
-        EntityRendererRegistry.register(Registration.GREATER_REVELATION_ENTITY, (context) -> {
-            return new GreaterRevelationRenderer(context);
-        });
+        EntityRendererRegistry.register(Registration.GREATER_REVELATION_ENTITY, GreaterRevelationRenderer::new);
 
         EntityRendererRegistry.register(Registration.WINGED_TORCH_ENTITY, (context) -> {
             return new WingedTorchRenderer<>(context);
