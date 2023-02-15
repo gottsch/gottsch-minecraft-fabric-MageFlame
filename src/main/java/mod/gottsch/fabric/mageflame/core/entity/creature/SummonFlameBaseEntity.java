@@ -285,6 +285,21 @@ public abstract class SummonFlameBaseEntity extends FlyingEntity implements ISum
         if (getLastLightCoords() != null && world.getBlockState(getLastLightCoords()).getBlock() == getFlameBlock()) {
             world.setBlockState(getLastLightCoords(), Blocks.AIR.getDefaultState());
         }
+
+        super.kill();
+    }
+
+    @Override
+    protected void updatePostDeath() {
+        // remove light blocks
+        if (getCurrentLightCoords() != null && world.getBlockState(getCurrentLightCoords()).getBlock() == getFlameBlock()) {
+            world.setBlockState(getCurrentLightCoords(), Blocks.AIR.getDefaultState());
+        }
+        if (getLastLightCoords() != null && world.getBlockState(getLastLightCoords()).getBlock() == getFlameBlock()) {
+            world.setBlockState(getLastLightCoords(), Blocks.AIR.getDefaultState());
+        }
+
+        super.updatePostDeath();
     }
 
     /**
