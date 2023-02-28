@@ -18,6 +18,7 @@
 package mod.gottsch.fabric.mageflame.core.entity.creature;
 
 import mod.gottsch.fabric.mageflame.MageFlame;
+import mod.gottsch.fabric.mageflame.core.config.MageFlameConfigs;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
@@ -35,6 +36,8 @@ import net.minecraft.entity.mob.FlyingEntity;
 import net.minecraft.entity.mob.GhastEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -104,6 +107,16 @@ public abstract class SummonFlameBaseEntity extends FlyingEntity implements ISum
     }
 
     @Override
+    protected void playStepSound(BlockPos pos, BlockState state) {
+        // do not play a sound
+    }
+
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return SoundEvents.BLOCK_CAMPFIRE_CRACKLE;
+    }
+
+    @Override
     public void doDeathEffects() {
         if (world.isClient) {
             double d0 = this.getX();
@@ -155,7 +168,9 @@ public abstract class SummonFlameBaseEntity extends FlyingEntity implements ISum
                     return;
                 }
             }
-            updateLightBlocks();
+            if (this.world.getTime() % MageFlameConfigs.UPDATE_LIGHT_TICKS == 0) {
+                updateLightBlocks();
+            }
         }
     }
 
