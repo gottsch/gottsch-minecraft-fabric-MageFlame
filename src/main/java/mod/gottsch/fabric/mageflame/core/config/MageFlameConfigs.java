@@ -25,6 +25,7 @@ public class MageFlameConfigs {
     public static long MAGE_FLAME_LIFESPAN;
     public static long LESSER_REVELATION_LIFESPAN;
     public static long GREATER_REVELATION_LIFESPAN;
+    public static int UPDATE_LIGHT_TICKS;
 
     /**
      *
@@ -46,7 +47,10 @@ public class MageFlameConfigs {
                                 "lesserRevelationLifespan=18000\n" +
                                 "# The lifespan of a Greater Revelation spell/entity in ticks.\n" +
                                 "# Default: 1200 ~ 72000\n" +
-                                "greaterRevelationLifespan=36000";
+                                "greaterRevelationLifespan=36000" +
+                                "# The number of ticks before the next light update.\n" +
+                                "# Default: 2\n" +
+                                "updateLightTicks=2";
             }
         };
 
@@ -54,5 +58,6 @@ public class MageFlameConfigs {
         MAGE_FLAME_LIFESPAN = CONFIG.getOrDefault( "mageFlameLifespan", 12000 );
         LESSER_REVELATION_LIFESPAN = CONFIG.getOrDefault( "lesserRevelationLifespan", 18000 );
         GREATER_REVELATION_LIFESPAN = CONFIG.getOrDefault( "greaterRevelationLifespan", 36000 );
+        UPDATE_LIGHT_TICKS = CONFIG.getOrDefault( "updateLightTicks", 2 );
     }
 }
