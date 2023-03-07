@@ -1,6 +1,5 @@
 package mod.gottsch.fabric.mageflame.core.entity.creature;
 
-import mod.gottsch.fabric.mageflame.core.config.MageFlameConfigs;
 import mod.gottsch.fabric.mageflame.core.setup.Registration;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -9,11 +8,12 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.FlyingEntity;
-import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
+
+import static mod.gottsch.fabric.mageflame.MageFlame.CONFIG;
 
 /**
  *
@@ -21,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
 public class GreaterRevelationEntity extends SummonFlameBaseEntity {
 
     public GreaterRevelationEntity(EntityType<? extends FlyingEntity> entityType, World level) {
-        super(entityType, level, MageFlameConfigs.GREATER_REVELATION_LIFESPAN); //36000);//Config.SERVER.mageFlameLifespan.get());
+        super(entityType, level, CONFIG.greaterRevelationLifespan());
     }
 
     public static DefaultAttributeContainer.Builder createMobAttributes() {

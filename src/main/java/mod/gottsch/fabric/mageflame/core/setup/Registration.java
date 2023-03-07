@@ -19,8 +19,6 @@ package mod.gottsch.fabric.mageflame.core.setup;
 
 import mod.gottsch.fabric.mageflame.MageFlame;
 import mod.gottsch.fabric.mageflame.core.block.SummonFlameBlock;
-import mod.gottsch.fabric.mageflame.core.config.MageFlameConfigs;
-import mod.gottsch.fabric.mageflame.core.config.SimpleConfig;
 import mod.gottsch.fabric.mageflame.core.entity.creature.*;
 import mod.gottsch.fabric.mageflame.core.event.SummonFlameServerEntityLoadHandler;
 import mod.gottsch.fabric.mageflame.core.item.GreaterFlameScroll;
@@ -33,9 +31,7 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
-import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
-import net.minecraft.block.LightBlock;
 import net.minecraft.block.Material;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
@@ -139,10 +135,6 @@ public class Registration {
      *
      */
     public static void register() {
-        // register configs
-        // NOTE ensure that these properties are only used server-side and not for registration properties.
-        MageFlameConfigs.register();
-
         // register blocks
         Registry.register(Registry.BLOCK, new Identifier(MageFlame.MOD_ID, "mage_flame_block"), MAGE_FLAME_BLOCK);
         Registry.register(Registry.BLOCK, new Identifier(MageFlame.MOD_ID, "lesser_revelation_block"), LESSER_REVELATION_BLOCK);
@@ -171,6 +163,5 @@ public class Registration {
 
         ServerEntityEvents.ENTITY_LOAD.register(new SummonFlameServerEntityLoadHandler());
 
-        // MageFlame.LOGGER.debug("Hello Fabric world!");
     }
 }

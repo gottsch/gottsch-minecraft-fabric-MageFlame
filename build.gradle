@@ -19,6 +19,11 @@ repositories {
 	maven {
 		url "${project.projectDir}/../../maven"
 	}
+	maven { url 'https://maven.wispforest.io' }
+	maven {
+		name = "CurseMaven"
+		url = "https://www.cursemaven.com"
+	}
 }
 
 dependencies {
@@ -33,8 +38,12 @@ dependencies {
 	// TODO does this work? no, it shouldn't - need a fabric version of gottschcore
 	//include "someguyssoftware.gottschcore:GottschCore:mc1.18.2-f40.1.0-v2.0.0"
 
+	modImplementation "io.wispforest:owo-lib:${project.owo_version}"
+	include "io.wispforest:owo-sentinel:${project.owo_version}"
+	annotationProcessor modImplementation("io.wispforest:owo-lib:${project.owo_version}")
 
-	// Uncomment the following line to enable the deprecated Fabric API modules. 
+	modImplementation "curse.maven:modmenu-308702:4401051"
+	// Uncomment the following line to enable the deprecated Fabric API modules.
 	// These are included in the Fabric API production distribution and allow you to update your mod to the latest modules at a later more convenient time.
 
 	// modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"

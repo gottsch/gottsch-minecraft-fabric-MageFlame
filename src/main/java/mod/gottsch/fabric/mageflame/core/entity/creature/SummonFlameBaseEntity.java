@@ -18,7 +18,6 @@
 package mod.gottsch.fabric.mageflame.core.entity.creature;
 
 import mod.gottsch.fabric.mageflame.MageFlame;
-import mod.gottsch.fabric.mageflame.core.config.MageFlameConfigs;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
@@ -168,7 +167,7 @@ public abstract class SummonFlameBaseEntity extends FlyingEntity implements ISum
                     return;
                 }
             }
-            if (this.world.getTime() % MageFlameConfigs.UPDATE_LIGHT_TICKS == 0) {
+            if (this.world.getTime() % MageFlame.CONFIG.updateLightTicks() == 0) {
                 updateLightBlocks();
             }
         }

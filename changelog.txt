@@ -1,0 +1,4 @@
+Version 1.40  (mc-1.19.2)
+============================
+-use owo Config (https://docs.wispforest.io/owo/config/) for Config file.
+-includes ModMenu support.
