@@ -35,6 +35,7 @@ import net.minecraft.entity.mob.FlyingEntity;
 import net.minecraft.entity.mob.GhastEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
@@ -132,7 +133,7 @@ public abstract class SummonFlameBaseEntity extends FlyingEntity implements ISum
         super.tick();
         if (!this.world.isClient) {
             if (updateLifespan() < 0) {
-                kill(DamageSource.GENERIC);
+                kill(((ServerWorld)world).getDamageSources().generic());
             }
         }
     }
@@ -285,7 +286,7 @@ public abstract class SummonFlameBaseEntity extends FlyingEntity implements ISum
 
     @Override
     public void kill() {
-        kill(DamageSource.GENERIC);
+        kill(((ServerWorld)world).getDamageSources().generic());
     }
 
     /**

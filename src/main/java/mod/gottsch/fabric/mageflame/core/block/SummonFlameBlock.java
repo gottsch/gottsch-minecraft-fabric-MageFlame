@@ -50,11 +50,6 @@ public class SummonFlameBlock extends Block implements ISummonFlameBlock {
     }
 
     @Override
-    public boolean isTranslucent(BlockState state, BlockView world, BlockPos pos) {
-        return true;
-    }
-
-    @Override
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.INVISIBLE;
     }
