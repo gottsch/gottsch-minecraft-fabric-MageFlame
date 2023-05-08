@@ -32,6 +32,7 @@ public class MageFlame implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+
 		Registration.register();
 	}
 }

@@ -1,8 +1,7 @@
 package mod.gottsch.fabric.mageflame.core.client.renderer.entity;
 
-import mod.gottsch.fabric.mageflame.core.client.model.entity.FlameBallModel;
 import mod.gottsch.fabric.mageflame.core.client.model.entity.WingedTorchModel;
-import mod.gottsch.fabric.mageflame.core.entity.creature.MageFlameEntity;
+import mod.gottsch.fabric.mageflame.core.client.renderer.entity.layer.WingedTorchFlameFeatureRenderer;
 import mod.gottsch.fabric.mageflame.core.entity.creature.WingedTorchEntity;
 import mod.gottsch.fabric.mageflame.core.setup.ClientSetup;
 import net.minecraft.client.render.entity.EntityRendererFactory;
@@ -16,6 +15,7 @@ public class WingedTorchRenderer<T extends WingedTorchEntity> extends MobEntityR
 
     public WingedTorchRenderer(EntityRendererFactory.Context context) {
         super(context, new WingedTorchModel<>(context.getPart(ClientSetup.WINGED_TORCH_LAYER)), 0.5f);
+        addFeature(new WingedTorchFlameFeatureRenderer<>(this));
     }
 
     @Override
