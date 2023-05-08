@@ -19,6 +19,7 @@ package mod.gottsch.fabric.mageflame.core.client.model.entity;
 
 import mod.gottsch.fabric.mageflame.core.entity.creature.SummonFlameBaseEntity;
 import net.minecraft.client.model.*;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.util.math.MatrixStack;
@@ -45,7 +46,7 @@ public class WingedTorchModel<T extends SummonFlameBaseEntity> extends EntityMod
 	 * @param root
 	 */
 	public WingedTorchModel(ModelPart root) {
-
+		super(RenderLayer::getEntityCutout);
 		this.main = root.getChild("main");
 		this.wings = main.getChild("wings");
 		this.rightWing = wings.getChild("rightWing");

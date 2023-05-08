@@ -19,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
 public class WingedTorchEntity extends SummonFlameBaseEntity {
 
     public WingedTorchEntity(EntityType<? extends FlyingEntity> entityType, World level) {
-        super(entityType, level, 12000);//Config.SERVER.mageFlameLifespan.get());
+        super(entityType, level, 12000);
     }
 
     /**

@@ -17,5 +17,13 @@
   "tooltip.mageflame.mage_flame.desc": "Allows the spellcaster to create a small ball of flames.",
   "tooltip.mageflame.mage_flame.lore": "The weakess of the summoned flames,~well-suited for the apprentice spellcaster.~It will allow you to see, but not as bright~as a regular torch. It is not strong enough~to navigate through vines and other~\nreplaceable blocks, and will extinguish if~it is unable to follow its owner.",
   "tooltip.mageflame.winged_torch.desc": "Allows the spellcaster to summon a winged torch.",
-  "tooltip.mageflame.winged_torch.lore": "The spellcaster is able reach into the nether~plane and summon a winged torch. The torch~will remain under your charge until you~release it or it perishes."
+  "tooltip.mageflame.winged_torch.lore": "The spellcaster is able reach into the nether~plane and summon a winged torch. The torch~will remain under your charge until you~release it or it perishes.",
+
+  "# ModMenu Values": "######",
+  "text.config.mageflame.title":  "Mage Flame Configuration",
+  "text.config.mageflame.section.flameProperties": "Flame / Torch Entity Properties",
+  "text.config.mageflame.option.mageFlameLifespan": "Mage Flame Lifespan",
+  "text.config.mageflame.option.lesserRevelationLifespan": "Lesser Revelation Lifespan",
+  "text.config.mageflame.option.greaterRevelationLifespan": "Greater Revelation Lifespan",
+  "text.config.mageflame.option.updateLightTicks": "Update Light Delay in Ticks"
 }

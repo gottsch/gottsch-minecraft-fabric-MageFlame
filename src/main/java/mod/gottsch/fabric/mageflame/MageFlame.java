@@ -17,6 +17,7 @@
  */
 package mod.gottsch.fabric.mageflame;
 
+import mod.gottsch.fabric.mageflame.core.config.MyConfig;
 import mod.gottsch.fabric.mageflame.core.setup.Registration;
 import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
@@ -29,6 +30,8 @@ public class MageFlame implements ModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger(MageFlame.MOD_ID);
 
 	public static final String MOD_ID = "mageflame";
+
+	public static final MyConfig CONFIG = MyConfig.createAndLoad();
 
 	@Override
 	public void onInitialize() {
