@@ -51,7 +51,7 @@ public class WingedTorchModel<T extends SummonFlameBaseEntity> extends EntityMod
 		this.wings = main.getChild("wings");
 		this.rightWing = wings.getChild("rightWing");
 		this.leftWing = wings.getChild("leftWing");
-		this.rightTip = rightWing.getChild(RIGHT_WING_TIP);
+		this.rightTip = rightWing.getChild("rightTip");
 		this.leftTip = leftWing.getChild("leftTip");
 
 		bodyY = main.pivotY;
@@ -67,10 +67,11 @@ public class WingedTorchModel<T extends SummonFlameBaseEntity> extends EntityMod
 		ModelPartData main = modelPartData.addChild("main", ModelPartBuilder.create(), ModelTransform.of(0.0F, 24.0F, 0.0F, 0.0873F, 0.0F, 0.0F));
 		ModelPartData torch = main.addChild("torch", ModelPartBuilder.create().uv(0, 0).cuboid(-1.0F, -10.0F, -1.0F, 2.0F, 10.0F, 2.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
 		ModelPartData wings = main.addChild("wings", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
-		ModelPartData rightWing = wings.addChild("rightWing", ModelPartBuilder.create().uv(9, 0).mirrored().cuboid(-5.0F, -0.5F, 0.0F, 5.0F, 5.0F, 1.0F, new Dilation(0.0F)).mirrored(false), ModelTransform.of(0.0F, -6.5F, 1.0F, 0.0F, 0.1745F, 0.0873F));
-		ModelPartData rightTip = rightWing.addChild(RIGHT_WING_TIP, ModelPartBuilder.create().uv(0, 13).mirrored().cuboid(-3.0F, -2.0F, -0.5F, 3.0F, 4.0F, 1.0F, new Dilation(0.0F)).mirrored(false), ModelTransform.of(-5.0F, 1.5F, 0.5F, 0.0F, -0.2618F, 0.0F));
-		ModelPartData leftWing = wings.addChild("leftWing", ModelPartBuilder.create().uv(9, 0).cuboid(0.0F, -0.5F, 0.0F, 5.0F, 5.0F, 1.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, -6.5F, 1.0F, 0.0F, -0.1745F, -0.0873F));
-		ModelPartData leftTip = leftWing.addChild("leftTip", ModelPartBuilder.create().uv(0, 13).cuboid(0.0F, -2.0F, 0.0F, 3.0F, 4.0F, 1.0F, new Dilation(0.0F)), ModelTransform.of(5.0F, 1.5F, 0.0F, 0.0F, 0.2618F, 0.0F));
+		ModelPartData rightWing = wings.addChild("rightWing", ModelPartBuilder.create().uv(10, 1).mirrored().cuboid(-5.0F, -0.5F, 0.0F, 5.0F, 5.0F, 0.0F, new Dilation(0.0F)).mirrored(false), ModelTransform.of(0.0F, -6.5F, 1.0F, 0.0F, 0.1745F, 0.0873F));
+		ModelPartData rightTip = rightWing.addChild("rightTip", ModelPartBuilder.create().uv(1, 14).mirrored().cuboid(-3.0F, -2.0F, -0.5F, 3.0F, 4.0F, 0.0F, new Dilation(0.0F)).mirrored(false), ModelTransform.of(-5.0F, 1.5F, 0.5F, 0.0F, -0.2618F, 0.0F));
+		ModelPartData leftWing = wings.addChild("leftWing", ModelPartBuilder.create().uv(10, 1).cuboid(0.0F, -0.5F, 0.0F, 5.0F, 5.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, -6.5F, 1.0F, 0.0F, -0.1745F, -0.0873F));
+		ModelPartData leftTip = leftWing.addChild("leftTip", ModelPartBuilder.create().uv(1, 14).cuboid(0.0F, -2.0F, 0.0F, 3.0F, 4.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(5.0F, 1.5F, 0.0F, 0.0F, 0.2618F, 0.0F));
+
 		return TexturedModelData.of(modelData, 32, 32);
 	}
 
