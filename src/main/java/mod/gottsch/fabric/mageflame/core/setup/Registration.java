@@ -35,8 +35,9 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
-import net.minecraft.block.Material;
+import net.minecraft.block.MapColor;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
@@ -58,8 +59,8 @@ public class Registration {
 
     // blocks
     public static final Block MAGE_FLAME_BLOCK = new SummonFlameBlock(
-            FabricBlockSettings
-                    .of(Material.AIR)
+            AbstractBlock.Settings.create()
+                    .mapColor(MapColor.CLEAR)
                     .strength(-1.0F, 3600000.8F)
                     .noCollision()
                     .dropsNothing()
@@ -69,8 +70,8 @@ public class Registration {
                     }));
 
     public static final Block LESSER_REVELATION_BLOCK = new SummonFlameBlock(
-            FabricBlockSettings.
-                    of(Material.AIR)
+            AbstractBlock.Settings.create()
+                    .mapColor(MapColor.CLEAR)
                     .strength(-1.0F, 3600000.8F)
                     .noCollision()
                     .dropsNothing()
@@ -80,8 +81,8 @@ public class Registration {
                     }));
 
     public static final Block GREATER_REVELATION_BLOCK = new SummonFlameBlock(
-            FabricBlockSettings
-                    .of(Material.AIR)
+            AbstractBlock.Settings.create()
+                    .mapColor(MapColor.CLEAR)
                     .strength(-1.0F, 3600000.8F)
                     .noCollision()
                     .dropsNothing()
@@ -129,7 +130,7 @@ public class Registration {
             new Identifier(MageFlame.MOD_ID, WINGED_TORCH),
             FabricEntityTypeBuilder.create(
                             SpawnGroup.CREATURE, WingedTorchEntity::new)
-                    .dimensions(EntityDimensions.fixed(0.375F, 0.25F))
+                    .dimensions(EntityDimensions.fixed(0.25F, 0.625F))
                     .build()
     );
 

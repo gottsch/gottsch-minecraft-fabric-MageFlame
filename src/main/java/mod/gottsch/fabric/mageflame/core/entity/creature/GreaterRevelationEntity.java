@@ -40,12 +40,12 @@ public class GreaterRevelationEntity extends SummonFlameBaseEntity {
         for (int i=0; i < 2; i++) {
             double d0 = this.getRandomX(0.5);
             double d2 = this.getRandomZ(0.5);
-            this.world.addParticle(Registration.REVELATION_PARTICLE, d0, d1, d2, 0.0D, 0.0D, 0.0D);
+            this.getWorld().addParticle(Registration.REVELATION_PARTICLE, d0, d1, d2, 0.0D, 0.0D, 0.0D);
         }
         double d0 = this.getX(0.5);
         double d2 = this.getZ(0.5);
-        this.world.addParticle(ParticleTypes.SMOKE, d0, d1, d2, 0.0D, 0.0D, 0.0D);
-        this.world.addParticle(ParticleTypes.SPORE_BLOSSOM_AIR, d0, d1, d2, 0.0D, 0.0D, 0.0D);
+        this.getWorld().addParticle(ParticleTypes.SMOKE, d0, d1, d2, 0.0D, 0.0D, 0.0D);
+        this.getWorld().addParticle(ParticleTypes.SPORE_BLOSSOM_AIR, d0, d1, d2, 0.0D, 0.0D, 0.0D);
     }
 
     /**
@@ -72,9 +72,9 @@ public class GreaterRevelationEntity extends SummonFlameBaseEntity {
      */
     @Override
     protected boolean testPlacement(BlockPos pos) {
-        BlockState state = this.world.getBlockState(pos);
+        BlockState state = this.getWorld().getBlockState(pos);
         // check block
-        if (state.isAir() || (state.getMaterial().isReplaceable()) && state.getFluidState().isEmpty()) {
+        if (state.isAir() || (state.isReplaceable()) && state.getFluidState().isEmpty()) {
             return true;
         }
         return false;

@@ -1,3 +1,8 @@
+Version 1.50  (mc-1.20.1)
+============================
+-update the bounding box of the winged torch so that it's top isn't in the rock above it.
+-includes ModMenu support.
+
 Version 1.40  (mc-1.19.3)
 ============================
 -use owo Config (https://docs.wispforest.io/owo/config/) for Config file.

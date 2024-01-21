@@ -35,7 +35,6 @@ import net.minecraft.entity.mob.FlyingEntity;
 import net.minecraft.entity.mob.GhastEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
@@ -80,7 +79,7 @@ public abstract class SummonFlameBaseEntity extends FlyingEntity implements ISum
      */
     protected SummonFlameBaseEntity(EntityType<? extends FlyingEntity> entityType, World world, long lifespan) {
         super(entityType, world);
-        this.birthTime = world.getTime();
+        this.birthTime = getWorld().getTime();
         this.lifespan = lifespan;
         this.moveControl = new SummonFlameMoveControl(this);
     }
@@ -118,12 +117,12 @@ public abstract class SummonFlameBaseEntity extends FlyingEntity implements ISum
 
     @Override
     public void doDeathEffects() {
-        if (world.isClient) {
+        if (getWorld().isClient) {
             double d0 = this.getX();
             double d1 = this.getY() + 0.2;
             double d2 = this.getZ();
 //            ((ServerWorld)world).sendParticles(ParticleTypes.SMOKE, d0, d1, d2, 1, 0D, 0D, 0D, (double)0);
-            this.world.addParticle(ParticleTypes.SMOKE, this.getParticleX(0.5), this.getRandomBodyY(), this.getParticleZ(0.5), (this.random.nextDouble() - 0.5) * 2.0, -this.random.nextDouble(), (this.random.nextDouble() - 0.5) * 2.0);
+            this.getWorld().addParticle(ParticleTypes.SMOKE, this.getParticleX(0.5), this.getRandomBodyY(), this.getParticleZ(0.5), (this.random.nextDouble() - 0.5) * 2.0, -this.random.nextDouble(), (this.random.nextDouble() - 0.5) * 2.0);
 
         }
     }
@@ -131,9 +130,9 @@ public abstract class SummonFlameBaseEntity extends FlyingEntity implements ISum
     @Override
     public void tick() {
         super.tick();
-        if (!this.world.isClient) {
+        if (!this.getWorld().isClient) {
             if (updateLifespan() < 0) {
-                kill(((ServerWorld)world).getDamageSources().generic());
+                kill(getWorld().getDamageSources().generic());
             }
         }
     }
@@ -150,9 +149,9 @@ public abstract class SummonFlameBaseEntity extends FlyingEntity implements ISum
     public void tickMovement() {
         super.tickMovement();
 
-        if (this.world.isClient) {
-            if (this.world.getTime() % 10 == 0) {
-                BlockState state = this.world.getBlockState(this.getBlockPos());
+        if (this.getWorld().isClient) {
+            if (this.getWorld().getTime() % 10 == 0) {
+                BlockState state = this.getWorld().getBlockState(this.getBlockPos());
                 if (state.getFluidState().isEmpty() || canLiveInFluid()) {
                     doLivingEffects();
                 }
@@ -160,15 +159,15 @@ public abstract class SummonFlameBaseEntity extends FlyingEntity implements ISum
         }
         else {
             // check for death scenarios ie no owner, if in water
-            if (this.world.getTime() % 10 == 0) {
-                BlockState state = this.world.getBlockState(this.getBlockPos());
+            if (this.getWorld().getTime() % 10 == 0) {
+                BlockState state = this.getWorld().getBlockState(this.getBlockPos());
                 if (this.getOwner() == null || (!state.getFluidState().isEmpty() && !canLiveInFluid())) {
                     // kill self
                     kill();
                     return;
                 }
             }
-            if (this.world.getTime() % MageFlame.CONFIG.updateLightTicks() == 0) {
+            if (this.getWorld().getTime() % MageFlame.CONFIG.updateLightTicks() == 0) {
                 updateLightBlocks();
             }
         }
@@ -191,13 +190,13 @@ public abstract class SummonFlameBaseEntity extends FlyingEntity implements ISum
             }
             // set last = current as they are in the same place
             setLastLightCoords(getCurrentLightCoords());
-            world.setBlockState(getCurrentLightCoords(), getFlameBlock().getDefaultState());
+            getWorld().setBlockState(getCurrentLightCoords(), getFlameBlock().getDefaultState());
         } else {
             if (!getBlockPos().equals(getCurrentLightCoords())) {
                 // test location if fluids
-                BlockState currentState = world.getBlockState(getBlockPos());
+                BlockState currentState = getWorld().getBlockState(getBlockPos());
                 if (!currentState.getFluidState().isEmpty() && !canLiveInFluid()) {
-                    world.setBlockState(getCurrentLightCoords(), Blocks.AIR.getDefaultState());
+                    getWorld().setBlockState(getCurrentLightCoords(), Blocks.AIR.getDefaultState());
                 }
                 else {
                     if (!updateLightCoords()) {
@@ -206,10 +205,10 @@ public abstract class SummonFlameBaseEntity extends FlyingEntity implements ISum
                     }
 
                     // update block with flame
-                    world.setBlockState(getCurrentLightCoords(), getFlameBlock().getDefaultState());
+                    getWorld().setBlockState(getCurrentLightCoords(), getFlameBlock().getDefaultState());
 
                     // delete old
-                    world.setBlockState(getLastLightCoords(), Blocks.AIR.getDefaultState());
+                    getWorld().setBlockState(getLastLightCoords(), Blocks.AIR.getDefaultState());
                 }
             }
         }
@@ -266,7 +265,7 @@ public abstract class SummonFlameBaseEntity extends FlyingEntity implements ISum
      * @return
      */
     protected boolean testPlacement(BlockPos pos) {
-        BlockState state = this.world.getBlockState(pos);
+        BlockState state = this.getWorld().getBlockState(pos);
         // check block
         return state.isAir();
     }
@@ -274,11 +273,11 @@ public abstract class SummonFlameBaseEntity extends FlyingEntity implements ISum
     @Override
     protected void updatePostDeath() {
         // remove light blocks
-        if (getCurrentLightCoords() != null && world.getBlockState(getCurrentLightCoords()).getBlock() == getFlameBlock()) {
-            world.setBlockState(getCurrentLightCoords(), Blocks.AIR.getDefaultState());
+        if (getCurrentLightCoords() != null && getWorld().getBlockState(getCurrentLightCoords()).getBlock() == getFlameBlock()) {
+            getWorld().setBlockState(getCurrentLightCoords(), Blocks.AIR.getDefaultState());
         }
-        if (getLastLightCoords() != null && world.getBlockState(getLastLightCoords()).getBlock() == getFlameBlock()) {
-            world.setBlockState(getLastLightCoords(), Blocks.AIR.getDefaultState());
+        if (getLastLightCoords() != null && getWorld().getBlockState(getLastLightCoords()).getBlock() == getFlameBlock()) {
+            getWorld().setBlockState(getLastLightCoords(), Blocks.AIR.getDefaultState());
         }
 
         super.updatePostDeath();
@@ -286,7 +285,7 @@ public abstract class SummonFlameBaseEntity extends FlyingEntity implements ISum
 
     @Override
     public void kill() {
-        kill(((ServerWorld)world).getDamageSources().generic());
+        kill(getWorld().getDamageSources().generic());
     }
 
     /**
@@ -307,11 +306,11 @@ public abstract class SummonFlameBaseEntity extends FlyingEntity implements ISum
         // MageFlame.LOGGER.debug("kill - current light coords -> {}, last light coords -> {}", getCurrentLightCoords(), getLastLightCoords());
 
         // remove light blocks
-        if (getCurrentLightCoords() != null && world.getBlockState(getCurrentLightCoords()).getBlock() == getFlameBlock()) {
-            world.setBlockState(getCurrentLightCoords(), Blocks.AIR.getDefaultState());
+        if (getCurrentLightCoords() != null && getWorld().getBlockState(getCurrentLightCoords()).getBlock() == getFlameBlock()) {
+            getWorld().setBlockState(getCurrentLightCoords(), Blocks.AIR.getDefaultState());
         }
-        if (getLastLightCoords() != null && world.getBlockState(getLastLightCoords()).getBlock() == getFlameBlock()) {
-            world.setBlockState(getLastLightCoords(), Blocks.AIR.getDefaultState());
+        if (getLastLightCoords() != null && getWorld().getBlockState(getLastLightCoords()).getBlock() == getFlameBlock()) {
+            getWorld().setBlockState(getLastLightCoords(), Blocks.AIR.getDefaultState());
         }
     }
 
@@ -459,7 +458,7 @@ public abstract class SummonFlameBaseEntity extends FlyingEntity implements ISum
         @Override
         public void start() {
             Vec3d initialPos = this.flameBall.selectSummonOffsetPos(this.owner);
-            Vec3d wantedPos = this.flameBall.selectSpawnPos(this.flameBall.world, new Vec3d(initialPos.x, initialPos.y, initialPos.z), this.flameBall.getMovementDirection());
+            Vec3d wantedPos = this.flameBall.selectSpawnPos(this.flameBall.getWorld(), new Vec3d(initialPos.x, initialPos.y, initialPos.z), this.flameBall.getMovementDirection());
             this.flameBall.getMoveControl().moveTo(wantedPos.x, wantedPos.y, wantedPos.z, 1.0D);
         }
 
@@ -474,7 +473,7 @@ public abstract class SummonFlameBaseEntity extends FlyingEntity implements ISum
                 if (this.flameBall.squaredDistanceTo(this.owner) >= 36.0D) {
                     // teleport to owner
                     Vec3d offsetPos = this.flameBall.selectSummonOffsetPos(this.owner);
-                    Vec3d wantedPos = this.flameBall.selectSpawnPos(this.flameBall.world, new Vec3d(offsetPos.x, offsetPos.y, offsetPos.z), this.flameBall.getMovementDirection());
+                    Vec3d wantedPos = this.flameBall.selectSpawnPos(this.flameBall.getWorld(), new Vec3d(offsetPos.x, offsetPos.y, offsetPos.z), this.flameBall.getMovementDirection());
                     this.flameBall.getMoveControl().moveTo(wantedPos.x, wantedPos.y, wantedPos.z, 1.0D);
 //                    this.flameBall.moveTo(wantedPos.x, wantedPos.y, wantedPos.z, this.flameBall.getYRot(), this.flameBall.getXRot());
                 }
@@ -520,7 +519,7 @@ public abstract class SummonFlameBaseEntity extends FlyingEntity implements ISum
     public LivingEntity getOwner() {
         try {
             UUID uuid = this.getOwnerUUID();
-            return uuid == null ? null : this.world.getPlayerByUuid(uuid);
+            return uuid == null ? null : this.getWorld().getPlayerByUuid(uuid);
         } catch (IllegalArgumentException illegalargumentexception) {
             return null;
         }
