@@ -100,9 +100,9 @@ public abstract class SummonFlameBaseEntity extends FlyingEntity implements ISum
     }
 
     @Override
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(DATA_OWNER_UUID, Optional.empty());
+    protected void initDataTracker(DataTracker.Builder builder) {
+        super.initDataTracker(builder);
+        builder.add(DATA_OWNER_UUID, Optional.empty());
     }
 
     @Override

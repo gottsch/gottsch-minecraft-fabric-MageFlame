@@ -18,19 +18,19 @@
 package mod.gottsch.fabric.mageflame.core.item;
 
 import mod.gottsch.fabric.mageflame.core.util.LangUtil;
-import net.minecraft.client.item.TooltipContext;
+import net.minecraft.client.item.TooltipType;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.*;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Optional;
@@ -56,25 +56,24 @@ public abstract class SummonFlameBaseItem extends Item implements ISummonFlameIt
 	public Text getName() {
 		return Text.literal(this.getTranslationKey()).formatted(Formatting.AQUA);
 	}
-	
+
 	@Override
-	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-//	public void appendHoverText(ItemStack stack, World level, List<Component> tooltip, TooltipFlag flag) {
-		appendBaseText(stack, world, tooltip, context);
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		appendBaseText(stack, context, tooltip, type);
 		LangUtil.appendAdvancedHoverText(tooltip, tt -> {
-			appendAdvancedText(stack, world, tooltip, context);
+			appendAdvancedText(stack, context, tooltip, type);
 		});
 	}
 
-	public void appendBaseText(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+	public void appendBaseText(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
 
 	}
 
-	public void appendAdvancedText(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+	public void appendAdvancedText(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
 
 	}
 	
-	public void appendLore(ItemStack stack, World level, List<Text> tooltip, TooltipContext flag, String key) {
+	public void appendLore(ItemStack stack, TooltipContext context, List<Text> tooltip, String key) {
 		MutableText lore = Text.translatable(LangUtil.tooltip(key));
 		tooltip.add(Text.literal(" "));
 		for (String s : lore.getString().split("~")) {	

@@ -19,14 +19,12 @@ package mod.gottsch.fabric.mageflame.core.item;
 
 import mod.gottsch.fabric.mageflame.core.setup.Registration;
 import mod.gottsch.fabric.mageflame.core.util.LangUtil;
-import net.minecraft.client.item.TooltipContext;
+import net.minecraft.client.item.TooltipType;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -49,7 +47,7 @@ public class GreaterFlameScroll extends SummonFlameBaseItem {
 	}
 
 	@Override
-	public void appendBaseText(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+	public void appendBaseText(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
 		
 		tooltip.add(Text.translatable(LangUtil.tooltip("greater_revelation.desc")).formatted(Formatting.YELLOW));
 		tooltip.add(Text.literal(" "));
@@ -58,7 +56,7 @@ public class GreaterFlameScroll extends SummonFlameBaseItem {
 	}
 
 	@Override
-	public void appendAdvancedText(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-		appendLore(stack, world, tooltip, context, "greater_revelation.lore");
+	public void appendAdvancedText(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+		appendLore(stack, context, tooltip, "greater_revelation.lore");
 	}
 }

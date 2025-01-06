@@ -29,9 +29,7 @@ import mod.gottsch.fabric.mageflame.core.item.LesserFlameScroll;
 import mod.gottsch.fabric.mageflame.core.item.MageFlameScroll;
 import mod.gottsch.fabric.mageflame.core.item.WingedTorchScroll;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
@@ -43,7 +41,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
-import net.minecraft.particle.DefaultParticleType;
+import net.minecraft.particle.SimpleParticleType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
@@ -92,10 +90,10 @@ public class Registration {
                     }));
 
     // items
-    public static final Item MAGE_FLAME_SCROLL = new MageFlameScroll(new FabricItemSettings());
-    public static final Item LESSER_REVELATION_SCROLL = new LesserFlameScroll(new FabricItemSettings());
-    public static final Item GREATER_REVELATION_SCROLL = new GreaterFlameScroll(new FabricItemSettings());
-    public static final Item WINGED_TORCH_SCROLL = new WingedTorchScroll(new FabricItemSettings());
+    public static final Item MAGE_FLAME_SCROLL = new MageFlameScroll(new Item.Settings());
+    public static final Item LESSER_REVELATION_SCROLL = new LesserFlameScroll(new Item.Settings());
+    public static final Item GREATER_REVELATION_SCROLL = new GreaterFlameScroll(new Item.Settings());
+    public static final Item WINGED_TORCH_SCROLL = new WingedTorchScroll(new Item.Settings());
 
     // entities
     public static final EntityType<MageFlameEntity> MAGE_FLAME_ENTITY = Registry.register(
@@ -135,7 +133,7 @@ public class Registration {
     );
 
     // particles
-    public static final DefaultParticleType REVELATION_PARTICLE = FabricParticleTypes.simple();
+    public static final SimpleParticleType REVELATION_PARTICLE = FabricParticleTypes.simple();
 
     /**
      *
