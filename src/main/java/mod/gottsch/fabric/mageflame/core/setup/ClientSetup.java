@@ -18,9 +18,9 @@ import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
 public class ClientSetup implements ClientModInitializer {
-     public static final EntityModelLayer FLAME_BALL_LAYER = new EntityModelLayer(new Identifier("mageflame", "flame_ball"), "main");
-    public static final EntityModelLayer LARGE_FLAME_BALL_LAYER = new EntityModelLayer(new Identifier("mageflame", "large_flame_ball"), "main");
-    public static final EntityModelLayer WINGED_TORCH_LAYER = new EntityModelLayer(new Identifier("mageflame", "winged_torch"), "main");
+     public static final EntityModelLayer FLAME_BALL_LAYER = new EntityModelLayer(Identifier.of("mageflame", "flame_ball"), "main");
+    public static final EntityModelLayer LARGE_FLAME_BALL_LAYER = new EntityModelLayer(Identifier.of("mageflame", "large_flame_ball"), "main");
+    public static final EntityModelLayer WINGED_TORCH_LAYER = new EntityModelLayer(Identifier.of("mageflame", "winged_torch"), "main");
 
     @Override
     public void onInitializeClient() {

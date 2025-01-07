@@ -20,6 +20,6 @@ public class LesserRevelationRenderer<T extends LesserRevelationEntity> extends 
 
     @Override
     public Identifier getTexture(LesserRevelationEntity entity) {
-        return new Identifier("mageflame", "textures/entity/lesser_revelation.png");
+        return Identifier.of("mageflame", "textures/entity/lesser_revelation.png");
     }
 }

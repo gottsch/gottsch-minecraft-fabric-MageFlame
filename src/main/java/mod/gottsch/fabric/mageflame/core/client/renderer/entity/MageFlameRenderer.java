@@ -21,6 +21,6 @@ public class MageFlameRenderer<T extends MageFlameEntity> extends MobEntityRende
 
     @Override
     public Identifier getTexture(MageFlameEntity entity) {
-        return new Identifier("mageflame", "textures/entity/mage_flame.png");
+        return Identifier.of("mageflame", "textures/entity/mage_flame.png");
     }
 }

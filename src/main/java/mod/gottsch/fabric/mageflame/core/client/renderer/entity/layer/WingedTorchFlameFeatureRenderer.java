@@ -33,7 +33,7 @@ import net.minecraft.util.Identifier;
  *
  */
 public class WingedTorchFlameFeatureRenderer<T extends SummonFlameBaseEntity, M extends WingedTorchModel<T>> extends EyesFeatureRenderer<T, M> {
-	private static final RenderLayer SKIN = RenderLayer.getEyes(new Identifier("mageflame","textures/entity/winged_torch_flame.png"));
+	private static final RenderLayer SKIN = RenderLayer.getEyes(Identifier.of("mageflame","textures/entity/winged_torch_flame.png"));
 
 	public WingedTorchFlameFeatureRenderer(FeatureRendererContext<T, M> featureRendererContext) {
 		super(featureRendererContext);

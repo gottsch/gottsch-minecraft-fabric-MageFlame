@@ -30,7 +30,7 @@ import net.minecraft.util.Identifier;
  *
  */
 public class LesserRevelationGlowFeatureRenderer<T extends SummonFlameBaseEntity, M extends FlameBallModel<T>> extends EyesFeatureRenderer<T, M> {
-	private static final RenderLayer SKIN = RenderLayer.getEyes(new Identifier("mageflame","textures/entity/lesser_revelation.png"));
+	private static final RenderLayer SKIN = RenderLayer.getEyes(Identifier.of("mageflame","textures/entity/lesser_revelation.png"));
 
 	public LesserRevelationGlowFeatureRenderer(FeatureRendererContext<T, M> featureRendererContext) {
 		super(featureRendererContext);

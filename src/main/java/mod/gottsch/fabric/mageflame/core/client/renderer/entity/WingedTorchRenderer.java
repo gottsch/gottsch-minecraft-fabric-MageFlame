@@ -20,6 +20,6 @@ public class WingedTorchRenderer<T extends WingedTorchEntity> extends MobEntityR
 
     @Override
     public Identifier getTexture(WingedTorchEntity entity) {
-        return new Identifier("mageflame", "textures/entity/winged_torch.png");
+        return Identifier.of("mageflame", "textures/entity/winged_torch.png");
     }
 }

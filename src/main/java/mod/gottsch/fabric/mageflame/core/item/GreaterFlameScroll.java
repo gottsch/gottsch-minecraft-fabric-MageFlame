@@ -19,10 +19,10 @@ package mod.gottsch.fabric.mageflame.core.item;
 
 import mod.gottsch.fabric.mageflame.core.setup.Registration;
 import mod.gottsch.fabric.mageflame.core.util.LangUtil;
-import net.minecraft.client.item.TooltipType;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
@@ -47,8 +47,7 @@ public class GreaterFlameScroll extends SummonFlameBaseItem {
 	}
 
 	@Override
-	public void appendBaseText(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
-		
+	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
 		tooltip.add(Text.translatable(LangUtil.tooltip("greater_revelation.desc")).formatted(Formatting.YELLOW));
 		tooltip.add(Text.literal(" "));
 		tooltip.add(Text.translatable(LangUtil.tooltip("light_level"), Registration.GREATER_REVELATION_BLOCK.getDefaultState().getLuminance()));

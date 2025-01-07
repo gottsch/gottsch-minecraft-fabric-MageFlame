@@ -98,7 +98,7 @@ public class Registration {
     // entities
     public static final EntityType<MageFlameEntity> MAGE_FLAME_ENTITY = Registry.register(
             Registries.ENTITY_TYPE,
-            new Identifier(MageFlame.MOD_ID, MAGE_FLAME),
+            Identifier.of(MageFlame.MOD_ID, MAGE_FLAME),
             FabricEntityTypeBuilder.create(
                             SpawnGroup.CREATURE, MageFlameEntity::new)
                     .dimensions(EntityDimensions.fixed(0.125f, 0.125f))
@@ -107,7 +107,7 @@ public class Registration {
 
     public static final EntityType<LesserRevelationEntity> LESSER_REVELATION_ENTITY = Registry.register(
             Registries.ENTITY_TYPE,
-            new Identifier(MageFlame.MOD_ID, LESSER_REVELATION),
+            Identifier.of(MageFlame.MOD_ID, LESSER_REVELATION),
             FabricEntityTypeBuilder.create(
                             SpawnGroup.CREATURE, LesserRevelationEntity::new)
                     .dimensions(EntityDimensions.fixed(0.125f, 0.125f))
@@ -116,7 +116,7 @@ public class Registration {
 
     public static final EntityType<GreaterRevelationEntity> GREATER_REVELATION_ENTITY = Registry.register(
             Registries.ENTITY_TYPE,
-            new Identifier(MageFlame.MOD_ID, GREATER_REVELATION),
+            Identifier.of(MageFlame.MOD_ID, GREATER_REVELATION),
             FabricEntityTypeBuilder.create(
                             SpawnGroup.CREATURE, GreaterRevelationEntity::new)
                     .dimensions(EntityDimensions.fixed(0.1875f, 0.1875f))
@@ -125,7 +125,7 @@ public class Registration {
 
     public static final EntityType<WingedTorchEntity> WINGED_TORCH_ENTITY = Registry.register(
             Registries.ENTITY_TYPE,
-            new Identifier(MageFlame.MOD_ID, WINGED_TORCH),
+            Identifier.of(MageFlame.MOD_ID, WINGED_TORCH),
             FabricEntityTypeBuilder.create(
                             SpawnGroup.CREATURE, WingedTorchEntity::new)
                     .dimensions(EntityDimensions.fixed(0.25F, 0.625F))
@@ -140,9 +140,9 @@ public class Registration {
      */
     public static void register() {
         // register blocks
-        Registry.register(Registries.BLOCK, new Identifier(MageFlame.MOD_ID, "mage_flame_block"), MAGE_FLAME_BLOCK);
-        Registry.register(Registries.BLOCK, new Identifier(MageFlame.MOD_ID, "lesser_revelation_block"), LESSER_REVELATION_BLOCK);
-        Registry.register(Registries.BLOCK, new Identifier(MageFlame.MOD_ID, "greater_revelation_block"), GREATER_REVELATION_BLOCK);
+        Registry.register(Registries.BLOCK, Identifier.of(MageFlame.MOD_ID, "mage_flame_block"), MAGE_FLAME_BLOCK);
+        Registry.register(Registries.BLOCK, Identifier.of(MageFlame.MOD_ID, "lesser_revelation_block"), LESSER_REVELATION_BLOCK);
+        Registry.register(Registries.BLOCK, Identifier.of(MageFlame.MOD_ID, "greater_revelation_block"), GREATER_REVELATION_BLOCK);
 
         // register item groups
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register(content -> {
@@ -154,10 +154,10 @@ public class Registration {
         });
 
         // register items
-        Registry.register(Registries.ITEM, new Identifier(MageFlame.MOD_ID, "mage_flame_scroll"), MAGE_FLAME_SCROLL);
-        Registry.register(Registries.ITEM, new Identifier(MageFlame.MOD_ID, "lesser_revelation_scroll"), LESSER_REVELATION_SCROLL);
-        Registry.register(Registries.ITEM, new Identifier(MageFlame.MOD_ID, "greater_revelation_scroll"), GREATER_REVELATION_SCROLL);
-        Registry.register(Registries.ITEM, new Identifier(MageFlame.MOD_ID, "winged_torch_scroll"), WINGED_TORCH_SCROLL);
+        Registry.register(Registries.ITEM, Identifier.of(MageFlame.MOD_ID, "mage_flame_scroll"), MAGE_FLAME_SCROLL);
+        Registry.register(Registries.ITEM, Identifier.of(MageFlame.MOD_ID, "lesser_revelation_scroll"), LESSER_REVELATION_SCROLL);
+        Registry.register(Registries.ITEM, Identifier.of(MageFlame.MOD_ID, "greater_revelation_scroll"), GREATER_REVELATION_SCROLL);
+        Registry.register(Registries.ITEM, Identifier.of(MageFlame.MOD_ID, "winged_torch_scroll"), WINGED_TORCH_SCROLL);
 
         // register entity attributes
          FabricDefaultAttributeRegistry.register(MAGE_FLAME_ENTITY, MageFlameEntity.createMobAttributes());
@@ -166,7 +166,7 @@ public class Registration {
         FabricDefaultAttributeRegistry.register(WINGED_TORCH_ENTITY, WingedTorchEntity.createMobAttributes());
 
         // particles
-        Registry.register(Registries.PARTICLE_TYPE, new Identifier(MageFlame.MOD_ID, "revelation_particle"), REVELATION_PARTICLE);
+        Registry.register(Registries.PARTICLE_TYPE, Identifier.of(MageFlame.MOD_ID, "revelation_particle"), REVELATION_PARTICLE);
 
         /*
          * Don't need nature spawns for this mod, but see https://www.youtube.com/watch?v=7gbmJGZvQks when you do.
