@@ -19,11 +19,10 @@ package mod.gottsch.fabric.mageflame.core.client.renderer.entity.layer;
 
 
 import mod.gottsch.fabric.mageflame.core.client.model.entity.FlameBallModel;
-import mod.gottsch.fabric.mageflame.core.client.model.entity.LargeFlameBallModel;
-import mod.gottsch.fabric.mageflame.core.entity.creature.SummonFlameBaseEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.feature.EyesFeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
+import net.minecraft.client.render.entity.state.LivingEntityRenderState;
 import net.minecraft.util.Identifier;
 
 /**
@@ -32,12 +31,13 @@ import net.minecraft.util.Identifier;
  *
  */
 
-public class MageFlameGlowFeatureRenderer<T extends SummonFlameBaseEntity, M extends FlameBallModel<T>> extends EyesFeatureRenderer<T, M> {
+public class MageFlameGlowFeatureRenderer<M extends FlameBallModel> extends EyesFeatureRenderer<LivingEntityRenderState, M> {
 	private static final RenderLayer SKIN = RenderLayer.getEyes(Identifier.of("mageflame","textures/entity/mage_flame.png"));
 
-	public MageFlameGlowFeatureRenderer(FeatureRendererContext<T, M> featureRendererContext) {
+	public MageFlameGlowFeatureRenderer(FeatureRendererContext<LivingEntityRenderState, M> featureRendererContext) {
 		super(featureRendererContext);
 	}
+
 	@Override
 	public RenderLayer getEyesTexture() {
 		return SKIN;

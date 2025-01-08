@@ -35,6 +35,7 @@ import net.minecraft.entity.mob.FlyingEntity;
 import net.minecraft.entity.mob.GhastEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
@@ -95,8 +96,8 @@ public abstract class SummonFlameBaseEntity extends FlyingEntity implements ISum
      */
     public static DefaultAttributeContainer.Builder createAttributes() {
         return LivingEntity.createLivingAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 0.5)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3F);
+                .add(EntityAttributes.MAX_HEALTH, 0.5)
+                .add(EntityAttributes.MOVEMENT_SPEED, 0.3F);
     }
 
     @Override
@@ -132,7 +133,7 @@ public abstract class SummonFlameBaseEntity extends FlyingEntity implements ISum
         super.tick();
         if (!this.getWorld().isClient) {
             if (updateLifespan() < 0) {
-                kill(getWorld().getDamageSources().generic());
+                kill((ServerWorld) getWorld(), getWorld().getDamageSources().generic());
             }
         }
     }
@@ -163,7 +164,7 @@ public abstract class SummonFlameBaseEntity extends FlyingEntity implements ISum
                 BlockState state = this.getWorld().getBlockState(this.getBlockPos());
                 if (this.getOwner() == null || (!state.getFluidState().isEmpty() && !canLiveInFluid())) {
                     // kill self
-                    kill();
+                    kill((ServerWorld) getWorld());
                     return;
                 }
             }
@@ -185,7 +186,7 @@ public abstract class SummonFlameBaseEntity extends FlyingEntity implements ISum
         // initial setup
         if (getCurrentLightCoords() == null) {
             if (!updateLightCoords()) {
-                kill();
+                kill((ServerWorld) getWorld());
                 return;
             }
             // set last = current as they are in the same place
@@ -200,7 +201,7 @@ public abstract class SummonFlameBaseEntity extends FlyingEntity implements ISum
                 }
                 else {
                     if (!updateLightCoords()) {
-                        kill();
+                        kill((ServerWorld) getWorld());
                         return;
                     }
 
@@ -284,16 +285,16 @@ public abstract class SummonFlameBaseEntity extends FlyingEntity implements ISum
     }
 
     @Override
-    public void kill() {
-        kill(getWorld().getDamageSources().generic());
+    public void kill(ServerWorld world) {
+        kill(world, world.getDamageSources().generic());
     }
 
     /**
      *
      * @param damageSource the source of the damage
      */
-    public void kill(DamageSource damageSource) {
-        this.damage(damageSource, Float.MAX_VALUE);
+    public void kill(ServerWorld world, DamageSource damageSource) {
+        this.damage(world, damageSource, Float.MAX_VALUE);
 
         doDeathEffects();
 

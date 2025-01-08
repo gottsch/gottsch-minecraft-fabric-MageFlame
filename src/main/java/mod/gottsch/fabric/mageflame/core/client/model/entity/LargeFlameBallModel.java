@@ -21,6 +21,8 @@ import mod.gottsch.fabric.mageflame.core.entity.creature.SummonFlameBaseEntity;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.EntityModel;
+import net.minecraft.client.render.entity.state.EntityRenderState;
+import net.minecraft.client.render.entity.state.LivingEntityRenderState;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
@@ -28,7 +30,7 @@ import net.minecraft.util.math.MathHelper;
 /**
  *
  */
-public class LargeFlameBallModel<T extends SummonFlameBaseEntity> extends EntityModel<T> {
+public class LargeFlameBallModel extends EntityModel<LivingEntityRenderState> {
 	private final ModelPart main;
 	private final float bodyY;
 
@@ -37,6 +39,7 @@ public class LargeFlameBallModel<T extends SummonFlameBaseEntity> extends Entity
 	 * @param root
 	 */
 	public LargeFlameBallModel(ModelPart root) {
+		super(root);
 		this.main = root.getChild("main");
 		this.bodyY = main.pivotY;
 	}
@@ -53,16 +56,12 @@ public class LargeFlameBallModel<T extends SummonFlameBaseEntity> extends Entity
 	}
 
 	@Override
-	public void setAngles(SummonFlameBaseEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		bob(this.main, bodyY, ageInTicks);
+	public void setAngles(LivingEntityRenderState state) {
+		bob(this.main, bodyY, state.age);
 	}
 
 	public static void bob(ModelPart part, float originY, float age) {
 		part.pivotY = originY + (MathHelper.cos(age * 0.25F) * 0.5F + 0.05F);
 	}
 
-	@Override
-	public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, int color) {
-		main.render(matrices, vertexConsumer, light, overlay, color);
-	}
 }

@@ -84,7 +84,7 @@ public interface ISummonFlameItem {
 			if(SpawnRestriction.canSpawn(entityType, level, SpawnReason.SPAWNER, spawnPos, level.getRandom())) {
 				// MageFlame.LOGGER.debug("placement is good");
 				// create entity
-				MobEntity mob = entityType.create(level);
+				MobEntity mob = entityType.create(level, SpawnReason.MOB_SUMMONED);
 				if (mob != null) {
 					// MageFlame.LOGGER.debug("new entity is created -> {}", mob.getUuidAsString());
 					mob.setPos(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
@@ -99,7 +99,7 @@ public interface ISummonFlameItem {
 						Entity existingMob = level.getEntity(existingUuid);
 						if (existingMob != null) {
 							// MageFlame.LOGGER.debug("located and killing exisiting entity -> {}", existingUuid.toString());
-							((SummonFlameBaseEntity)existingMob).kill();
+							((SummonFlameBaseEntity)existingMob).kill(level);
 						}
 					}
 

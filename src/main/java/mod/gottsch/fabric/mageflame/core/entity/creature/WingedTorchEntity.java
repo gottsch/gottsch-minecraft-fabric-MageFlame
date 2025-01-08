@@ -27,8 +27,8 @@ public class WingedTorchEntity extends SummonFlameBaseEntity {
      */
     public static DefaultAttributeContainer.Builder createAttributes() {
         return LivingEntity.createLivingAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 10)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3F);
+                .add(EntityAttributes.MAX_HEALTH, 10)
+                .add(EntityAttributes.MOVEMENT_SPEED, 0.3F);
     }
 
     @Override

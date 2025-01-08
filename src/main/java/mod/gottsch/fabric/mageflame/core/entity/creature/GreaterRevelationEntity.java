@@ -25,8 +25,8 @@ public class GreaterRevelationEntity extends SummonFlameBaseEntity {
 
     public static DefaultAttributeContainer.Builder createMobAttributes() {
         return LivingEntity.createLivingAttributes()
-                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 16.0)
-                .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK);
+                .add(EntityAttributes.FOLLOW_RANGE, 16.0)
+                .add(EntityAttributes.ATTACK_KNOCKBACK);
     }
 
     @Override
