@@ -17,7 +17,6 @@
  */
 package mod.gottsch.fabric.mageflame.core.item;
 
-import mod.gottsch.fabric.mageflame.MageFlame;
 import mod.gottsch.fabric.mageflame.core.entity.creature.ISummonFlameEntity;
 import mod.gottsch.fabric.mageflame.core.entity.creature.SummonFlameBaseEntity;
 import mod.gottsch.fabric.mageflame.core.registry.SummonFlameRegistry;
@@ -63,28 +62,28 @@ public interface ISummonFlameItem {
 
 	/**
 	 * 
-	 * @param level
+	 * @param world
 	 * @param random
 	 * @param owner
 	 * @param entityType
 	 * @param coords
 	 * @return
 	 */
-	default public Optional<MobEntity> spawn(ServerWorld level, Random random, LivingEntity owner, EntityType<? extends MobEntity> entityType, Vec3d coords) {
+	default public Optional<MobEntity> spawn(ServerWorld world, Random random, LivingEntity owner, EntityType<? extends MobEntity> entityType, Vec3d coords) {
 		Direction direction = owner.getMovementDirection();
 
-		if (!level.isClient) {
+		if (!world.isClient) {
 			// select the first available spawn pos from origin (coords)
-			Vec3d spawnVec3 = selectSpawnPos(level, coords, direction);
+			Vec3d spawnVec3 = selectSpawnPos(world, coords, direction);
 			BlockPos spawnPos = new BlockPos((int)spawnVec3.x, (int)spawnVec3.y, (int)spawnVec3.z);
 			// MageFlame.LOGGER.debug("attempting to spawn summon flame at -> {} ...", spawnPos);
 
 
 			// determine if the entity can spawn
-			if(SpawnRestriction.canSpawn(entityType, level, SpawnReason.SPAWNER, spawnPos, level.getRandom())) {
+			if(SpawnRestriction.canSpawn(entityType, world, SpawnReason.SPAWNER, spawnPos, world.getRandom())) {
 				// MageFlame.LOGGER.debug("placement is good");
 				// create entity
-				MobEntity mob = entityType.create(level);
+				MobEntity mob = entityType.create(world, SpawnReason.MOB_SUMMONED);
 				if (mob != null) {
 					// MageFlame.LOGGER.debug("new entity is created -> {}", mob.getUuidAsString());
 					mob.setPos(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
@@ -96,10 +95,10 @@ public interface ISummonFlameItem {
 						// unregister existing entity for player
 						UUID existingUuid = SummonFlameRegistry.unregister(owner.getUuid());
 						// MageFlame.LOGGER.debug("owner is registered to entity -> {}", existingUuid.toString());
-						Entity existingMob = level.getEntity(existingUuid);
+						Entity existingMob = world.getEntity(existingUuid);
 						if (existingMob != null) {
 							// MageFlame.LOGGER.debug("located and killing exisiting entity -> {}", existingUuid.toString());
-							((SummonFlameBaseEntity)existingMob).kill();
+							((SummonFlameBaseEntity)existingMob).kill(world);
 						}
 					}
 
@@ -108,7 +107,7 @@ public interface ISummonFlameItem {
 					SummonFlameRegistry.register(owner.getUuid(), mob.getUuid());
 					
 					// add entity into the level (ie EntityJoinWorldEvent)
-					level.spawnEntityAndPassengers(mob);
+					world.spawnEntityAndPassengers(mob);
 
 					// cast effects
 					for (int p = 0; p < 20; p++) {
@@ -116,7 +115,7 @@ public interface ISummonFlameItem {
 						double ySpeed = random.nextGaussian() * 0.02D;
 						double zSpeed = random.nextGaussian() * 0.02D;
 
-						level.addParticle(ParticleTypes.POOF, owner.getX(), owner.getY() + 0.5, owner.getZ(), xSpeed, ySpeed, zSpeed);
+						world.addParticle(ParticleTypes.POOF, owner.getX(), owner.getY() + 0.5, owner.getZ(), xSpeed, ySpeed, zSpeed);
 					}
 					
 					return Optional.of(mob);

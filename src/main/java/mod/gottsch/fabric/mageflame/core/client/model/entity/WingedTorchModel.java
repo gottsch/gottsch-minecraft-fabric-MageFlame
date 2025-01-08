@@ -17,26 +17,21 @@
  */
 package mod.gottsch.fabric.mageflame.core.client.model.entity;
 
-import mod.gottsch.fabric.mageflame.core.entity.creature.SummonFlameBaseEntity;
 import net.minecraft.client.model.*;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.EntityModel;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.render.entity.state.LivingEntityRenderState;
 import net.minecraft.util.math.MathHelper;
 
 /**
  *
  */
-public class WingedTorchModel<T extends SummonFlameBaseEntity> extends EntityModel<T> {
+public class WingedTorchModel extends EntityModel<LivingEntityRenderState> {
 	private static final String RIGHT_WING_TIP = "rightWingTip";
 
 	private final ModelPart main;
 	private final ModelPart wings;
 	private final ModelPart rightWing;
-	private final ModelPart rightTip;
 	private final ModelPart leftWing;
-	private final ModelPart leftTip;
 
 	private float bodyY;
 
@@ -45,13 +40,11 @@ public class WingedTorchModel<T extends SummonFlameBaseEntity> extends EntityMod
 	 * @param root
 	 */
 	public WingedTorchModel(ModelPart root) {
-		super(RenderLayer::getEntityCutout);
+		super(root);
 		this.main = root.getChild("main");
 		this.wings = main.getChild("wings");
 		this.rightWing = wings.getChild("rightWing");
 		this.leftWing = wings.getChild("leftWing");
-		this.rightTip = rightWing.getChild("rightTip");
-		this.leftTip = leftWing.getChild("leftTip");
 
 		bodyY = main.pivotY;
 	}
@@ -78,32 +71,19 @@ public class WingedTorchModel<T extends SummonFlameBaseEntity> extends EntityMod
 	 * pitch = x-axis;
 	 * yaw = y-axis;
 	 * roll = z-axis;
-	 *
-	 * @param entity
-	 * @param limbSwing
-	 * @param limbSwingAmount
-	 * @param ageInTicks
-	 * @param netHeadYaw
-	 * @param headPitch
 	 */
 	@Override
-	public void setAngles(SummonFlameBaseEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		// flag wings
+	public void setAngles(LivingEntityRenderState state) {		// flag wings
 		float armSpeed = 0.35F;
-		this.rightWing.yaw = /*0.47123894F + */MathHelper.cos(ageInTicks * armSpeed) * (float)Math.PI * 0.05F;
+		this.rightWing.yaw = /*0.47123894F + */MathHelper.cos(state.age * armSpeed) * (float)Math.PI * 0.05F;
 		this.leftWing.yaw = -this.rightWing.yaw;
 		this.leftWing.pitch = 0.47123894F;
 		this.rightWing.pitch = 0.47123894F;
 
-		bob(main, bodyY, ageInTicks);
+		bob(main, bodyY, state.age);
 	}
 
 	public static void bob(ModelPart part, float originY, float age) {
 		part.pivotY = originY + (MathHelper.cos(age * 0.25F) * 0.5F + 0.05F);
-	}
-
-	@Override
-	public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, int color) {
-		main.render(matrices, vertexConsumer, light, overlay, color);
 	}
 }

@@ -18,17 +18,19 @@
 package mod.gottsch.fabric.mageflame.core.item;
 
 import mod.gottsch.fabric.mageflame.core.util.LangUtil;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.screen.ScreenTexts;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -53,8 +55,8 @@ public abstract class SummonFlameBaseItem extends Item implements ISummonFlameIt
 	}
 
 	@Override
-	public Text getName() {
-		return Text.literal(this.getTranslationKey()).formatted(Formatting.AQUA);
+	public Text getName(ItemStack stack) {
+		return super.getName(stack).copy().formatted(Formatting.AQUA);
 	}
 
 	@Override
@@ -92,10 +94,10 @@ public abstract class SummonFlameBaseItem extends Item implements ISummonFlameIt
 	}
 
 	@Override
-	public TypedActionResult<ItemStack> use(World level, PlayerEntity player, Hand hand) {
+	public ActionResult use(World level, PlayerEntity player, Hand hand) {
 		ItemStack heldStack = player.getStackInHand(hand);
 		if (level.isClient) {
-			return TypedActionResult.pass(heldStack);
+			return ActionResult.PASS;
 		}
 		Vec3d spawnPos = getByPlayerPos(player);
 
@@ -106,7 +108,7 @@ public abstract class SummonFlameBaseItem extends Item implements ISummonFlameIt
 			// MageFlame.LOGGER.debug("summon flame is present...");
 			// reduce scroll stack size ie consume
 			heldStack.decrement(1);
-			return TypedActionResult.consume(heldStack);
+			return ActionResult.CONSUME;
 		}
 		return super.use(level, player, hand);
 	}

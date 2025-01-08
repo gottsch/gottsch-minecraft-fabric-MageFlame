@@ -44,6 +44,8 @@ import net.minecraft.item.ItemGroups;
 import net.minecraft.particle.SimpleParticleType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 
 /**
@@ -56,44 +58,47 @@ public class Registration {
     public static final String WINGED_TORCH = "winged_torch";
 
     // blocks
-    public static final Block MAGE_FLAME_BLOCK = new SummonFlameBlock(
-            AbstractBlock.Settings.create()
-                    .mapColor(MapColor.CLEAR)
-                    .strength(-1.0F, 3600000.8F)
-                    .noCollision()
-                    .dropsNothing()
-                    .nonOpaque()
-                    .luminance((state) -> {
-                        return 11;
-                    }));
+    public static Block MAGE_FLAME_BLOCK;
+//    = new SummonFlameBlock(
+//            AbstractBlock.Settings.create()
+//                    .mapColor(MapColor.CLEAR)
+//                    .strength(-1.0F, 3600000.8F)
+//                    .noCollision()
+//                    .dropsNothing()
+//                    .nonOpaque()
+//                    .luminance((state) -> {
+//                        return 11;
+//                    }));
 
-    public static final Block LESSER_REVELATION_BLOCK = new SummonFlameBlock(
-            AbstractBlock.Settings.create()
-                    .mapColor(MapColor.CLEAR)
-                    .strength(-1.0F, 3600000.8F)
-                    .noCollision()
-                    .dropsNothing()
-                    .nonOpaque()
-                    .luminance((state) -> {
-                        return 13;
-                    }));
+    public static Block LESSER_REVELATION_BLOCK;
+//    = new SummonFlameBlock(
+//            AbstractBlock.Settings.create()
+//                    .mapColor(MapColor.CLEAR)
+//                    .strength(-1.0F, 3600000.8F)
+//                    .noCollision()
+//                    .dropsNothing()
+//                    .nonOpaque()
+//                    .luminance((state) -> {
+//                        return 13;
+//                    }));
 
-    public static final Block GREATER_REVELATION_BLOCK = new SummonFlameBlock(
-            AbstractBlock.Settings.create()
-                    .mapColor(MapColor.CLEAR)
-                    .strength(-1.0F, 3600000.8F)
-                    .noCollision()
-                    .dropsNothing()
-                    .nonOpaque()
-                    .luminance((state) -> {
-                        return 15;
-                    }));
+    public static Block GREATER_REVELATION_BLOCK;
+//    = new SummonFlameBlock(
+//            AbstractBlock.Settings.create()
+//                    .mapColor(MapColor.CLEAR)
+//                    .strength(-1.0F, 3600000.8F)
+//                    .noCollision()
+//                    .dropsNothing()
+//                    .nonOpaque()
+//                    .luminance((state) -> {
+//                        return 15;
+//                    }));
 
     // items
-    public static final Item MAGE_FLAME_SCROLL = new MageFlameScroll(new Item.Settings());
-    public static final Item LESSER_REVELATION_SCROLL = new LesserFlameScroll(new Item.Settings());
-    public static final Item GREATER_REVELATION_SCROLL = new GreaterFlameScroll(new Item.Settings());
-    public static final Item WINGED_TORCH_SCROLL = new WingedTorchScroll(new Item.Settings());
+    public static Item MAGE_FLAME_SCROLL; // = new MageFlameScroll(new Item.Settings());
+    public static Item LESSER_REVELATION_SCROLL; // = new LesserFlameScroll(new Item.Settings());
+    public static Item GREATER_REVELATION_SCROLL; // = new GreaterFlameScroll(new Item.Settings());
+    public static Item WINGED_TORCH_SCROLL; // = new WingedTorchScroll(new Item.Settings());
 
     // entities
     public static final EntityType<MageFlameEntity> MAGE_FLAME_ENTITY = Registry.register(
@@ -102,7 +107,7 @@ public class Registration {
             FabricEntityTypeBuilder.create(
                             SpawnGroup.CREATURE, MageFlameEntity::new)
                     .dimensions(EntityDimensions.fixed(0.125f, 0.125f))
-                    .build()
+                    .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(MageFlame.MOD_ID, MAGE_FLAME)))
     );
 
     public static final EntityType<LesserRevelationEntity> LESSER_REVELATION_ENTITY = Registry.register(
@@ -111,7 +116,7 @@ public class Registration {
             FabricEntityTypeBuilder.create(
                             SpawnGroup.CREATURE, LesserRevelationEntity::new)
                     .dimensions(EntityDimensions.fixed(0.125f, 0.125f))
-                    .build()
+                    .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(MageFlame.MOD_ID, LESSER_REVELATION)))
     );
 
     public static final EntityType<GreaterRevelationEntity> GREATER_REVELATION_ENTITY = Registry.register(
@@ -120,29 +125,99 @@ public class Registration {
             FabricEntityTypeBuilder.create(
                             SpawnGroup.CREATURE, GreaterRevelationEntity::new)
                     .dimensions(EntityDimensions.fixed(0.1875f, 0.1875f))
-                    .build()
+                    .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(MageFlame.MOD_ID, GREATER_REVELATION)))
     );
 
     public static final EntityType<WingedTorchEntity> WINGED_TORCH_ENTITY = Registry.register(
             Registries.ENTITY_TYPE,
             Identifier.of(MageFlame.MOD_ID, WINGED_TORCH),
-            FabricEntityTypeBuilder.create(
-                            SpawnGroup.CREATURE, WingedTorchEntity::new)
-                    .dimensions(EntityDimensions.fixed(0.25F, 0.625F))
-                    .build()
+            EntityType.Builder.create(
+                            WingedTorchEntity::new, SpawnGroup.CREATURE)
+                    .dimensions(0.25F, 0.625F)
+                    .build(RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(MageFlame.MOD_ID, WINGED_TORCH)))
     );
 
     // particles
     public static final SimpleParticleType REVELATION_PARTICLE = FabricParticleTypes.simple();
 
+    public static Block registerSummonFlameBlock(String name, Block.Settings settings) {
+        RegistryKey<Block> key = RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(MageFlame.MOD_ID, name));
+        return Registry.register(Registries.BLOCK, key, new SummonFlameBlock(settings.registryKey(key)));
+    }
+
     /**
      *
      */
     public static void register() {
-        // register blocks
-        Registry.register(Registries.BLOCK, Identifier.of(MageFlame.MOD_ID, "mage_flame_block"), MAGE_FLAME_BLOCK);
-        Registry.register(Registries.BLOCK, Identifier.of(MageFlame.MOD_ID, "lesser_revelation_block"), LESSER_REVELATION_BLOCK);
-        Registry.register(Registries.BLOCK, Identifier.of(MageFlame.MOD_ID, "greater_revelation_block"), GREATER_REVELATION_BLOCK);
+
+        MAGE_FLAME_BLOCK = registerSummonFlameBlock("mage_flame_block",
+                AbstractBlock.Settings.create()
+                        .mapColor(MapColor.CLEAR)
+                        .strength(-1.0F, 3600000.8F)
+                        .noCollision()
+                        .dropsNothing()
+                        .nonOpaque()
+                        .luminance((state) -> 11)
+        );
+
+//        LESSER_REVELATION_BLOCK = Registry.register(Registries.BLOCK, RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(MageFlame.MOD_ID, "lesser_revelation_block")), new SummonFlameBlock(
+//                AbstractBlock.Settings.create()
+//                        .mapColor(MapColor.CLEAR)
+//                        .strength(-1.0F, 3600000.8F)
+//                        .noCollision()
+//                        .dropsNothing()
+//                        .nonOpaque()
+//                        .luminance((state) -> {
+//                            return 13;
+//                        })
+//        ));
+        LESSER_REVELATION_BLOCK = registerSummonFlameBlock("lesser_revelation_block",
+                AbstractBlock.Settings.create()
+                        .mapColor(MapColor.CLEAR)
+                        .strength(-1.0F, 3600000.8F)
+                        .noCollision()
+                        .dropsNothing()
+                        .nonOpaque()
+                        .luminance((state) -> 13)
+        );
+
+//        GREATER_REVELATION_BLOCK = Registry.register(Registries.BLOCK, RegistryKey.of(RegistryKeys.BLOCK, Identifier.of(MageFlame.MOD_ID, "greater_revelation_block")), new SummonFlameBlock(
+//                AbstractBlock.Settings.create()
+//                        .mapColor(MapColor.CLEAR)
+//                        .strength(-1.0F, 3600000.8F)
+//                        .noCollision()
+//                        .dropsNothing()
+//                        .nonOpaque()
+//                        .luminance((state) -> {
+//                            return 15;
+//                        })
+//        ));
+        GREATER_REVELATION_BLOCK = registerSummonFlameBlock("greater_revelation_block",
+                AbstractBlock.Settings.create()
+                        .mapColor(MapColor.CLEAR)
+                        .strength(-1.0F, 3600000.8F)
+                        .noCollision()
+                        .dropsNothing()
+                        .nonOpaque()
+                        .luminance((state) -> 15)
+        );
+
+        // register items
+        Identifier itemIdentifier = Identifier.of(MageFlame.MOD_ID, "mage_flame_scroll");
+        RegistryKey<Item> itemRegistryKey = RegistryKey.of(RegistryKeys.ITEM, itemIdentifier);
+        MAGE_FLAME_SCROLL = Registry.register(Registries.ITEM, itemRegistryKey, new MageFlameScroll(new Item.Settings().registryKey(itemRegistryKey)));
+
+        itemIdentifier = Identifier.of(MageFlame.MOD_ID, "lesser_revelation_scroll");
+        itemRegistryKey = RegistryKey.of(RegistryKeys.ITEM, itemIdentifier);
+        LESSER_REVELATION_SCROLL = Registry.register(Registries.ITEM, itemRegistryKey, new LesserFlameScroll(new Item.Settings().registryKey(itemRegistryKey)));
+
+        itemIdentifier = Identifier.of(MageFlame.MOD_ID, "greater_revelation_scroll");
+        itemRegistryKey = RegistryKey.of(RegistryKeys.ITEM, itemIdentifier);
+        GREATER_REVELATION_SCROLL = Registry.register(Registries.ITEM, itemRegistryKey, new GreaterFlameScroll(new Item.Settings().registryKey(itemRegistryKey)));
+
+        itemIdentifier = Identifier.of(MageFlame.MOD_ID, "winged_torch_scroll");
+        itemRegistryKey = RegistryKey.of(RegistryKeys.ITEM, itemIdentifier);
+        WINGED_TORCH_SCROLL = Registry.register(Registries.ITEM, itemRegistryKey, new WingedTorchScroll(new Item.Settings().registryKey(itemRegistryKey)));
 
         // register item groups
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register(content -> {
@@ -153,14 +228,8 @@ public class Registration {
 
         });
 
-        // register items
-        Registry.register(Registries.ITEM, Identifier.of(MageFlame.MOD_ID, "mage_flame_scroll"), MAGE_FLAME_SCROLL);
-        Registry.register(Registries.ITEM, Identifier.of(MageFlame.MOD_ID, "lesser_revelation_scroll"), LESSER_REVELATION_SCROLL);
-        Registry.register(Registries.ITEM, Identifier.of(MageFlame.MOD_ID, "greater_revelation_scroll"), GREATER_REVELATION_SCROLL);
-        Registry.register(Registries.ITEM, Identifier.of(MageFlame.MOD_ID, "winged_torch_scroll"), WINGED_TORCH_SCROLL);
-
         // register entity attributes
-         FabricDefaultAttributeRegistry.register(MAGE_FLAME_ENTITY, MageFlameEntity.createMobAttributes());
+        FabricDefaultAttributeRegistry.register(MAGE_FLAME_ENTITY, MageFlameEntity.createMobAttributes());
         FabricDefaultAttributeRegistry.register(LESSER_REVELATION_ENTITY, LesserRevelationEntity.createMobAttributes());
         FabricDefaultAttributeRegistry.register(GREATER_REVELATION_ENTITY, GreaterRevelationEntity.createMobAttributes());
         FabricDefaultAttributeRegistry.register(WINGED_TORCH_ENTITY, WingedTorchEntity.createMobAttributes());

@@ -18,10 +18,10 @@
 package mod.gottsch.fabric.mageflame.core.client.renderer.entity.layer;
 
 import mod.gottsch.fabric.mageflame.core.client.model.entity.FlameBallModel;
-import mod.gottsch.fabric.mageflame.core.entity.creature.SummonFlameBaseEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.feature.EyesFeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
+import net.minecraft.client.render.entity.state.LivingEntityRenderState;
 import net.minecraft.util.Identifier;
 
 /**
@@ -29,10 +29,10 @@ import net.minecraft.util.Identifier;
  * @author Mark Gottschling May 8, 2023
  *
  */
-public class LesserRevelationGlowFeatureRenderer<T extends SummonFlameBaseEntity, M extends FlameBallModel<T>> extends EyesFeatureRenderer<T, M> {
+public class LesserRevelationGlowFeatureRenderer<M extends FlameBallModel> extends EyesFeatureRenderer<LivingEntityRenderState, M> {
 	private static final RenderLayer SKIN = RenderLayer.getEyes(Identifier.of("mageflame","textures/entity/lesser_revelation.png"));
 
-	public LesserRevelationGlowFeatureRenderer(FeatureRendererContext<T, M> featureRendererContext) {
+	public LesserRevelationGlowFeatureRenderer(FeatureRendererContext<LivingEntityRenderState, M> featureRendererContext) {
 		super(featureRendererContext);
 	}
 
