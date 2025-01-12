@@ -2,7 +2,6 @@ package mod.gottsch.fabric.mageflame.core.entity.creature;
 
 import mod.gottsch.fabric.mageflame.MageFlame;
 import mod.gottsch.fabric.mageflame.core.setup.Registration;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -12,12 +11,11 @@ import net.minecraft.entity.mob.FlyingEntity;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.NotNull;
 
 /**
  *
  */
-public class GreaterRevelationEntity extends SummonFlameBaseEntity {
+public class GreaterRevelationEntity extends SummonedLightSourceFlyingEntity {
 
     public GreaterRevelationEntity(EntityType<? extends FlyingEntity> entityType, World level) {
         super(entityType, level, MageFlame.CONFIG.greaterRevelationLifespan());
@@ -27,11 +25,6 @@ public class GreaterRevelationEntity extends SummonFlameBaseEntity {
         return LivingEntity.createLivingAttributes()
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 16.0)
                 .add(EntityAttributes.GENERIC_ATTACK_KNOCKBACK);
-    }
-
-    @Override
-    public @NotNull Block getFlameBlock() {
-        return Registration.GREATER_REVELATION_BLOCK;
     }
 
     @Override

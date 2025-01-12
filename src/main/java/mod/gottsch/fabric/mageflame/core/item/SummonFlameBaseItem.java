@@ -53,8 +53,13 @@ public abstract class SummonFlameBaseItem extends Item implements ISummonFlameIt
 	}
 
 	@Override
+	public Text getName(ItemStack stack) {
+		return Text.translatable(this.getTranslationKey(stack)).formatted(Formatting.AQUA);
+	}
+
+	@Override
 	public Text getName() {
-		return Text.literal(this.getTranslationKey()).formatted(Formatting.AQUA);
+		return Text.translatable(this.getTranslationKey()).formatted(Formatting.AQUA);
 	}
 
 	@Override

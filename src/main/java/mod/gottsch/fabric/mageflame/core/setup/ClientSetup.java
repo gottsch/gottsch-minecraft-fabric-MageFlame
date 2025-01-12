@@ -1,6 +1,7 @@
 package mod.gottsch.fabric.mageflame.core.setup;
 
 import mod.gottsch.fabric.mageflame.MageFlame;
+import mod.gottsch.fabric.mageflame.core.client.model.entity.FireWolfModel;
 import mod.gottsch.fabric.mageflame.core.client.model.entity.FlameBallModel;
 import mod.gottsch.fabric.mageflame.core.client.model.entity.LargeFlameBallModel;
 import mod.gottsch.fabric.mageflame.core.client.model.entity.WingedTorchModel;
@@ -18,9 +19,10 @@ import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
 public class ClientSetup implements ClientModInitializer {
-     public static final EntityModelLayer FLAME_BALL_LAYER = new EntityModelLayer(Identifier.of("mageflame", "flame_ball"), "main");
+    public static final EntityModelLayer FLAME_BALL_LAYER = new EntityModelLayer(Identifier.of("mageflame", "flame_ball"), "main");
     public static final EntityModelLayer LARGE_FLAME_BALL_LAYER = new EntityModelLayer(Identifier.of("mageflame", "large_flame_ball"), "main");
     public static final EntityModelLayer WINGED_TORCH_LAYER = new EntityModelLayer(Identifier.of("mageflame", "winged_torch"), "main");
+    public static final EntityModelLayer FIRE_WOLF_LAYER = new EntityModelLayer(Identifier.of("mageflame", "fire_wolf"), "main");
 
     @Override
     public void onInitializeClient() {
@@ -29,10 +31,12 @@ public class ClientSetup implements ClientModInitializer {
         EntityRendererRegistry.register(Registration.LESSER_REVELATION_ENTITY, LesserRevelationRenderer::new);
         EntityRendererRegistry.register(Registration.GREATER_REVELATION_ENTITY, GreaterRevelationRenderer::new);
         EntityRendererRegistry.register(Registration.WINGED_TORCH_ENTITY, WingedTorchRenderer::new);
+        EntityRendererRegistry.register(Registration.FIRE_WOLF_ENTITY, FireWolfRenderer::new);
 
         EntityModelLayerRegistry.registerModelLayer(FLAME_BALL_LAYER, FlameBallModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(LARGE_FLAME_BALL_LAYER, LargeFlameBallModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(WINGED_TORCH_LAYER, WingedTorchModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(FIRE_WOLF_LAYER, FireWolfModel::getTexturedModelData);
 
         /* Adds our particle textures to vanilla's Texture Atlas so it can be shown properly.
          * Modify the namespace and particle id accordingly.

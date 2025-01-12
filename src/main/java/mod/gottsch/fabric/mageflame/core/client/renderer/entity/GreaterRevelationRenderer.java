@@ -14,7 +14,7 @@ import net.minecraft.util.Identifier;
 public class GreaterRevelationRenderer<T extends GreaterRevelationEntity> extends MobEntityRenderer<T, LargeFlameBallModel<T>> {
 
     public GreaterRevelationRenderer(EntityRendererFactory.Context context) {
-        super(context, new LargeFlameBallModel<>(context.getPart(ClientSetup.LARGE_FLAME_BALL_LAYER)), 0.5f);
+        super(context, new LargeFlameBallModel<>(context.getPart(ClientSetup.LARGE_FLAME_BALL_LAYER)), 0);
         this.addFeature(new GreaterRevelationGlowFeatureRenderer<>(this));
     }
 

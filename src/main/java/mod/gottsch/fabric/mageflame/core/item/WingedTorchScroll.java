@@ -51,7 +51,6 @@ public class WingedTorchScroll extends SummonFlameBaseItem {
 		
 		tooltip.add(Text.translatable(LangUtil.tooltip("winged_torch.desc")).formatted(Formatting.YELLOW));
 		tooltip.add(Text.literal(" "));
-		tooltip.add(Text.translatable(LangUtil.tooltip("light_level"), Registration.GREATER_REVELATION_BLOCK.getDefaultState().getLuminance()));
 	}
 
 	@Override

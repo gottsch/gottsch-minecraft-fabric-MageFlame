@@ -50,7 +50,6 @@ public class GreaterFlameScroll extends SummonFlameBaseItem {
 	public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
 		tooltip.add(Text.translatable(LangUtil.tooltip("greater_revelation.desc")).formatted(Formatting.YELLOW));
 		tooltip.add(Text.literal(" "));
-		tooltip.add(Text.translatable(LangUtil.tooltip("light_level"), Registration.GREATER_REVELATION_BLOCK.getDefaultState().getLuminance()));
 		tooltip.add(Text.translatable(LangUtil.tooltip("lifespan"), ticksToTime(36000))); //Config.SERVER.mageFlameLifespan.get())));
 	}
 

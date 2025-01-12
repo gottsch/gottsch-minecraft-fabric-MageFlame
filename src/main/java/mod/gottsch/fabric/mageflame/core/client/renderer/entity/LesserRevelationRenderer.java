@@ -14,7 +14,7 @@ import net.minecraft.util.Identifier;
 public class LesserRevelationRenderer<T extends LesserRevelationEntity> extends MobEntityRenderer<T, FlameBallModel<T>> {
 
     public LesserRevelationRenderer(EntityRendererFactory.Context context) {
-        super(context, new FlameBallModel<>(context.getPart(ClientSetup.FLAME_BALL_LAYER)), 0.5f);
+        super(context, new FlameBallModel<>(context.getPart(ClientSetup.FLAME_BALL_LAYER)), 0);
         this.addFeature(new LesserRevelationGlowFeatureRenderer<>(this));
     }
 

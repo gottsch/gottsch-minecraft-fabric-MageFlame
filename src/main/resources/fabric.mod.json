@@ -23,6 +23,12 @@
     ],
     "client": [
       "mod.gottsch.fabric.mageflame.core.setup.ClientSetup"
+    ],
+    "fabric-datagen": [
+      "mod.gottsch.fabric.mageflame.MageFlameDataGenerator"
+    ],
+    "dynamiclights": [
+      "mod.gottsch.fabric.mageflame.core.setup.DynamicLights"
     ]
   },
 

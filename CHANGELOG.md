@@ -9,10 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Removed entity shadows from entities (mage flame etc)
+- Updated Scroll item textures
+- Fixed spelling/text for scroll tooltips
 - Replaced changelog.txt with CHANGELOG.md
-- 
+- Replaced manual asset and data files with datagen
+
 ### Added
 
+- Datagen generated asset and data files
+- Patchouli support and entries
 
 ## [1.5.0]
 

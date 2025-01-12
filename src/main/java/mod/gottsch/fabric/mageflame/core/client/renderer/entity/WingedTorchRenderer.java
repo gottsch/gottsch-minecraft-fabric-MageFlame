@@ -14,7 +14,7 @@ import net.minecraft.util.Identifier;
 public class WingedTorchRenderer<T extends WingedTorchEntity> extends MobEntityRenderer<T, WingedTorchModel<T>> {
 
     public WingedTorchRenderer(EntityRendererFactory.Context context) {
-        super(context, new WingedTorchModel<>(context.getPart(ClientSetup.WINGED_TORCH_LAYER)), 0.5f);
+        super(context, new WingedTorchModel<>(context.getPart(ClientSetup.WINGED_TORCH_LAYER)), 0);
         this.addFeature(new WingedTorchFlameFeatureRenderer<>(this));
     }
 

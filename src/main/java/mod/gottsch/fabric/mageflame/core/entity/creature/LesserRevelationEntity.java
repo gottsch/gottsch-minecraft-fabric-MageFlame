@@ -2,25 +2,18 @@ package mod.gottsch.fabric.mageflame.core.entity.creature;
 
 import mod.gottsch.fabric.mageflame.MageFlame;
 import mod.gottsch.fabric.mageflame.core.setup.Registration;
-import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.FlyingEntity;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.NotNull;
 
 /**
  *
  */
-public class LesserRevelationEntity extends SummonFlameBaseEntity {
+public class LesserRevelationEntity extends SummonedLightSourceFlyingEntity {
 
     public LesserRevelationEntity(EntityType<? extends FlyingEntity> entityType, World level) {
         super(entityType, level, MageFlame.CONFIG.lesserRevelationLifespan());
-    }
-
-    @Override
-    public @NotNull Block getFlameBlock() {
-        return Registration.LESSER_REVELATION_BLOCK;
     }
 
     @Override

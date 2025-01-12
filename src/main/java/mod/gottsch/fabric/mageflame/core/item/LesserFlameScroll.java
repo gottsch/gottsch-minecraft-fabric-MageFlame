@@ -51,7 +51,6 @@ public class LesserFlameScroll extends SummonFlameBaseItem {
 		
 		tooltip.add(Text.translatable(LangUtil.tooltip("lesser_revelation.desc")).formatted(Formatting.YELLOW));
 		tooltip.add(Text.literal(" "));
-		tooltip.add(Text.translatable(LangUtil.tooltip("light_level"), Registration.LESSER_REVELATION_BLOCK.getDefaultState().getLuminance()));
 		tooltip.add(Text.translatable(LangUtil.tooltip("lifespan"), ticksToTime(18000))); //Config.SERVER.mageFlameLifespan.get())));
 	}
 

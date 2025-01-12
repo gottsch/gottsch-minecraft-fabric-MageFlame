@@ -50,7 +50,6 @@ public class MageFlameScroll extends SummonFlameBaseItem {
 		
 		tooltip.add(Text.translatable(LangUtil.tooltip("mage_flame.desc")).formatted(Formatting.YELLOW));
 		tooltip.add(Text.literal(" "));
-		tooltip.add(Text.translatable(LangUtil.tooltip("light_level"), Registration.MAGE_FLAME_BLOCK.getDefaultState().getLuminance()));
 		tooltip.add(Text.translatable(LangUtil.tooltip("lifespan"), ticksToTime(12000))); //Config.SERVER.mageFlameLifespan.get())));
 	}
 

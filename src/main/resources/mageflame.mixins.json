@@ -6,7 +6,6 @@
   "mixins": [
   ],
   "client": [
-    "MageFlameMixin"
   ],
   "injectors": {
     "defaultRequire": 1

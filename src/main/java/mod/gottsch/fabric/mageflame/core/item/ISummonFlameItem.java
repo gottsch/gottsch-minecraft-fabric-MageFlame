@@ -17,9 +17,8 @@
  */
 package mod.gottsch.fabric.mageflame.core.item;
 
-import mod.gottsch.fabric.mageflame.MageFlame;
-import mod.gottsch.fabric.mageflame.core.entity.creature.ISummonFlameEntity;
-import mod.gottsch.fabric.mageflame.core.entity.creature.SummonFlameBaseEntity;
+import mod.gottsch.fabric.mageflame.core.entity.creature.ISummonedLightSourceEntity;
+import mod.gottsch.fabric.mageflame.core.entity.creature.SummonedLightSourceFlyingEntity;
 import mod.gottsch.fabric.mageflame.core.registry.SummonFlameRegistry;
 import net.minecraft.entity.*;
 import net.minecraft.entity.mob.MobEntity;
@@ -88,7 +87,7 @@ public interface ISummonFlameItem {
 				if (mob != null) {
 					// MageFlame.LOGGER.debug("new entity is created -> {}", mob.getUuidAsString());
 					mob.setPos(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
-					((ISummonFlameEntity)mob).setOwner(owner);
+					((ISummonedLightSourceEntity)mob).setOwner(owner);
 					
 					// MageFlame.LOGGER.debug("is owner registered -> {}", SummonFlameRegistry.isRegistered(owner.getUuid()));
 					// check and remove existing owner's entity, regardless if existing entity is located
@@ -99,7 +98,7 @@ public interface ISummonFlameItem {
 						Entity existingMob = level.getEntity(existingUuid);
 						if (existingMob != null) {
 							// MageFlame.LOGGER.debug("located and killing exisiting entity -> {}", existingUuid.toString());
-							((SummonFlameBaseEntity)existingMob).kill();
+							((ISummonedLightSourceEntity)existingMob).kill();
 						}
 					}
 
