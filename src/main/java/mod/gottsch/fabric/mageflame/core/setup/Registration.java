@@ -19,7 +19,8 @@ package mod.gottsch.fabric.mageflame.core.setup;
 
 import mod.gottsch.fabric.mageflame.MageFlame;
 import mod.gottsch.fabric.mageflame.core.entity.creature.*;
-import mod.gottsch.fabric.mageflame.core.event.SummonLightSourceServerEntityLoadHandler;
+import mod.gottsch.fabric.mageflame.core.event.MageFlameServerWorldLoadHandler;
+import mod.gottsch.fabric.mageflame.core.event.MageFlameServerWorldUnloadHandler;
 import mod.gottsch.fabric.mageflame.core.item.*;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
@@ -139,8 +140,9 @@ public class Registration {
          *  BiomeModifications.addSpawn(BiomeSelectors.categories(Biome.Category.PLAINS), SpawnGroup.CREATURE)
          */
 
-        ServerEntityEvents.ENTITY_LOAD.register(new SummonLightSourceServerEntityLoadHandler());
+        ServerEntityEvents.ENTITY_LOAD.register(new MageFlameServerWorldLoadHandler());
+        ServerEntityEvents.ENTITY_UNLOAD.register(new MageFlameServerWorldUnloadHandler());
 
-        // MageFlame.LOGGER.debug("Hello Fabric world!");
+        // MageFlame.LOGGER.info("Hello Fabric world!");
     }
 }

@@ -17,6 +17,7 @@
  */
 package mod.gottsch.fabric.mageflame.core.item;
 
+import mod.gottsch.fabric.mageflame.MageFlame;
 import mod.gottsch.fabric.mageflame.core.setup.Registration;
 import mod.gottsch.fabric.mageflame.core.util.LangUtil;
 import net.minecraft.entity.EntityType;
@@ -34,7 +35,7 @@ import java.util.List;
  * @author Mark Gottschling Jan 19, 2023
  *
  */
-public class MageFlameScroll extends SummonFlameBaseItem {
+public class MageFlameScroll extends SummonFlyingScrollItem {
 
 	public MageFlameScroll(Settings properties) {
 
@@ -50,7 +51,7 @@ public class MageFlameScroll extends SummonFlameBaseItem {
 		
 		tooltip.add(Text.translatable(LangUtil.tooltip("mage_flame.desc")).formatted(Formatting.YELLOW));
 		tooltip.add(Text.literal(" "));
-		tooltip.add(Text.translatable(LangUtil.tooltip("lifespan"), ticksToTime(12000))); //Config.SERVER.mageFlameLifespan.get())));
+		tooltip.add(Text.translatable(LangUtil.tooltip("lifespan"), ticksToTime(MageFlame.CONFIG.mageFlameLifespan())));
 	}
 
 	@Override

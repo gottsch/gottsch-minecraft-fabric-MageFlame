@@ -18,9 +18,7 @@
 package mod.gottsch.fabric.mageflame.core.client.renderer.entity.layer;
 
 import mod.gottsch.fabric.mageflame.core.client.model.entity.FireWolfModel;
-import mod.gottsch.fabric.mageflame.core.client.model.entity.WingedTorchModel;
-import mod.gottsch.fabric.mageflame.core.entity.creature.SummonedLightSourceFlyingEntity;
-import mod.gottsch.fabric.mageflame.core.entity.creature.SummonedLightSourcePathAwareEntity;
+import mod.gottsch.fabric.mageflame.core.entity.creature.SummonedPathAwareEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.feature.EyesFeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
@@ -31,7 +29,7 @@ import net.minecraft.util.Identifier;
  * @author Mark Gottschling Jan 10, 2025
  *
  */
-public class FireWolfFlameFeatureRenderer<T extends SummonedLightSourcePathAwareEntity, M extends FireWolfModel<T>> extends EyesFeatureRenderer<T, M> {
+public class FireWolfFlameFeatureRenderer<T extends SummonedPathAwareEntity, M extends FireWolfModel<T>> extends EyesFeatureRenderer<T, M> {
 	private static final RenderLayer SKIN = RenderLayer.getEyes(Identifier.of("mageflame","textures/entity/fire_wolf_fur.png"));
 
 	public FireWolfFlameFeatureRenderer(FeatureRendererContext<T, M> featureRendererContext) {

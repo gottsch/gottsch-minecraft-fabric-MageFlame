@@ -17,7 +17,7 @@
  */
 package mod.gottsch.fabric.mageflame.core.client.model.entity;
 
-import mod.gottsch.fabric.mageflame.core.entity.creature.SummonedLightSourcePathAwareEntity;
+import mod.gottsch.fabric.mageflame.core.entity.creature.SummonedPathAwareEntity;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.EntityModel;
@@ -29,7 +29,7 @@ import net.minecraft.util.math.MathHelper;
  * @author Mark Gottschling Jan 11, 2025
  *
  */
-public class FireWolfModel<T extends SummonedLightSourcePathAwareEntity> extends EntityModel<T> {
+public class FireWolfModel<T extends SummonedPathAwareEntity> extends EntityModel<T> {
 
 	private final ModelPart head;
 	private final ModelPart torso;
@@ -59,19 +59,29 @@ public class FireWolfModel<T extends SummonedLightSourcePathAwareEntity> extends
 	public static TexturedModelData getTexturedModelData() {
 		ModelData modelData = new ModelData();
 		ModelPartData modelPartData = modelData.getRoot();
-		ModelPartData head = modelPartData.addChild("head", ModelPartBuilder.create().uv(0, 0).cuboid(-3.0F, -4.0F, -4.0F, 6.0F, 6.0F, 4.0F, new Dilation(0.0F))
-				.uv(16, 14).cuboid(-3.0F, -6.0F, -2.0F, 2.0F, 2.0F, 1.0F, new Dilation(0.0F))
-				.uv(16, 14).cuboid(1.0F, -6.0F, -2.0F, 2.0F, 2.0F, 1.0F, new Dilation(0.0F))
-				.uv(0, 10).cuboid(-1.5F, -1.0156F, -7.0F, 3.0F, 3.0F, 4.0F, new Dilation(0.0F)), ModelTransform.of(-1.0F, 13.5F, -5.0F, 0.1745F, 0.0F, 0.0F));
+		ModelPartData head = modelPartData.addChild("head", ModelPartBuilder.create().uv(25, 14).cuboid(-3.0F, -4.0F, -4.0F, 6.0F, 6.0F, 4.0F, new Dilation(0.0F))
+				.uv(38, 36).cuboid(-3.0F, -6.0F, -2.0F, 2.0F, 2.0F, 1.0F, new Dilation(0.0F))
+				.uv(38, 36).cuboid(1.0F, -6.0F, -2.0F, 2.0F, 2.0F, 1.0F, new Dilation(0.0F))
+				.uv(25, 25).cuboid(-1.5F, -1.0156F, -7.0F, 3.0F, 3.0F, 4.0F, new Dilation(0.0F)), ModelTransform.of(-1.0F, 13.5F, -5.0F, 0.1745F, 0.0F, 0.0F));
 
-		ModelPartData body = modelPartData.addChild("body", ModelPartBuilder.create().uv(18, 14).cuboid(-4.0F, -2.0F, -3.0F, 6.0F, 9.0F, 6.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, 14.0F, 2.0F, 1.5708F, 0.0F, 0.0F));
-		ModelPartData upperBody = modelPartData.addChild("upperBody", ModelPartBuilder.create().uv(21, 0).cuboid(-4.0F, -8.0F, -3.0F, 8.0F, 6.0F, 7.0F, new Dilation(0.0F)), ModelTransform.of(-1.0F, 14.0F, 2.0F, 1.5708F, 0.0F, 0.0F));
-		ModelPartData rightRearLeg = modelPartData.addChild("rightRearLeg", ModelPartBuilder.create().uv(0, 18).mirrored().cuboid(-1.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, new Dilation(0.0F)).mirrored(false), ModelTransform.pivot(-2.5F, 16.0F, 7.0F));
-		ModelPartData leftRearLeg = modelPartData.addChild("leftRearLeg", ModelPartBuilder.create().uv(0, 18).cuboid(-1.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, new Dilation(0.0F)), ModelTransform.pivot(0.5F, 16.0F, 7.0F));
-		ModelPartData rightFrontLeg = modelPartData.addChild("rightFrontLeg", ModelPartBuilder.create().uv(0, 18).mirrored().cuboid(-2.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, new Dilation(0.0F)).mirrored(false), ModelTransform.pivot(-2.5F, 16.0F, -4.0F));
-		ModelPartData leftFrontLeg = modelPartData.addChild("leftFrontLeg", ModelPartBuilder.create().uv(0, 18).cuboid(0.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, new Dilation(0.0F)), ModelTransform.pivot(0.5F, 16.0F, -4.0F));
-		ModelPartData tail = modelPartData.addChild("tail", ModelPartBuilder.create().uv(9, 18).cuboid(-1.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, new Dilation(0.0F)), ModelTransform.of(-1.0F, 12.0F, 8.0F, 0.9599F, 0.0F, 0.0F));
-		return TexturedModelData.of(modelData, 64, 32);
+		ModelPartData body = modelPartData.addChild("body", ModelPartBuilder.create().uv(0, 14).cuboid(-4.0F, -2.0F, -3.0F, 6.0F, 9.0F, 6.0F, new Dilation(0.0F))
+				.uv(33, 33).cuboid(-1.0F, -2.0F, 3.0F, 0.0F, 7.0F, 2.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, 14.0F, 2.0F, 1.5708F, 0.0F, 0.0F));
+
+		ModelPartData upperBody = modelPartData.addChild("upperBody", ModelPartBuilder.create().uv(0, 0).cuboid(-4.0F, -8.0F, -3.0F, 8.0F, 6.0F, 7.0F, new Dilation(0.0F)), ModelTransform.of(-1.0F, 14.0F, 2.0F, 1.5708F, 0.0F, 0.0F));
+		ModelPartData cube_r1 = upperBody.addChild("cube_r1", ModelPartBuilder.create().uv(38, 33).cuboid(2.0F, 0.0F, 0.0F, 2.0F, 0.0F, 2.0F, new Dilation(0.0F)), ModelTransform.of(-3.0F, -8.0F, 4.0F, -0.7854F, 0.0F, 0.0F));
+		ModelPartData cube_r2 = upperBody.addChild("cube_r2", ModelPartBuilder.create().uv(9, 32).cuboid(0.0F, 0.0F, 0.0F, 4.0F, 0.0F, 3.0F, new Dilation(0.0F)), ModelTransform.of(-2.0F, -6.0F, 4.0F, -0.7854F, 0.0F, 0.0F));
+		ModelPartData cube_r3 = upperBody.addChild("cube_r3", ModelPartBuilder.create().uv(31, 11).cuboid(-2.0F, 0.0F, 0.0F, 6.0F, 0.0F, 2.0F, new Dilation(0.0F)), ModelTransform.of(-1.0F, -4.0F, 4.0F, -0.7854F, 0.0F, 0.0F));
+		ModelPartData cube_r4 = upperBody.addChild("cube_r4", ModelPartBuilder.create().uv(0, 30).cuboid(-4.0F, 0.0F, 0.0F, 8.0F, 0.0F, 1.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, -2.0F, 4.0F, -0.7854F, 0.0F, 0.0F));
+		ModelPartData rightRearLeg = modelPartData.addChild("rightRearLeg", ModelPartBuilder.create().uv(31, 0).mirrored().cuboid(-1.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, new Dilation(0.0F)).mirrored(false), ModelTransform.pivot(-2.5F, 16.0F, 7.0F));
+		ModelPartData leftRearLeg = modelPartData.addChild("leftRearLeg", ModelPartBuilder.create().uv(31, 0).cuboid(-1.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, new Dilation(0.0F)), ModelTransform.pivot(0.5F, 16.0F, 7.0F));
+		ModelPartData rightFrontLeg = modelPartData.addChild("rightFrontLeg", ModelPartBuilder.create().uv(31, 0).mirrored().cuboid(-2.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, new Dilation(0.0F)).mirrored(false), ModelTransform.pivot(-2.5F, 16.0F, -4.0F));
+		ModelPartData leftFrontLeg = modelPartData.addChild("leftFrontLeg", ModelPartBuilder.create().uv(31, 0).cuboid(0.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, new Dilation(0.0F))
+				.uv(18, 36).cuboid(1.0F, 5.0F, 1.0F, 0.0F, 3.0F, 2.0F, new Dilation(0.0F)), ModelTransform.pivot(0.5F, 16.0F, -4.0F));
+
+		ModelPartData tail = modelPartData.addChild("tail", ModelPartBuilder.create().uv(0, 32).cuboid(-1.0F, 0.0F, -1.0F, 2.0F, 8.0F, 2.0F, new Dilation(0.0F))
+				.uv(24, 33).cuboid(0.0F, 5.0F, -2.0F, 0.0F, 3.0F, 4.0F, new Dilation(0.0F))
+				.uv(9, 36).cuboid(-2.0F, 5.0F, 0.0F, 4.0F, 3.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(-1.0F, 12.0F, 8.0F, 0.9599F, 0.0F, 0.0F));
+		return TexturedModelData.of(modelData, 64, 64);
 	}
 
 	@Override
@@ -95,7 +105,7 @@ public class FireWolfModel<T extends SummonedLightSourcePathAwareEntity> extends
 	}
 
 	@Override
-	public void setAngles(SummonedLightSourcePathAwareEntity entity, float limbSwing, float limbSwingAmount, float age, float headYaw, float headPitch) {
+	public void setAngles(SummonedPathAwareEntity entity, float limbSwing, float limbSwingAmount, float age, float headYaw, float headPitch) {
 		this.head.pitch = headPitch * ((float)Math.PI / 180F);
 		this.head.yaw = headYaw * ((float)Math.PI / 180F);
 //		this.tail.pitch = age;

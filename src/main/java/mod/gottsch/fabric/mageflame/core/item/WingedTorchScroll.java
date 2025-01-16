@@ -34,7 +34,7 @@ import java.util.List;
  * @author Mark Gottschling Jan 19, 2023
  *
  */
-public class WingedTorchScroll extends SummonFlameBaseItem {
+public class WingedTorchScroll extends SummonFlyingScrollItem {
 
 	public WingedTorchScroll(Settings properties) {
 

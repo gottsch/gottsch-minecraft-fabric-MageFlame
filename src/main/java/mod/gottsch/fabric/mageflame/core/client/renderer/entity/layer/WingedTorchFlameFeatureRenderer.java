@@ -18,7 +18,7 @@
 package mod.gottsch.fabric.mageflame.core.client.renderer.entity.layer;
 
 import mod.gottsch.fabric.mageflame.core.client.model.entity.WingedTorchModel;
-import mod.gottsch.fabric.mageflame.core.entity.creature.SummonedLightSourceFlyingEntity;
+import mod.gottsch.fabric.mageflame.core.entity.creature.SummonedFlyingEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.feature.EyesFeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
@@ -29,7 +29,7 @@ import net.minecraft.util.Identifier;
  * @author Mark Gottschling May 8, 2023
  *
  */
-public class WingedTorchFlameFeatureRenderer<T extends SummonedLightSourceFlyingEntity, M extends WingedTorchModel<T>> extends EyesFeatureRenderer<T, M> {
+public class WingedTorchFlameFeatureRenderer<T extends SummonedFlyingEntity, M extends WingedTorchModel<T>> extends EyesFeatureRenderer<T, M> {
 	private static final RenderLayer SKIN = RenderLayer.getEyes(Identifier.of("mageflame","textures/entity/winged_torch_flame.png"));
 
 	public WingedTorchFlameFeatureRenderer(FeatureRendererContext<T, M> featureRendererContext) {

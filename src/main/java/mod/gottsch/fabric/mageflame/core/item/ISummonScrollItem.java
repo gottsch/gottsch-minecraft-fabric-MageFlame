@@ -17,31 +17,63 @@
  */
 package mod.gottsch.fabric.mageflame.core.item;
 
-import mod.gottsch.fabric.mageflame.core.entity.creature.ISummonedLightSourceEntity;
-import mod.gottsch.fabric.mageflame.core.entity.creature.SummonedLightSourceFlyingEntity;
-import mod.gottsch.fabric.mageflame.core.registry.SummonFlameRegistry;
-import net.minecraft.entity.*;
+import mod.gottsch.fabric.gottschcore.spatial.ICoords;
+import mod.gottsch.fabric.mageflame.core.entity.creature.ISummonedEntity;
+import mod.gottsch.fabric.mageflame.core.util.LangUtil;
+import mod.gottsch.fabric.mageflame.core.util.SpawnUtil;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.Random;
-import java.util.UUID;
 
 /**
  * 
  * @author Mark Gottschling Jan 20, 2023
  *
  */
-public interface ISummonFlameItem {
+public interface ISummonScrollItem {
 
-	EntityType<? extends MobEntity> getSummonFlameEntity();
+	<T extends MobEntity & ISummonedEntity> EntityType<T> getSummonFlameEntity();
+
+	default public String ticksToTime(int ticks) {
+		int secs = ticks / 20;
+		int hours = secs / 3600;
+		int remainder = secs % 3600;
+		int minutes = remainder / 60;
+		int seconds = remainder % 60;
+		return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+	}
+
+	default public void appendBaseText(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type) {
+	}
+
+	default public void appendAdvancedText(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type) {
+	}
+
+	default public void appendLore(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, String key) {
+		MutableText lore = Text.translatable(LangUtil.tooltip(key));
+		tooltip.add(Text.literal(" "));
+		for (String s : lore.getString().split("~")) {
+			tooltip.add(Text.translatable(LangUtil.INDENT2)
+					.append(Text.literal(s).formatted(Formatting.GOLD, Formatting.ITALIC)));
+		}
+	}
 
 	/**
 	 * 
@@ -69,60 +101,69 @@ public interface ISummonFlameItem {
 	 * @param coords
 	 * @return
 	 */
-	default public Optional<MobEntity> spawn(ServerWorld level, Random random, LivingEntity owner, EntityType<? extends MobEntity> entityType, Vec3d coords) {
-		Direction direction = owner.getMovementDirection();
 
-		if (!level.isClient) {
-			// select the first available spawn pos from origin (coords)
-			Vec3d spawnVec3 = selectSpawnPos(level, coords, direction);
-			BlockPos spawnPos = new BlockPos((int)spawnVec3.x, (int)spawnVec3.y, (int)spawnVec3.z);
-			// MageFlame.LOGGER.debug("attempting to spawn summon flame at -> {} ...", spawnPos);
+	default public <T extends MobEntity & ISummonedEntity> Optional<?> spawn(ServerWorld level, Random random, LivingEntity owner, EntityType<T> entityType, ICoords coords) {
 
+		return SpawnUtil.spawnAtPos(level, random, owner, entityType, coords);
 
-			// determine if the entity can spawn
-			if(SpawnRestriction.canSpawn(entityType, level, SpawnReason.SPAWNER, spawnPos, level.getRandom())) {
-				// MageFlame.LOGGER.debug("placement is good");
-				// create entity
-				MobEntity mob = entityType.create(level);
-				if (mob != null) {
-					// MageFlame.LOGGER.debug("new entity is created -> {}", mob.getUuidAsString());
-					mob.setPos(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
-					((ISummonedLightSourceEntity)mob).setOwner(owner);
-					
-					// MageFlame.LOGGER.debug("is owner registered -> {}", SummonFlameRegistry.isRegistered(owner.getUuid()));
-					// check and remove existing owner's entity, regardless if existing entity is located
-					if (SummonFlameRegistry.isRegistered(owner.getUuid())) {
-						// unregister existing entity for player
-						UUID existingUuid = SummonFlameRegistry.unregister(owner.getUuid());
-						// MageFlame.LOGGER.debug("owner is registered to entity -> {}", existingUuid.toString());
-						Entity existingMob = level.getEntity(existingUuid);
-						if (existingMob != null) {
-							// MageFlame.LOGGER.debug("located and killing exisiting entity -> {}", existingUuid.toString());
-							((ISummonedLightSourceEntity)existingMob).kill();
-						}
-					}
+		//		Direction direction = owner.getMovementDirection();
+//
+//		if (!level.isClient) {
+//			// select the first available spawn pos from origin (coords)
+//			Vec3d spawnVec3 = selectSpawnPos(level, coords, direction);
+//			BlockPos spawnPos = new BlockPos((int)spawnVec3.x, (int)spawnVec3.y, (int)spawnVec3.z);
+//			// MageFlame.LOGGER.info("attempting to spawn summon flame at -> {} ...", spawnPos);
+//
+//
+//			// determine if the entity can spawn
+//			if(SpawnRestriction.canSpawn(entityType, level, SpawnReason.SPAWNER, spawnPos, level.getRandom())) {
+//				// MageFlame.LOGGER.info("placement is good");
+//				// create entity
+//				MobEntity mob = entityType.create(level);
+//				if (mob != null) {
+//					// MageFlame.LOGGER.info("new entity is created -> {}", mob.getUuidAsString());
+//					mob.setPos(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
+//					((ISummonedLightSourceEntity)mob).setOwner(owner);
+//
+//					// MageFlame.LOGGER.info("is owner registered -> {}", SummonFlameRegistry.isRegistered(owner.getUuid()));
+//					// check and remove existing owner's entity, regardless if existing entity is located
+//					if (SummonedLightSourceRegistry.isRegistered(owner.getUuid())) {
+//						// unregister existing entity for player
+//						UUID existingUuid = SummonedLightSourceRegistry.unregister(owner.getUuid());
+//						// MageFlame.LOGGER.info("owner is registered to entity -> {}", existingUuid.toString());
+//						Entity existingMob = level.getEntity(existingUuid);
+//						if (existingMob != null) {
+//							// MageFlame.LOGGER.info("located and killing exisiting entity -> {}", existingUuid.toString());
+//							((ISummonedLightSourceEntity)existingMob).kill();
+//						}
+//					}
+//
+//					// registry entity
+//					// MageFlame.LOGGER.info("registering entity -> {} to owner -> {}", mob.getUuidAsString(), owner.getUuidAsString());
+//					SummonedLightSourceRegistry.register(owner.getUuid(), mob.getUuid());
+//					StateSaverAndLoader.getServerState(level.getServer()).markDirty();
+//
+//					// add entity into the level (ie EntityJoinWorldEvent)
+//					level.spawnEntityAndPassengers(mob);
+//
+//					// cast effects
+//					doCastEffects(level, owner);
+//
+//					return Optional.of(mob);
+//				}
+//			}
+//		}
+//		return Optional.empty();
+	}
 
-					// registry entity
-					// MageFlame.LOGGER.debug("registering entity -> {} to owner -> {}", mob.getUuidAsString(), owner.getUuidAsString());
-					SummonFlameRegistry.register(owner.getUuid(), mob.getUuid());
-					
-					// add entity into the level (ie EntityJoinWorldEvent)
-					level.spawnEntityAndPassengers(mob);
+	default public void doCastEffects(World world, LivingEntity owner) {
+		for (int p = 0; p < 20; p++) {
+			double xSpeed = world.random.nextGaussian() * 0.02D;
+			double ySpeed = world.random.nextGaussian() * 0.02D;
+			double zSpeed = world.random.nextGaussian() * 0.02D;
 
-					// cast effects
-					for (int p = 0; p < 20; p++) {
-						double xSpeed = random.nextGaussian() * 0.02D;
-						double ySpeed = random.nextGaussian() * 0.02D;
-						double zSpeed = random.nextGaussian() * 0.02D;
-
-						level.addParticle(ParticleTypes.POOF, owner.getX(), owner.getY() + 0.5, owner.getZ(), xSpeed, ySpeed, zSpeed);
-					}
-					
-					return Optional.of(mob);
-				}
-			}
+			world.addParticle(ParticleTypes.POOF, owner.getX(), owner.getY() + 0.5, owner.getZ(), xSpeed, ySpeed, zSpeed);
 		}
-		return Optional.empty();
 	}
 
 	/**

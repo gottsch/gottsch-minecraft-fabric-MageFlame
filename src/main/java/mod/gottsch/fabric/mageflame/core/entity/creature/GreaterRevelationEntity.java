@@ -15,7 +15,7 @@ import net.minecraft.world.World;
 /**
  *
  */
-public class GreaterRevelationEntity extends SummonedLightSourceFlyingEntity {
+public class GreaterRevelationEntity extends SummonedFlyingEntity {
 
     public GreaterRevelationEntity(EntityType<? extends FlyingEntity> entityType, World level) {
         super(entityType, level, MageFlame.CONFIG.greaterRevelationLifespan());
@@ -60,16 +60,16 @@ public class GreaterRevelationEntity extends SummonedLightSourceFlyingEntity {
         return this.getZ((2.0D * this.random.nextDouble() - 1.0D) * factor);
     }
 
-    /**
-     * Greater Revelation is powerful enough to destroy replaceable blocks
-     */
-    @Override
-    protected boolean testPlacement(BlockPos pos) {
-        BlockState state = this.getWorld().getBlockState(pos);
-        // check block
-        if (state.isAir() || (state.isReplaceable()) && state.getFluidState().isEmpty()) {
-            return true;
-        }
-        return false;
-    }
+//    /**
+//     * Greater Revelation is powerful enough to destroy replaceable blocks
+//     */
+//    @Override
+//    protected boolean testPlacement(BlockPos pos) {
+//        BlockState state = this.getWorld().getBlockState(pos);
+//        // check block
+//        if (state.isAir() || (state.isReplaceable()) && state.getFluidState().isEmpty()) {
+//            return true;
+//        }
+//        return false;
+//    }
 }

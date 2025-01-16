@@ -32,7 +32,6 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
@@ -45,26 +44,33 @@ import java.util.UUID;
 /**
  * Created by Mark Gottschling on 1/9/2025
  */
-public abstract class SummonedLightSourcePathAwareEntity extends PathAwareEntity implements ISummonedLightSourceEntity {
+public abstract class SummonedPathAwareEntity extends PathAwareEntity implements ISummonedEntity {
     private static final TrackedData<Optional<UUID>> DATA_OWNER_UUID;
 
-    private long birthTime;
-    private long lifespan;
+//    private static final int MAX_BUFFER_TIME = 1200;
+
+//    private long birthTime;
+//    private int lifespan;
+//    private int bufferTime;
+
+    // entity for composite inheritance
+    private final SummonedBaseHandler<SummonedPathAwareEntity> summonedBaseHandler;
 
     static {
-        DATA_OWNER_UUID = DataTracker.registerData(SummonedLightSourcePathAwareEntity.class, TrackedDataHandlerRegistry.OPTIONAL_UUID);
+        DATA_OWNER_UUID = DataTracker.registerData(SummonedPathAwareEntity.class, TrackedDataHandlerRegistry.OPTIONAL_UUID);
     }
 
-    protected SummonedLightSourcePathAwareEntity(EntityType<? extends PathAwareEntity> entityType, World world, long lifespan) {
+    protected SummonedPathAwareEntity(EntityType<? extends PathAwareEntity> entityType, World world, int lifespan) {
         super(entityType, world);
-        this.birthTime = world.getTime();
-        this.lifespan = lifespan;
+        this.summonedBaseHandler = new SummonedBaseHandler<>(world.getTime(), lifespan);
+//        this.birthTime = world.getTime();
+//        this.lifespan = lifespan;
     }
 
     @Override
     protected void initGoals() {
         super.initGoals();
-        this.goalSelector.add(6, new FollowOwnerGoal(this, (double)1.0F, 10.0F, 2.0F));
+        this.goalSelector.add(6, new FollowOwnerGoal(this, (double)1.0F, 5.0F, 2.0F));
     }
 
     // TODO why isn't his used?!
@@ -91,91 +97,122 @@ public abstract class SummonedLightSourcePathAwareEntity extends PathAwareEntity
     }
 
     @Override
+    public double updateLifespan() {
+        return this.summonedBaseHandler.updateLifespan();
+    }
+
+    @Override
     public void doDeathEffects() {
-        if (getWorld().isClient) {
-            double d0 = this.getX();
-            double d1 = this.getY() + 0.2;
-            double d2 = this.getZ();
-            this.getWorld().addParticle(ParticleTypes.SMOKE, this.getParticleX(0.5), this.getRandomBodyY(), this.getParticleZ(0.5), (this.random.nextDouble() - 0.5) * 2.0, -this.random.nextDouble(), (this.random.nextDouble() - 0.5) * 2.0);
-        }
+        this.summonedBaseHandler.doDeathEffects(this);
     }
 
     @Override
     public void tick() {
         super.tick();
-        if (!this.getWorld().isClient) {
-            if (updateLifespan() < 0) {
-                kill(getWorld().getDamageSources().generic());
-            }
-        }
+        this.summonedBaseHandler.tick(this, getOwner());
+//        if (!this.getWorld().isClient) {
+//            if (updateLifespan() < 0) {
+//                unregister();
+//                kill(getWorld().getDamageSources().generic());
+//            }
+//        }
     }
+
+//    public void unregister() {
+//        if (getOwner() != null) {
+//            PlayerData playerData = StateSaverAndLoader.getPlayerState(getOwner());
+//            playerData.unregister(getUuid());
+//        }
+//    }
 
     /**
      *
      */
-    protected double updateLifespan() {
-        return --this.lifespan;
-    }
+//    protected double updateLifespan() {
+//        return --this.lifespan;
+//    }
 
     @Override
     public void tickMovement() {
         super.tickMovement();
-
-        if (this.getWorld().isClient) {
-            if (this.getWorld().getTime() % 10 == 0) {
-                BlockState state = this.getWorld().getBlockState(this.getBlockPos());
-                if (state.getFluidState().isEmpty() || canLiveInFluid()) {
-                    doLivingEffects();
-                }
-            }
-        }
-        else {
-            // check for death scenarios ie no owner, if in water
-            if (this.getWorld().getTime() % 10 == 0) {
-                BlockState state = this.getWorld().getBlockState(this.getBlockPos());
-                if (this.getOwner() == null || (!state.getFluidState().isEmpty() && !canLiveInFluid())) {
-                    // kill self
-                    kill();
-                    return;
-                }
-            }
-        }
+        this.summonedBaseHandler.tickMovement(this);
+//        if (this.getWorld().isClient) {
+//            if (this.getWorld().getTime() % 10 == 0) {
+//                BlockState state = this.getWorld().getBlockState(this.getBlockPos());
+//                if (state.getFluidState().isEmpty() || canLiveInFluid()) {
+//                    doLivingEffects();
+//                }
+//            }
+//        }
+//        else {
+//            // check for death scenarios ie no owner, if in water
+//            // NOTE the entity will join the world BEFORE the player
+//            // in single player and therefor will have no owner
+//            // and will call kill(). use bufferTime to delay this action.
+//            if (this.getWorld().getTime() % 10 == 0) {
+//                BlockState state = this.getWorld().getBlockState(this.getBlockPos());
+//                if (this.getOwner() == null) {
+//                    bufferTime += 10;
+//                    if (bufferTime > MAX_BUFFER_TIME) {
+//                        kill();
+//                    }
+//                    return;
+//                } else if (!state.getFluidState().isEmpty() && !canLiveInFluid()) {
+//                    // kill self
+//                    unregister();
+//                    kill();
+//
+//                    return;
+//                }
+//                if (bufferTime > 0) bufferTime = 0;
+//            }
+//        }
     }
 
-    protected boolean testPlacement(BlockPos pos) {
-        BlockState state = this.getWorld().getBlockState(pos);
-        // check block
-        return state.isAir();
-    }
+//    protected boolean testPlacement(BlockPos pos) {
+//        BlockState state = this.getWorld().getBlockState(pos);
+//        // check block
+//        return state.isAir();
+//    }
 
     @Override
     public LivingEntity getOwner() {
         try {
             UUID uuid = this.getOwnerUUID();
-            return uuid == null ? null : this.getWorld().getPlayerByUuid(uuid);
+            return (uuid == null) ? null : this.getWorld().getPlayerByUuid(uuid);
         } catch (IllegalArgumentException illegalargumentexception) {
             return null;
         }
     }
 
+    /**
+     * override vanilla entity.kill()
+     */
     @Override
     public void kill() {
-        kill(getWorld().getDamageSources().generic());
+        this.summonedBaseHandler.kill(this);
+//        this.summonedBaseHandler.killAndUnregister(this, this.getOwner(), getWorld().getDamageSources().generic());
+//        kill(getWorld().getDamageSources().generic());
     }
 
+    /**
+     * override MageFlame#ISummonedEntity.kill(DamageSource)
+     * @param damageSource
+     */
     @Override
     public void kill(DamageSource damageSource) {
-        this.damage(damageSource, Float.MAX_VALUE);
-
-        doDeathEffects();
-
-        // hide the entity
-        setInvisible(true);
-
+        this.summonedBaseHandler.kill(this, damageSource);
+//        this.damage(damageSource, Float.MAX_VALUE);
+//
+//        doDeathEffects();
+//
+//        // hide the entity
+//        setInvisible(true);
+//
         // set dead
         this.dead = true;
-
-        // MageFlame.LOGGER.debug("kill - current light coords -> {}, last light coords -> {}", getCurrentLightCoords(), getLastLightCoords());
+//
+//        // MageFlame.LOGGER.info("kill - current light coords -> {}, last light coords -> {}", getCurrentLightCoords(), getLastLightCoords());
     }
 
     @Override
@@ -187,7 +224,7 @@ public abstract class SummonedLightSourcePathAwareEntity extends PathAwareEntity
         }
 
         nbt.putLong(BIRTH_TIME, getBirthTime());
-        nbt.putDouble(LIFESPAN, getLifespan());
+        nbt.putInt(LIFESPAN, getLifespan());
     }
 
     public void readCustomDataFromNbt(NbtCompound nbt) {
@@ -205,25 +242,25 @@ public abstract class SummonedLightSourcePathAwareEntity extends PathAwareEntity
             setBirthTime(nbt.getLong(BIRTH_TIME));
         }
         if (nbt.contains(LIFESPAN)) {
-            setLifespan(nbt.getLong(LIFESPAN));
+            setLifespan(nbt.getInt(LIFESPAN));
         }
     }
 
     // TEMP until GottschCore for Fabric exists
-    public static NbtCompound saveCoords(BlockPos pos) {
-        NbtCompound tag = new NbtCompound();
-        tag.putInt("x", pos.getX());
-        tag.putInt("y", pos.getY());
-        tag.putInt("z", pos.getZ());
-        return tag;
-    }
-
-    public static BlockPos loadCoords(NbtCompound tag) {
-        if (tag.contains("x") && tag.contains("y") && tag.contains("z")) {
-            return new BlockPos(tag.getInt("x"), tag.getInt("y"), tag.getInt("z"));
-        }
-        return null;
-    }
+//    public static NbtCompound saveCoords(BlockPos pos) {
+//        NbtCompound tag = new NbtCompound();
+//        tag.putInt("x", pos.getX());
+//        tag.putInt("y", pos.getY());
+//        tag.putInt("z", pos.getZ());
+//        return tag;
+//    }
+//
+//    public static BlockPos loadCoords(NbtCompound tag) {
+//        if (tag.contains("x") && tag.contains("y") && tag.contains("z")) {
+//            return new BlockPos(tag.getInt("x"), tag.getInt("y"), tag.getInt("z"));
+//        }
+//        return null;
+//    }
 
     @Override
     public void checkDespawn() {
@@ -257,22 +294,26 @@ public abstract class SummonedLightSourcePathAwareEntity extends PathAwareEntity
 
     @Override
     public long getBirthTime() {
-        return birthTime;
+//        return birthTime;
+        return this.summonedBaseHandler.getBirthTime();
     }
 
     @Override
     public void setBirthTime(long birthTime) {
-        this.birthTime = birthTime;
+//        this.birthTime = birthTime;
+        this.summonedBaseHandler.setBirthTime(birthTime);
     }
 
     @Override
-    public long getLifespan() {
-        return lifespan;
+    public int getLifespan() {
+//        return lifespan;
+        return this.summonedBaseHandler.getLifespan();
     }
 
     @Override
-    public void setLifespan(long lifespan) {
-        this.lifespan =lifespan;
+    public void setLifespan(int lifespan) {
+//        this.lifespan =lifespan;
+        this.summonedBaseHandler.setLifespan(lifespan);
     }
 
     ///// from TameableEntity /////
@@ -341,7 +382,7 @@ public abstract class SummonedLightSourcePathAwareEntity extends PathAwareEntity
     ///// end from Tameable /////
 
     public static class FollowOwnerGoal extends Goal {
-        private final SummonedLightSourcePathAwareEntity lightSourceEntity;
+        private final SummonedPathAwareEntity lightSourceEntity;
         private LivingEntity owner;
         private final double speed;
         private final EntityNavigation navigation;
@@ -350,7 +391,7 @@ public abstract class SummonedLightSourcePathAwareEntity extends PathAwareEntity
         private final float minDistance;
         private float oldWaterPathfindingPenalty;
 
-        public FollowOwnerGoal(SummonedLightSourcePathAwareEntity lightSourceEntity, double speed, float minDistance, float maxDistance) {
+        public FollowOwnerGoal(SummonedPathAwareEntity lightSourceEntity, double speed, float minDistance, float maxDistance) {
             this.lightSourceEntity = lightSourceEntity;
             this.speed = speed;
             this.navigation = lightSourceEntity.getNavigation();

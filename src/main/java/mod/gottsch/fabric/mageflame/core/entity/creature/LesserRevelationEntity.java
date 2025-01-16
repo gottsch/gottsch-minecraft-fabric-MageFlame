@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 /**
  *
  */
-public class LesserRevelationEntity extends SummonedLightSourceFlyingEntity {
+public class LesserRevelationEntity extends SummonedFlyingEntity {
 
     public LesserRevelationEntity(EntityType<? extends FlyingEntity> entityType, World level) {
         super(entityType, level, MageFlame.CONFIG.lesserRevelationLifespan());

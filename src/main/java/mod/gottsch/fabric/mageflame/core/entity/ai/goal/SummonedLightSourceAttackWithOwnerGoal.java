@@ -17,7 +17,7 @@
  */
 package mod.gottsch.fabric.mageflame.core.entity.ai.goal;
 
-import mod.gottsch.fabric.mageflame.core.entity.creature.SummonedLightSourcePathAwareEntity;
+import mod.gottsch.fabric.mageflame.core.entity.creature.SummonedPathAwareEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.ai.goal.Goal;
@@ -29,11 +29,11 @@ import java.util.EnumSet;
  * Created by Mark Gottschling on 1/10/2025
  */
 public class SummonedLightSourceAttackWithOwnerGoal extends TrackTargetGoal {
-    private final SummonedLightSourcePathAwareEntity lightSourceEntity;
+    private final SummonedPathAwareEntity lightSourceEntity;
     private LivingEntity attacking;
     private int lastAttackTime;
 
-    public SummonedLightSourceAttackWithOwnerGoal(SummonedLightSourcePathAwareEntity lightSourceEntity) {
+    public SummonedLightSourceAttackWithOwnerGoal(SummonedPathAwareEntity lightSourceEntity) {
         super(lightSourceEntity, false);
         this.lightSourceEntity = lightSourceEntity;
         this.setControls(EnumSet.of(Goal.Control.TARGET));

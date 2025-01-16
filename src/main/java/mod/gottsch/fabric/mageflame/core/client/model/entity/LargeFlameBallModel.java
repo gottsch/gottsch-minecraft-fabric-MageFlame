@@ -17,7 +17,7 @@
  */
 package mod.gottsch.fabric.mageflame.core.client.model.entity;
 
-import mod.gottsch.fabric.mageflame.core.entity.creature.SummonedLightSourceFlyingEntity;
+import mod.gottsch.fabric.mageflame.core.entity.creature.SummonedFlyingEntity;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.EntityModel;
@@ -27,7 +27,7 @@ import net.minecraft.util.math.MathHelper;
 /**
  *
  */
-public class LargeFlameBallModel<T extends SummonedLightSourceFlyingEntity> extends EntityModel<T> {
+public class LargeFlameBallModel<T extends SummonedFlyingEntity> extends EntityModel<T> {
 	private final ModelPart main;
 	private final float bodyY;
 	private final float scale;
@@ -54,7 +54,7 @@ public class LargeFlameBallModel<T extends SummonedLightSourceFlyingEntity> exte
 	}
 
 	@Override
-	public void setAngles(SummonedLightSourceFlyingEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+	public void setAngles(SummonedFlyingEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		bob(this.main, bodyY, ageInTicks);
 		pulse(this.main, scale, ageInTicks);
 	}

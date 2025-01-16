@@ -41,6 +41,7 @@ public class ModLangProvider extends FabricLanguageProvider {
         translationBuilder.add(Registration.LESSER_REVELATION_SCROLL, "Lesser Revelation Scroll");
         translationBuilder.add(Registration.GREATER_REVELATION_SCROLL, "Greater Revelation Scroll");
         translationBuilder.add(Registration.WINGED_TORCH_SCROLL, "Winged Torch Scroll");
+        translationBuilder.add(Registration.FIRE_WOLF_SCROLL, "Ember Hound Scroll");
 
         // entities
         translationBuilder.add(Registration.MAGE_FLAME_ENTITY, "Mage Flame");

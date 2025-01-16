@@ -9,10 +9,10 @@ import net.minecraft.world.World;
 /**
  *
  */
-public class MageFlameEntity extends SummonedLightSourceFlyingEntity {
+public class MageFlameEntity extends SummonedFlyingEntity {
 
     public MageFlameEntity(EntityType<? extends FlyingEntity> entityType, World level) {
-        super(entityType, level,  MageFlame.CONFIG.mageFlameLifespan());
+        super(entityType, level, MageFlame.CONFIG.mageFlameLifespan());
     }
 
     @Override

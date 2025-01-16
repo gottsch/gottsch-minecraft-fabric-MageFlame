@@ -18,8 +18,9 @@
 package mod.gottsch.fabric.mageflame.core.entity.creature;
 
 import mod.gottsch.fabric.mageflame.MageFlame;
+import mod.gottsch.fabric.mageflame.core.peristence.PlayerData;
+import mod.gottsch.fabric.mageflame.core.peristence.StateSaverAndLoader;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
@@ -53,17 +54,19 @@ import java.util.UUID;
  * @author Mark Gottschling Jan 21, 2023
  *
  */
-public abstract class SummonedLightSourceFlyingEntity extends FlyingEntity implements ISummonedLightSourceEntity {
+public abstract class SummonedFlyingEntity extends FlyingEntity implements ISummonedEntity {
     private static final TrackedData<Optional<UUID>> DATA_OWNER_UUID;
+//    private static final int MAX_BUFFER_TIME = 1200;
 
-    private BlockPos currentLightCoords;
-    private BlockPos lastLightCoords;
+//    private long birthTime;
+//    private int lifespan;
+//    private int bufferTime;
 
-    private long birthTime;
-    private long lifespan;
+    // entity for composite inheritance
+    private final SummonedBaseHandler<SummonedFlyingEntity> summonedBaseHandler;
 
     static {
-        DATA_OWNER_UUID = DataTracker.registerData(SummonedLightSourceFlyingEntity.class, TrackedDataHandlerRegistry.OPTIONAL_UUID);
+        DATA_OWNER_UUID = DataTracker.registerData(SummonedFlyingEntity.class, TrackedDataHandlerRegistry.OPTIONAL_UUID);
     }
 
     /**
@@ -71,17 +74,19 @@ public abstract class SummonedLightSourceFlyingEntity extends FlyingEntity imple
      * @param entityType
      * @param world
      */
-    protected SummonedLightSourceFlyingEntity(EntityType<? extends FlyingEntity> entityType, World world, long lifespan) {
+    protected SummonedFlyingEntity(EntityType<? extends FlyingEntity> entityType, World world, int lifespan) {
         super(entityType, world);
-        this.birthTime = getWorld().getTime();
-        this.lifespan = lifespan;
+        this.summonedBaseHandler = new SummonedBaseHandler<>(world.getTime(), lifespan);
+
+//        this.birthTime = getWorld().getTime();
+//        this.lifespan = lifespan;
         this.moveControl = new SummonedLightSourceFlyingMoveControl(this);
     }
 
     @Override
     protected void initGoals() {
         super.initGoals();
-        this.goalSelector.add(1, new SummonedLightSourceFlyingFollowOwnerGoal(this, 3F));
+        this.goalSelector.add(1, new SummonedFlyingEntityFollowOwnerGoal(this, 3F));
     }
 
     /**
@@ -110,87 +115,109 @@ public abstract class SummonedLightSourceFlyingEntity extends FlyingEntity imple
     }
 
     @Override
-    public void doDeathEffects() {
-        if (getWorld().isClient) {
-            double d0 = this.getX();
-            double d1 = this.getY() + 0.2;
-            double d2 = this.getZ();
-//            ((ServerWorld)world).sendParticles(ParticleTypes.SMOKE, d0, d1, d2, 1, 0D, 0D, 0D, (double)0);
-            this.getWorld().addParticle(ParticleTypes.SMOKE, this.getParticleX(0.5), this.getRandomBodyY(), this.getParticleZ(0.5), (this.random.nextDouble() - 0.5) * 2.0, -this.random.nextDouble(), (this.random.nextDouble() - 0.5) * 2.0);
+    public double updateLifespan() {
+        return this.summonedBaseHandler.updateLifespan();
+    }
 
-        }
+    @Override
+    public void doDeathEffects() {
+        this.summonedBaseHandler.doDeathEffects(this);
     }
 
     @Override
     public void tick() {
         super.tick();
-        if (!this.getWorld().isClient) {
-            if (updateLifespan() < 0) {
-                kill(getWorld().getDamageSources().generic());
-            }
-        }
+        this.summonedBaseHandler.tick(this, getOwner());
+//        if (!this.getWorld().isClient) {
+//            if (updateLifespan() < 0) {
+//                unregister();
+//                kill(getWorld().getDamageSources().generic());
+//            }
+//        }
     }
 
-    /**
-     *
-     */
-    protected double updateLifespan() {
+//    public void unregister() {
+//        if (getOwner() != null) {
+//            PlayerData playerData = StateSaverAndLoader.getPlayerState(getOwner());
+//            playerData.unregister(getUuid());
+//        }
+//    }
 
-        return --this.lifespan;
-    }
+//    /**
+//     *
+//     */
+//    protected double updateLifespan() {
+//
+//        return --this.lifespan;
+//    }
 
     @Override
     public void tickMovement() {
         super.tickMovement();
-
-        if (this.getWorld().isClient) {
-            if (this.getWorld().getTime() % 10 == 0) {
-                BlockState state = this.getWorld().getBlockState(this.getBlockPos());
-                if (state.getFluidState().isEmpty() || canLiveInFluid()) {
-                    doLivingEffects();
-                }
-            }
-        }
-        else {
-            // check for death scenarios ie no owner, if in water
-            if (this.getWorld().getTime() % 10 == 0) {
-                BlockState state = this.getWorld().getBlockState(this.getBlockPos());
-                if (this.getOwner() == null || (!state.getFluidState().isEmpty() && !canLiveInFluid())) {
-                    // kill self
-                    kill();
-                    return;
-                }
-            }
-        }
+        this.summonedBaseHandler.tickMovement(this);
+//        if (this.getWorld().isClient) {
+//            if (this.getWorld().getTime() % 10 == 0) {
+//                BlockState state = this.getWorld().getBlockState(this.getBlockPos());
+//                if (state.getFluidState().isEmpty() || canLiveInFluid()) {
+//                    doLivingEffects();
+//                }
+//            }
+//        }
+//        else {
+//            // check for death scenarios ie no owner, if in water
+//            if (this.getWorld().getTime() % 10 == 0) {
+//                BlockState state = this.getWorld().getBlockState(this.getBlockPos());
+//                if (this.getOwner() == null) {
+//                    bufferTime += 10;
+//                    if (bufferTime > MAX_BUFFER_TIME) {
+//                        MageFlame.LOGGER.info("killing summoned entity that doesnt have an owner -> {}", getUuid());
+//                        kill();
+//                    }
+//                    return;
+//                } else if (!state.getFluidState().isEmpty() && !canLiveInFluid()) {
+//                    // kill self
+//                    unregister();
+//                    kill();
+//
+//                    return;
+//                }
+//                if (bufferTime > 0) bufferTime = 0;
+//
+//            }
+//        }
     }
 
-    /**
-     *
-     * @param pos
-     * @return
-     */
-    protected boolean testPlacement(BlockPos pos) {
-        BlockState state = this.getWorld().getBlockState(pos);
-        // check block
-        return state.isAir();
-    }
+//    /**
+//     *
+//     * @param pos
+//     * @return
+//     */
+//    protected boolean testPlacement(BlockPos pos) {
+//        BlockState state = this.getWorld().getBlockState(pos);
+//        // check block
+//        return state.isAir();
+//    }
 
     @Override
     public void kill() {
-        kill(getWorld().getDamageSources().generic());
-    }
+        MageFlame.LOGGER.info("killing entity -> {}", this.getUuid().toString());
+        this.summonedBaseHandler.kill(this);
+//        kill(getWorld().getDamageSources().generic());
+        }
 
     /**
      *
      * @param damageSource the source of the damage
      */
     public void kill(DamageSource damageSource) {
-        this.damage(damageSource, Float.MAX_VALUE);
-
-        doDeathEffects();
-
-        // hide the entity
-        setInvisible(true);
+            this.summonedBaseHandler.kill(this, damageSource);
+//
+//        this.damage(damageSource, Float.MAX_VALUE);
+//
+//        doDeathEffects();
+//
+//        // hide the entity
+//        setInvisible(true);
 
         // set dead
         this.dead = true;
@@ -209,7 +236,7 @@ public abstract class SummonedLightSourceFlyingEntity extends FlyingEntity imple
         }
 
         nbt.putLong(BIRTH_TIME, getBirthTime());
-        nbt.putDouble(LIFESPAN, getLifespan());
+        nbt.putInt(LIFESPAN, getLifespan());
     }
 
     /**
@@ -231,25 +258,25 @@ public abstract class SummonedLightSourceFlyingEntity extends FlyingEntity imple
             setBirthTime(nbt.getLong(BIRTH_TIME));
         }
         if (nbt.contains(LIFESPAN)) {
-            setLifespan(nbt.getLong(LIFESPAN));
+            setLifespan(nbt.getInt(LIFESPAN));
         }
     }
 
     // TEMP until GottschCore for Fabric exists
-    public static NbtCompound saveCoords(BlockPos pos) {
-        NbtCompound tag = new NbtCompound();
-        tag.putInt("x", pos.getX());
-        tag.putInt("y", pos.getY());
-        tag.putInt("z", pos.getZ());
-        return tag;
-    }
-
-    public static BlockPos loadCoords(NbtCompound tag) {
-        if (tag.contains("x") && tag.contains("y") && tag.contains("z")) {
-            return new BlockPos(tag.getInt("x"), tag.getInt("y"), tag.getInt("z"));
-        }
-        return null;
-    }
+//    public static NbtCompound saveCoords(BlockPos pos) {
+//        NbtCompound tag = new NbtCompound();
+//        tag.putInt("x", pos.getX());
+//        tag.putInt("y", pos.getY());
+//        tag.putInt("z", pos.getZ());
+//        return tag;
+//    }
+//
+//    public static BlockPos loadCoords(NbtCompound tag) {
+//        if (tag.contains("x") && tag.contains("y") && tag.contains("z")) {
+//            return new BlockPos(tag.getInt("x"), tag.getInt("y"), tag.getInt("z"));
+//        }
+//        return null;
+//    }
 
     @Override
     public void checkDespawn() {
@@ -268,8 +295,8 @@ public abstract class SummonedLightSourceFlyingEntity extends FlyingEntity imple
     /**
      *
      */
-    public static class SummonedLightSourceFlyingFollowOwnerGoal extends Goal {
-        private SummonedLightSourceFlyingEntity lightSourceEntity;
+    public static class SummonedFlyingEntityFollowOwnerGoal extends Goal {
+        private SummonedFlyingEntity lightSourceEntity;
         // the distance away at which the flame ball starts to follow
         private float startDistance;
         private LivingEntity owner;
@@ -279,7 +306,7 @@ public abstract class SummonedLightSourceFlyingEntity extends FlyingEntity imple
          * @param lightSourceEntity
          * @param startDistance
          */
-        public SummonedLightSourceFlyingFollowOwnerGoal(SummonedLightSourceFlyingEntity lightSourceEntity, float startDistance) {
+        public SummonedFlyingEntityFollowOwnerGoal(SummonedFlyingEntity lightSourceEntity, float startDistance) {
             this.lightSourceEntity = lightSourceEntity;
             this.startDistance = startDistance;
         }
@@ -352,8 +379,8 @@ public abstract class SummonedLightSourceFlyingEntity extends FlyingEntity imple
     /*
      * This uses the Vex MoveControl tick() algorithm.
      */
-    class SummonedLightSourceFlyingMoveControl extends MoveControl {
-        public SummonedLightSourceFlyingMoveControl(SummonedLightSourceFlyingEntity entity) {
+    static class SummonedLightSourceFlyingMoveControl extends MoveControl {
+        public SummonedLightSourceFlyingMoveControl(SummonedFlyingEntity entity) {
             super(entity);
         }
 
@@ -393,15 +420,15 @@ public abstract class SummonedLightSourceFlyingEntity extends FlyingEntity imple
         }
     }
 
-    @Override
-    public void setOwner(LivingEntity entity) {
-        if (entity == null) {
-            setOwnerUUID(null);
-        }
-        else {
-            setOwnerUUID(entity.getUuid());
-        }
-    }
+//    @Override
+//    public void setOwner(LivingEntity entity) {
+//        if (entity == null) {
+//            setOwnerUUID(null);
+//        }
+//        else {
+//            setOwnerUUID(entity.getUuid());
+//        }
+//    }
 
     @Override
     public UUID getOwnerUUID() {
@@ -415,21 +442,25 @@ public abstract class SummonedLightSourceFlyingEntity extends FlyingEntity imple
 
     @Override
     public long getBirthTime() {
-        return birthTime;
+//        return birthTime;
+        return this.summonedBaseHandler.getBirthTime();
     }
 
     @Override
-    public long getLifespan() {
-        return lifespan;
+    public int getLifespan() {
+//        return lifespan;
+        return this.summonedBaseHandler.getLifespan();
     }
 
     @Override
     public void setBirthTime(long birthTime) {
-        this.birthTime = birthTime;
+//        this.birthTime = birthTime;
+        this.summonedBaseHandler.setBirthTime(birthTime);
     }
 
     @Override
-    public void setLifespan(long lifespan) {
-        this.lifespan = lifespan;
+    public void setLifespan(int lifespan) {
+//        this.lifespan = lifespan;
+        this.summonedBaseHandler.setLifespan(lifespan);
     }
 }

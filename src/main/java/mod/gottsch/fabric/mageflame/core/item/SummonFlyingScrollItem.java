@@ -17,7 +17,10 @@
  */
 package mod.gottsch.fabric.mageflame.core.item;
 
+import mod.gottsch.fabric.gottschcore.spatial.Coords;
+import mod.gottsch.fabric.gottschcore.spatial.ICoords;
 import mod.gottsch.fabric.mageflame.core.util.LangUtil;
+import mod.gottsch.fabric.mageflame.core.util.SpawnUtil;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -29,6 +32,8 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -41,13 +46,13 @@ import java.util.Random;
  * @author Mark Gottschling Jan 22, 2023
  *
  */
-public abstract class SummonFlameBaseItem extends Item implements ISummonFlameItem {
+public abstract class SummonFlyingScrollItem extends Item implements ISummonScrollItem {
 
 	/**
 	 * 
 	 * @param properties
 	 */
-	public SummonFlameBaseItem(Settings properties) {
+	public SummonFlyingScrollItem(Settings properties) {
 
 		super(properties);
 	}
@@ -70,45 +75,22 @@ public abstract class SummonFlameBaseItem extends Item implements ISummonFlameIt
 		});
 	}
 
-	public void appendBaseText(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
-
-	}
-
-	public void appendAdvancedText(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
-
-	}
-	
-	public void appendLore(ItemStack stack, TooltipContext context, List<Text> tooltip, String key) {
-		MutableText lore = Text.translatable(LangUtil.tooltip(key));
-		tooltip.add(Text.literal(" "));
-		for (String s : lore.getString().split("~")) {	
-			tooltip.add(Text.translatable(LangUtil.INDENT2)
-					.append(Text.literal(s).formatted(Formatting.GOLD, Formatting.ITALIC)));
-		}
-	}
-
-	public String ticksToTime(int ticks) {
-		int secs = ticks / 20;   
-		int hours = secs / 3600;
-		int remainder = secs % 3600;
-		int minutes = remainder / 60;
-		int seconds = remainder % 60;
-		return String.format("%02d:%02d:%02d", hours, minutes, seconds);
-	}
-
 	@Override
 	public TypedActionResult<ItemStack> use(World level, PlayerEntity player, Hand hand) {
 		ItemStack heldStack = player.getStackInHand(hand);
 		if (level.isClient) {
 			return TypedActionResult.pass(heldStack);
 		}
-		Vec3d spawnPos = getByPlayerPos(player);
-
+		Direction direction = player.getMovementDirection();
+		Vec3d playerPos = getByPlayerPos(player);
+		Vec3d spawnVec3 = selectSpawnPos(level, playerPos, direction);
+//		BlockPos spawnPos = new BlockPos((int)spawnVec3.x, (int)spawnVec3.y, (int)spawnVec3.z);
+		ICoords coords = Coords.of(SpawnUtil.vec3ToBlockPos(spawnVec3));
 		// spawn entity
-		// MageFlame.LOGGER.debug("using summon flame item...");
-		Optional<MobEntity> mob = spawn((ServerWorld)level, new Random(), player, getSummonFlameEntity(), spawnPos);
+		// MageFlame.LOGGER.info("using summon flame item...");
+		Optional<?> mob = spawn((ServerWorld)level, level.random, player, getSummonFlameEntity(), coords);
 		if (mob.isPresent()) {
-			// MageFlame.LOGGER.debug("summon flame is present...");
+			// MageFlame.LOGGER.info("summon flame is present...");
 			// reduce scroll stack size ie consume
 			heldStack.decrement(1);
 			return TypedActionResult.consume(heldStack);

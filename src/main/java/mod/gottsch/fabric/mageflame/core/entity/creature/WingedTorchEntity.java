@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 /**
  *
  */
-public class WingedTorchEntity extends SummonedLightSourceFlyingEntity {
+public class WingedTorchEntity extends SummonedFlyingEntity {
 
     public WingedTorchEntity(EntityType<? extends FlyingEntity> entityType, World level) {
         super(entityType, level, 12000);
@@ -29,7 +29,7 @@ public class WingedTorchEntity extends SummonedLightSourceFlyingEntity {
     }
 
     @Override
-    protected double updateLifespan() {
+    public double updateLifespan() {
         return getLifespan();
     }
 
@@ -45,13 +45,14 @@ public class WingedTorchEntity extends SummonedLightSourceFlyingEntity {
     /**
      * Winged Torch is powerful enough to destroy replaceable blocks
      */
-    @Override
-    protected boolean testPlacement(BlockPos pos) {
-        BlockState state = this.getWorld().getBlockState(pos);
-        // check block
-        if (state.isAir() || (state.isReplaceable()) && state.getFluidState().isEmpty()) {
-            return true;
-        }
-        return false;
-    }
+//    @Override
+//    protected boolean testPlacement(BlockPos pos) {
+//        BlockState state = this.getWorld().getBlockState(pos);
+//        // check block
+//        if (state.isAir() || (state.isReplaceable()) && state.getFluidState().isEmpty()) {
+//            return true;
+//        }
+//        return false;
+//    }
+
 }

@@ -27,6 +27,9 @@ public class ConfigModel {
     @RangeConstraint(min = 1200, max = 72000)
     public int greaterRevelationLifespan = 36000;
 
+    @RangeConstraint(min = 1200, max = 72000)
+    public int emberHoundLifespan = 72000;
+
     // client side (make separate config?
     @RangeConstraint(min = 1, max = 20)
     public int updateLightTicks = 2;

@@ -17,35 +17,37 @@
  */
 package mod.gottsch.fabric.mageflame.core.entity.creature;
 
-import net.minecraft.block.Block;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.data.TrackedData;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Optional;
 import java.util.UUID;
 
 /**
  *
  */
-public interface ISummonedLightSourceEntity {
+public interface ISummonedEntity {
     static final String OWNER = "owner";
     static final String BIRTH_TIME = "birthTime";
     static final String LIFESPAN = "lifespan";
 
-    public void doLivingEffects();
+    void doLivingEffects();
     void doDeathEffects();
+    double updateLifespan();
+    default boolean canLiveInFluid() {
+        return false;
+    }
 
-    @Nullable
+    //    public void kill();
+    void kill(DamageSource damageSource);
+
     LivingEntity getOwner();
 //    void setOwner(LivingEntity entity);
-    default public void setOwner(LivingEntity entity) {
+    default void setOwner(LivingEntity entity) {
         if (entity == null) {
             setOwnerUUID(null);
         }
@@ -58,19 +60,10 @@ public interface ISummonedLightSourceEntity {
     void setOwnerUUID(UUID uuid);
 
     long getBirthTime();
-    long getLifespan();
+    int getLifespan();
 
     void setBirthTime(long birthTime);
-    void setLifespan(long lifespan);
-
-
-    default public boolean canLiveInFluid() {
-        return false;
-    }
-
-
-    public void kill();
-    public void kill(DamageSource damageSource);
+    void setLifespan(int lifespan);
 
     /**
      *
@@ -170,6 +163,7 @@ public interface ISummonedLightSourceEntity {
         return coords;
     }
 
+    @Deprecated
     // TODO move to a util class
     private BlockPos vec3ToBlockPos(Vec3d vec3) {
         return new BlockPos((int)vec3.x, (int)vec3.y, (int)vec3.z);

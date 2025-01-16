@@ -18,7 +18,7 @@
 package mod.gottsch.fabric.mageflame.core.client.renderer.entity.layer;
 
 import mod.gottsch.fabric.mageflame.core.client.model.entity.LargeFlameBallModel;
-import mod.gottsch.fabric.mageflame.core.entity.creature.SummonedLightSourceFlyingEntity;
+import mod.gottsch.fabric.mageflame.core.entity.creature.SummonedFlyingEntity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.feature.EyesFeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
@@ -29,7 +29,7 @@ import net.minecraft.util.Identifier;
  * @author Mark Gottschling May 8, 2023
  *
  */
-public class GreaterRevelationGlowFeatureRenderer<T extends SummonedLightSourceFlyingEntity, M extends LargeFlameBallModel<T>> extends EyesFeatureRenderer<T, M> {
+public class GreaterRevelationGlowFeatureRenderer<T extends SummonedFlyingEntity, M extends LargeFlameBallModel<T>> extends EyesFeatureRenderer<T, M> {
 	private static final RenderLayer SKIN = RenderLayer.getEyes(Identifier.of("mageflame","textures/entity/greater_revelation.png"));
 	public GreaterRevelationGlowFeatureRenderer(FeatureRendererContext<T, M> featureRendererContext) {
 		super(featureRendererContext);

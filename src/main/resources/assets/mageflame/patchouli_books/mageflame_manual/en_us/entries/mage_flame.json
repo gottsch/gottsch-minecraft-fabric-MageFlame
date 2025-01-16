@@ -18,13 +18,6 @@
       "title": "Mage Flame Recipe",
       "recipe": "mageflame:mage_flame_scroll",
       "text": "Allows the spellcaster to create a small ball of flames.$(br)Brightness = 11$(br)Duration = 10 minutes"
-    },
-
-    {
-      "type": "patchouli:crafting",
-      "title": "Topaz Key Recipe",
-      "recipe": "treasure2:topaz_key",
-      "text": ""
     }
   ]
 }

@@ -89,6 +89,24 @@ public class ModRecipes extends RecipeProvider {
 					.criterion(hasItem(Items.BLAZE_POWDER), conditionsFromItem(Items.BLAZE_POWDER))
 					.offerTo(exporter, Identifier.of(MageFlame.MOD_ID, getRecipeName(Registration.WINGED_TORCH_SCROLL)));
 
+			ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, Registration.FIRE_WOLF_SCROLL)
+					.pattern(" x ")
+					.pattern("ltl")
+					.pattern("spb")
+					.input('x', Items.LAVA_BUCKET)
+					.input('l', Items.LEATHER)
+					.input('t', Items.TORCH)
+					.input('s', Items.FLINT_AND_STEEL)
+					.input('p', Items.PAPER)
+					.input('b', Items.BLAZE_POWDER)
+					.criterion(hasItem(Items.TORCH), conditionsFromItem(Items.TORCH))
+					.criterion(hasItem(Items.PAPER), conditionsFromItem(Items.PAPER))
+					.criterion(hasItem(Items.FLINT_AND_STEEL), conditionsFromItem(Items.FLINT_AND_STEEL))
+					.criterion(hasItem(Items.LAVA_BUCKET), conditionsFromItem(Items.LAVA_BUCKET))
+					.criterion(hasItem(Items.LEATHER), conditionsFromItem(Items.LEATHER))
+					.criterion(hasItem(Items.BLAZE_POWDER), conditionsFromItem(Items.BLAZE_POWDER))
+					.offerTo(exporter, Identifier.of(MageFlame.MOD_ID, getRecipeName(Registration.FIRE_WOLF_SCROLL)));
+
 		}
 
 }

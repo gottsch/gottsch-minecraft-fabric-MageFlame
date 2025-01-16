@@ -20,8 +20,6 @@ package mod.gottsch.fabric.mageflame.core.entity.creature;
 import mod.gottsch.fabric.mageflame.MageFlame;
 import mod.gottsch.fabric.mageflame.core.entity.ai.goal.SummonedLightSourceAttackWithOwnerGoal;
 import mod.gottsch.fabric.mageflame.core.entity.ai.goal.SummonedLightSourceTrackOwnerAttackerGoal;
-import mod.gottsch.fabric.mageflame.core.setup.Registration;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -34,16 +32,14 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by Mark Gottschling on 1/9/2025
  */
-public class FireWolfEntity extends SummonedLightSourcePathAwareEntity {
+public class FireWolfEntity extends SummonedPathAwareEntity {
 
     public FireWolfEntity(EntityType<? extends PathAwareEntity> entityType, World world) {
-        // TODO update config property
-        super(entityType, world, MageFlame.CONFIG.greaterRevelationLifespan());
+        super(entityType, world, MageFlame.CONFIG.emberHoundLifespan());
     }
 
     @Override
@@ -54,8 +50,8 @@ public class FireWolfEntity extends SummonedLightSourcePathAwareEntity {
         this.goalSelector.add(10, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
         this.goalSelector.add(10, new LookAroundGoal(this));
         this.targetSelector.add(1, new SummonedLightSourceTrackOwnerAttackerGoal(this));
-           this.targetSelector.add(2, new SummonedLightSourceAttackWithOwnerGoal(this));
-        this.targetSelector.add(3, new RevengeGoal(this).setGroupRevenge());
+        this.targetSelector.add(2, new SummonedLightSourceAttackWithOwnerGoal(this));
+        this.targetSelector.add(3, new RevengeGoal(this, PlayerEntity.class).setGroupRevenge());
         this.targetSelector.add(7, new ActiveTargetGoal(this, AbstractSkeletonEntity.class, false));
     }
 
@@ -70,16 +66,17 @@ public class FireWolfEntity extends SummonedLightSourcePathAwareEntity {
 
     @Override
     public void doLivingEffects() {
-        double d1 = this.getY() + 0.5;
-        for (int i=0; i < 2; i++) {
+        double d1 = this.getRandomBodyY();
+        for (int i=0; i < 3; i++) {
             double d0 = this.getRandomX(0.5);
-            double d2 = this.getRandomZ(0.5);
-            this.getWorld().addParticle(Registration.REVELATION_PARTICLE, d0, d1, d2, 0.0D, 0.0D, 0.0D);
+            double d2 = this.getRandomZ(0.75);
+            this.getWorld().addParticle(ParticleTypes.FLAME, d0, d1, d2, 0.0D, 0.0D, 0.0D);
         }
-        double d0 = this.getX(0.5);
-        double d2 = this.getZ(0.5);
-        this.getWorld().addParticle(ParticleTypes.SMOKE, d0, d1, d2, 0.0D, 0.0D, 0.0D);
-        this.getWorld().addParticle(ParticleTypes.SPORE_BLOSSOM_AIR, d0, d1, d2, 0.0D, 0.0D, 0.0D);
+        if (this.getWorld().getTime() % 4 == 0) {
+            double d0 = this.getX(0.5);
+            double d2 = this.getZ(0.75);
+            this.getWorld().addParticle(ParticleTypes.SMOKE, d0, d1, d2, 0.0D, 0.0D, 0.0D);
+        }
     }
 
     // TODO need to move this to parent class
@@ -102,13 +99,13 @@ public class FireWolfEntity extends SummonedLightSourcePathAwareEntity {
         return this.getZ((2.0D * this.random.nextDouble() - 1.0D) * factor);
     }
 
-    @Override
-    protected boolean testPlacement(BlockPos pos) {
-        BlockState state = this.getWorld().getBlockState(pos);
-        // check block
-        if (state.isAir() || (state.isReplaceable()) && state.getFluidState().isEmpty()) {
-            return true;
-        }
-        return false;
-    }
+//    @Override
+//    protected boolean testPlacement(BlockPos pos) {
+//        BlockState state = this.getWorld().getBlockState(pos);
+//        // check block
+//        if (state.isAir() || (state.isReplaceable()) && state.getFluidState().isEmpty()) {
+//            return true;
+//        }
+//        return false;
+//    }
 }
