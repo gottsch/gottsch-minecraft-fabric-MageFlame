@@ -1,6 +1,6 @@
 /*
- * This file is part of Mage Flame.
- * Copyright (c) 2023 Mark Gottschling (gottsch)
+ * This file is part of  Mage Flame.
+ * Copyright (c) 2025 Mark Gottschling (gottsch)
  *
  * Mage Flame is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -9,7 +9,7 @@
  *
  * Mage Flame is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURCoordsE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
@@ -17,9 +17,8 @@
  */
 package mod.gottsch.fabric.mageflame.core.client.renderer.entity;
 
-import mod.gottsch.fabric.mageflame.core.client.model.entity.FlameBallModel;
-import mod.gottsch.fabric.mageflame.core.client.renderer.entity.layer.LesserRevelationGlowFeatureRenderer;
-import mod.gottsch.fabric.mageflame.core.entity.creature.LesserRevelationEntity;
+import mod.gottsch.fabric.mageflame.core.client.model.entity.EmberHoundModel;
+import mod.gottsch.fabric.mageflame.core.entity.creature.EmberHoundEntity;
 import mod.gottsch.fabric.mageflame.core.setup.ClientSetup;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
@@ -28,15 +27,14 @@ import net.minecraft.util.Identifier;
 /*
  * A renderer is used to provide an entity model, shadow size, and texture.
  */
-public class LesserRevelationRenderer<T extends LesserRevelationEntity> extends MobEntityRenderer<T, FlameBallModel<T>> {
+public class EmberHoundRenderer<T extends EmberHoundEntity> extends MobEntityRenderer<T, EmberHoundModel<T>> {
 
-    public LesserRevelationRenderer(EntityRendererFactory.Context context) {
-        super(context, new FlameBallModel<>(context.getPart(ClientSetup.FLAME_BALL_LAYER)), 0);
-        this.addFeature(new LesserRevelationGlowFeatureRenderer<>(this));
+    public EmberHoundRenderer(EntityRendererFactory.Context context) {
+        super(context, new EmberHoundModel<>(context.getPart(ClientSetup.EMBER_HOUND_LAYER)), 0);
     }
 
     @Override
-    public Identifier getTexture(LesserRevelationEntity entity) {
-        return Identifier.of("mageflame", "textures/entity/lesser_revelation.png");
+    public Identifier getTexture(EmberHoundEntity entity) {
+        return Identifier.of("mageflame", "textures/entity/ember_hound.png");
     }
 }

@@ -24,7 +24,7 @@ public class LesserRevelationEntity extends SummonedFlyingEntity {
 
         this.getWorld().addParticle(ParticleTypes.SMOKE, d0, d1, d2, 0.0D, 0.0D, 0.0D);
         this.getWorld().addParticle(Registration.REVELATION_PARTICLE, d0, d1, d2, 0.0D, 0.0D, 0.0D);
-        this.getWorld().addParticle(ParticleTypes.SPORE_BLOSSOM_AIR, d0, d1, d2, 0.0D, 0.0D, 0.0D);
+//        this.getWorld().addParticle(ParticleTypes.SPORE_BLOSSOM_AIR, d0, d1, d2, 0.0D, 0.0D, 0.0D);
 
     }
 }

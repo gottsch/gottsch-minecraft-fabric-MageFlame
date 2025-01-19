@@ -18,8 +18,6 @@
 package mod.gottsch.fabric.mageflame.core.entity.creature;
 
 import mod.gottsch.fabric.mageflame.MageFlame;
-import mod.gottsch.fabric.mageflame.core.peristence.PlayerData;
-import mod.gottsch.fabric.mageflame.core.peristence.StateSaverAndLoader;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -35,7 +33,6 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.FlyingEntity;
 import net.minecraft.entity.mob.GhastEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
@@ -56,14 +53,9 @@ import java.util.UUID;
  */
 public abstract class SummonedFlyingEntity extends FlyingEntity implements ISummonedEntity {
     private static final TrackedData<Optional<UUID>> DATA_OWNER_UUID;
-//    private static final int MAX_BUFFER_TIME = 1200;
-
-//    private long birthTime;
-//    private int lifespan;
-//    private int bufferTime;
 
     // entity for composite inheritance
-    private final SummonedBaseHandler<SummonedFlyingEntity> summonedBaseHandler;
+    private final SummonedEntityBaseHandler<SummonedFlyingEntity> summonedEntityBaseHandler;
 
     static {
         DATA_OWNER_UUID = DataTracker.registerData(SummonedFlyingEntity.class, TrackedDataHandlerRegistry.OPTIONAL_UUID);
@@ -76,10 +68,8 @@ public abstract class SummonedFlyingEntity extends FlyingEntity implements ISumm
      */
     protected SummonedFlyingEntity(EntityType<? extends FlyingEntity> entityType, World world, int lifespan) {
         super(entityType, world);
-        this.summonedBaseHandler = new SummonedBaseHandler<>(world.getTime(), lifespan);
+        this.summonedEntityBaseHandler = new SummonedEntityBaseHandler<>(world.getTime(), lifespan);
 
-//        this.birthTime = getWorld().getTime();
-//        this.lifespan = lifespan;
         this.moveControl = new SummonedLightSourceFlyingMoveControl(this);
     }
 
@@ -116,108 +106,41 @@ public abstract class SummonedFlyingEntity extends FlyingEntity implements ISumm
 
     @Override
     public double updateLifespan() {
-        return this.summonedBaseHandler.updateLifespan();
+        return this.summonedEntityBaseHandler.updateLifespan();
     }
 
     @Override
     public void doDeathEffects() {
-        this.summonedBaseHandler.doDeathEffects(this);
+        this.summonedEntityBaseHandler.doDeathEffects(this);
     }
 
     @Override
     public void tick() {
         super.tick();
-        this.summonedBaseHandler.tick(this, getOwner());
-//        if (!this.getWorld().isClient) {
-//            if (updateLifespan() < 0) {
-//                unregister();
-//                kill(getWorld().getDamageSources().generic());
-//            }
-//        }
+        this.summonedEntityBaseHandler.tick(this, getOwner());
     }
 
-//    public void unregister() {
-//        if (getOwner() != null) {
-//            PlayerData playerData = StateSaverAndLoader.getPlayerState(getOwner());
-//            playerData.unregister(getUuid());
-//        }
-//    }
-
-//    /**
-//     *
-//     */
-//    protected double updateLifespan() {
-//
-//        return --this.lifespan;
-//    }
 
     @Override
     public void tickMovement() {
         super.tickMovement();
-        this.summonedBaseHandler.tickMovement(this);
-//        if (this.getWorld().isClient) {
-//            if (this.getWorld().getTime() % 10 == 0) {
-//                BlockState state = this.getWorld().getBlockState(this.getBlockPos());
-//                if (state.getFluidState().isEmpty() || canLiveInFluid()) {
-//                    doLivingEffects();
-//                }
-//            }
-//        }
-//        else {
-//            // check for death scenarios ie no owner, if in water
-//            if (this.getWorld().getTime() % 10 == 0) {
-//                BlockState state = this.getWorld().getBlockState(this.getBlockPos());
-//                if (this.getOwner() == null) {
-//                    bufferTime += 10;
-//                    if (bufferTime > MAX_BUFFER_TIME) {
-//                        MageFlame.LOGGER.info("killing summoned entity that doesnt have an owner -> {}", getUuid());
-//                        kill();
-//                    }
-//                    return;
-//                } else if (!state.getFluidState().isEmpty() && !canLiveInFluid()) {
-//                    // kill self
-//                    unregister();
-//                    kill();
-//
-//                    return;
-//                }
-//                if (bufferTime > 0) bufferTime = 0;
-//
-//            }
-//        }
+        this.summonedEntityBaseHandler.tickMovement(this);
     }
-
-//    /**
-//     *
-//     * @param pos
-//     * @return
-//     */
-//    protected boolean testPlacement(BlockPos pos) {
-//        BlockState state = this.getWorld().getBlockState(pos);
-//        // check block
-//        return state.isAir();
-//    }
 
     @Override
     public void kill() {
         MageFlame.LOGGER.info("killing entity -> {}", this.getUuid().toString());
-        this.summonedBaseHandler.kill(this);
-//        kill(getWorld().getDamageSources().generic());
-        }
+        this.summonedEntityBaseHandler.killAndUnregister(this);
+        // set dead
+        this.dead = true;
+    }
 
     /**
      *
      * @param damageSource the source of the damage
      */
     public void kill(DamageSource damageSource) {
-            this.summonedBaseHandler.kill(this, damageSource);
-//
-//        this.damage(damageSource, Float.MAX_VALUE);
-//
-//        doDeathEffects();
-//
-//        // hide the entity
-//        setInvisible(true);
+        this.summonedEntityBaseHandler.killAndUnregister(this, damageSource);
 
         // set dead
         this.dead = true;
@@ -261,22 +184,6 @@ public abstract class SummonedFlyingEntity extends FlyingEntity implements ISumm
             setLifespan(nbt.getInt(LIFESPAN));
         }
     }
-
-    // TEMP until GottschCore for Fabric exists
-//    public static NbtCompound saveCoords(BlockPos pos) {
-//        NbtCompound tag = new NbtCompound();
-//        tag.putInt("x", pos.getX());
-//        tag.putInt("y", pos.getY());
-//        tag.putInt("z", pos.getZ());
-//        return tag;
-//    }
-//
-//    public static BlockPos loadCoords(NbtCompound tag) {
-//        if (tag.contains("x") && tag.contains("y") && tag.contains("z")) {
-//            return new BlockPos(tag.getInt("x"), tag.getInt("y"), tag.getInt("z"));
-//        }
-//        return null;
-//    }
 
     @Override
     public void checkDespawn() {
@@ -420,16 +327,6 @@ public abstract class SummonedFlyingEntity extends FlyingEntity implements ISumm
         }
     }
 
-//    @Override
-//    public void setOwner(LivingEntity entity) {
-//        if (entity == null) {
-//            setOwnerUUID(null);
-//        }
-//        else {
-//            setOwnerUUID(entity.getUuid());
-//        }
-//    }
-
     @Override
     public UUID getOwnerUUID() {
         return this.dataTracker.get(DATA_OWNER_UUID).orElse(null);
@@ -443,24 +340,21 @@ public abstract class SummonedFlyingEntity extends FlyingEntity implements ISumm
     @Override
     public long getBirthTime() {
 //        return birthTime;
-        return this.summonedBaseHandler.getBirthTime();
+        return this.summonedEntityBaseHandler.getBirthTime();
     }
 
     @Override
     public int getLifespan() {
-//        return lifespan;
-        return this.summonedBaseHandler.getLifespan();
+        return this.summonedEntityBaseHandler.getLifespan();
     }
 
     @Override
     public void setBirthTime(long birthTime) {
-//        this.birthTime = birthTime;
-        this.summonedBaseHandler.setBirthTime(birthTime);
+        this.summonedEntityBaseHandler.setBirthTime(birthTime);
     }
 
     @Override
     public void setLifespan(int lifespan) {
-//        this.lifespan = lifespan;
-        this.summonedBaseHandler.setLifespan(lifespan);
+        this.summonedEntityBaseHandler.setLifespan(lifespan);
     }
 }

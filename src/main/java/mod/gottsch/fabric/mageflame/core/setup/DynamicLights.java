@@ -33,19 +33,19 @@ public class DynamicLights implements DynamicLightsInitializer {
     @Override
     public void onInitializeDynamicLights(ItemLightSourceManager itemLightSourceManager) {
         registerDynamicLightHandler(Registration.MAGE_FLAME_ENTITY,
-                DynamicLightHandler.makeHandler(firewolf -> 11, firewolf -> true)
+                DynamicLightHandler.makeHandler(entity -> 9, entity -> true)
         );
         registerDynamicLightHandler(Registration.LESSER_REVELATION_ENTITY,
-                DynamicLightHandler.makeHandler(firewolf -> 13, firewolf -> true)
+                DynamicLightHandler.makeHandler(entity -> 11, entity -> true)
         );
         registerDynamicLightHandler(Registration.GREATER_REVELATION_ENTITY,
-                DynamicLightHandler.makeHandler(firewolf -> 15, firewolf -> true)
+                DynamicLightHandler.makeHandler(entity -> 13, entity -> true)
         );
         registerDynamicLightHandler(Registration.WINGED_TORCH_ENTITY,
-                DynamicLightHandler.makeHandler(firewolf -> 15, firewolf -> true)
+                DynamicLightHandler.makeHandler(entity -> 15, entity -> true)
         );
 
-        registerDynamicLightHandler(Registration.FIRE_WOLF_ENTITY,
+        registerDynamicLightHandler(Registration.EMBER_HOUND_ENTITY,
                 entity -> {
                     int luminance = 15;
                     if(entity.getLifespan() < 1500F) {
@@ -54,6 +54,10 @@ public class DynamicLights implements DynamicLightsInitializer {
                     }
                     return luminance;
                 }
+        );
+
+        registerDynamicLightHandler(Registration.BUBBLE_FLAME_ENTITY,
+                DynamicLightHandler.makeHandler(entity -> 14, entity -> false)
         );
     }
 }

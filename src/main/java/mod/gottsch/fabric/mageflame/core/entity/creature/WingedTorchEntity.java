@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 public class WingedTorchEntity extends SummonedFlyingEntity {
 
     public WingedTorchEntity(EntityType<? extends FlyingEntity> entityType, World level) {
-        super(entityType, level, 12000);
+        super(entityType, level, Integer.MAX_VALUE);
     }
 
     /**

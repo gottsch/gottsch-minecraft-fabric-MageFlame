@@ -22,26 +22,49 @@ import mod.gottsch.fabric.mageflame.core.entity.creature.ISummonedEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.MobEntity;
 
+import java.util.Comparator;
+import java.util.UUID;
+
 /**
  * Created by Mark Gottschling on 1/14/2025
  */
 public class SummonedEntityData {
+    private UUID id;
     private EntityType entityType;
     private int lifespan; // in ticks
     private long createTime; // in ticks
     private ICoords coords;
 
+    public static Comparator<SummonedEntityData> lifespanComparator = new Comparator<SummonedEntityData>() {
+        @Override
+        public int compare(SummonedEntityData p1, SummonedEntityData p2) {
+            return Integer.compare(p1.getLifespan(), p2.getLifespan());
+        }
+    };
+
+    /**
+     *
+     */
     public SummonedEntityData() {}
 
-    public <T extends MobEntity & ISummonedEntity> SummonedEntityData(EntityType<T> entityType, int lifespan, long createTime) {
+    public <T extends MobEntity & ISummonedEntity> SummonedEntityData(UUID id, EntityType<T> entityType, int lifespan, long createTime) {
+        this.id = id;
         this.entityType = entityType;
         this.lifespan = lifespan;
         this.createTime = createTime;
     }
 
-    public <T extends MobEntity & ISummonedEntity> SummonedEntityData(EntityType<T> entityType, int lifespan, long createTime, ICoords coords) {
-        this(entityType, lifespan, createTime);
+    public <T extends MobEntity & ISummonedEntity> SummonedEntityData(UUID id, EntityType<T> entityType, int lifespan, long createTime, ICoords coords) {
+        this(id, entityType, lifespan, createTime);
         this.coords = coords;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public long getCreateTime() {
@@ -79,7 +102,8 @@ public class SummonedEntityData {
     @Override
     public String toString() {
         return "SummonedEntityData{" +
-                "entityType=" + entityType +
+                "id=" + id +
+                ", entityType=" + entityType +
                 ", lifespan=" + lifespan +
                 ", createTime=" + createTime +
                 ", coords=" + coords +

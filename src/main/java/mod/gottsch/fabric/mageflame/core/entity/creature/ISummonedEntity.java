@@ -42,7 +42,6 @@ public interface ISummonedEntity {
         return false;
     }
 
-    //    public void kill();
     void kill(DamageSource damageSource);
 
     LivingEntity getOwner();

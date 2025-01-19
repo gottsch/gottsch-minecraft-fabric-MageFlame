@@ -1,10 +1,24 @@
+/*
+ * This file is part of  Mage Flame.
+ * Copyright (c) 2023 Mark Gottschling (gottsch)
+ *
+ * Mage Flame is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Mage Flame is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURCoordsE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Mage Flame.  If not, see <http://www.gnu.org/licenses/lgpl>.
+ */
 package mod.gottsch.fabric.mageflame.core.setup;
 
 import mod.gottsch.fabric.mageflame.MageFlame;
-import mod.gottsch.fabric.mageflame.core.client.model.entity.FireWolfModel;
-import mod.gottsch.fabric.mageflame.core.client.model.entity.FlameBallModel;
-import mod.gottsch.fabric.mageflame.core.client.model.entity.LargeFlameBallModel;
-import mod.gottsch.fabric.mageflame.core.client.model.entity.WingedTorchModel;
+import mod.gottsch.fabric.mageflame.core.client.model.entity.*;
 import mod.gottsch.fabric.mageflame.core.client.renderer.entity.*;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
@@ -22,8 +36,8 @@ public class ClientSetup implements ClientModInitializer {
     public static final EntityModelLayer FLAME_BALL_LAYER = new EntityModelLayer(Identifier.of("mageflame", "flame_ball"), "main");
     public static final EntityModelLayer LARGE_FLAME_BALL_LAYER = new EntityModelLayer(Identifier.of("mageflame", "large_flame_ball"), "main");
     public static final EntityModelLayer WINGED_TORCH_LAYER = new EntityModelLayer(Identifier.of("mageflame", "winged_torch"), "main");
-    public static final EntityModelLayer FIRE_WOLF_LAYER = new EntityModelLayer(Identifier.of("mageflame", "fire_wolf"), "main");
-
+    public static final EntityModelLayer EMBER_HOUND_LAYER = new EntityModelLayer(Identifier.of("mageflame", "ember_hound"), "main");
+    public static final EntityModelLayer BUBBLE_FLAME_LAYER = new EntityModelLayer(Identifier.of("mageflame", "bubble_flame_layer"), "main");
     @Override
     public void onInitializeClient() {
 
@@ -31,12 +45,14 @@ public class ClientSetup implements ClientModInitializer {
         EntityRendererRegistry.register(Registration.LESSER_REVELATION_ENTITY, LesserRevelationRenderer::new);
         EntityRendererRegistry.register(Registration.GREATER_REVELATION_ENTITY, GreaterRevelationRenderer::new);
         EntityRendererRegistry.register(Registration.WINGED_TORCH_ENTITY, WingedTorchRenderer::new);
-        EntityRendererRegistry.register(Registration.FIRE_WOLF_ENTITY, FireWolfRenderer::new);
+        EntityRendererRegistry.register(Registration.EMBER_HOUND_ENTITY, EmberHoundRenderer::new);
+        EntityRendererRegistry.register(Registration.BUBBLE_FLAME_ENTITY, BubbleFlameRenderer::new);
 
         EntityModelLayerRegistry.registerModelLayer(FLAME_BALL_LAYER, FlameBallModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(LARGE_FLAME_BALL_LAYER, LargeFlameBallModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(WINGED_TORCH_LAYER, WingedTorchModel::getTexturedModelData);
-        EntityModelLayerRegistry.registerModelLayer(FIRE_WOLF_LAYER, FireWolfModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(EMBER_HOUND_LAYER, EmberHoundModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(BUBBLE_FLAME_LAYER, BubbleFlameModel::getTexturedModelData);
 
         /* Adds our particle textures to vanilla's Texture Atlas so it can be shown properly.
          * Modify the namespace and particle id accordingly.
@@ -51,5 +67,8 @@ public class ClientSetup implements ClientModInitializer {
          * Second argument is the particle's factory. The factory controls how the particle behaves.
          * In this example, we'll use FlameParticle's Factory.*/
         ParticleFactoryRegistry.getInstance().register(Registration.REVELATION_PARTICLE, FlameParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(Registration.GREATER_REVELATION_PARTICLE, FlameParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(Registration.BUBBLE_FLAME_PARTICLE, FlameParticle.Factory::new);
+
     }
 }

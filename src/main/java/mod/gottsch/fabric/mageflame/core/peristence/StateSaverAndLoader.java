@@ -47,8 +47,7 @@ public class StateSaverAndLoader extends PersistentState {
 
     @Override
     public NbtCompound writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
-        MageFlame.LOGGER.info("saving persistent data...");
-MageFlame.LOGGER.info("player data to be persisted -> {}", players);
+//        MageFlame.LOGGER.info("saving persistent data...");
         NbtCompound playersNbt = new NbtCompound();
         players.forEach((key, value) -> {
             NbtCompound playerNbt = new NbtCompound();
@@ -58,50 +57,20 @@ MageFlame.LOGGER.info("player data to be persisted -> {}", players);
             playersNbt.put(key.toString(), playerNbt);
         });
         nbt.put("players", playersNbt);
-        MageFlame.LOGGER.info("players NBT data -> {}", playersNbt);
-//        // write registry to persistent state
-//        NbtList tag = new NbtList();
-//        SummonedLightSourceRegistry.REGISTRY.forEach((k,v) -> {
-//            MageFlame.LOGGER.info("saving persistent entity -> {}, mob -> {}", k.toString(), v.toString());
-//            NbtCompound entry = new NbtCompound();
-//            entry.put("id", NbtString.of(k.toString()));
-//            entry.put("value", NbtString.of(v.toString()));
-//
-//            tag.add(entry);
-//        });
-//        nbt.put(REGISTRY_TAG, tag);
-
         return nbt;
     }
 
     public static StateSaverAndLoader load(NbtCompound nbt, RegistryWrapper.WrapperLookup registryLookup) {
         StateSaverAndLoader state = new StateSaverAndLoader();
 
-        MageFlame.LOGGER.info("loading persistent data ie players");
+//        MageFlame.LOGGER.info("loading persistent data ie players");
         NbtCompound playersNbt = nbt.getCompound("players");
         playersNbt.getKeys().forEach(playerUuid -> {
-            MageFlame.LOGGER.info("loading player -> {}", playerUuid);
             PlayerData playerData = new PlayerData();
             NbtCompound data = playersNbt.getCompound(playerUuid);
-            MageFlame.LOGGER.info("player compound nbt -> {}", data);
             playerData.loadNbt(data);
-            MageFlame.LOGGER.info("player data -> {}", playerData);
             state.players.put(UUID.fromString(playerUuid), playerData);
         });
-//        if (nbt.contains(REGISTRY_TAG)) {
-//            try {
-//                NbtList tag = nbt.getList(REGISTRY_TAG, 10);
-//                for (int i = 0; i < tag.size(); i++) {
-//                    NbtCompound entry = tag.getCompound(i);
-//                    MageFlame.LOGGER.info("loading persistent entity -> {}, mob -> {}", UUID.fromString(entry.getString("id")), UUID.fromString(entry.getString("value")));
-//                    SummonedLightSourceRegistry.register(UUID.fromString(entry.getString("id")),
-//                            UUID.fromString(entry.getString("value")));
-//                }
-//            }
-//            catch(Exception e) {
-//                MageFlame.LOGGER.error("error", e);
-//            }
-//        }
         return state;
     }
 

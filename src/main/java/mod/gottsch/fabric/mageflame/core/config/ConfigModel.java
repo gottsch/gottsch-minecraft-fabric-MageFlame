@@ -12,6 +12,8 @@ import io.wispforest.owo.config.annotation.SectionHeader;
 @Config(name = "mageflame", wrapperName = "MyConfig")
 public class ConfigModel {
     @SectionHeader("flameProperties")
+    @RangeConstraint(min = 1, max = 10)
+    public int maxSummonedEntitiesPerPlayer = 3;
 //    @RestartRequired
 //    @Sync(Option.SyncMode.OVERRIDE_CLIENT)
     @RangeConstraint(min = 1200, max = 72000)
@@ -29,9 +31,5 @@ public class ConfigModel {
 
     @RangeConstraint(min = 1200, max = 72000)
     public int emberHoundLifespan = 72000;
-
-    // client side (make separate config?
-    @RangeConstraint(min = 1, max = 20)
-    public int updateLightTicks = 2;
 }
 

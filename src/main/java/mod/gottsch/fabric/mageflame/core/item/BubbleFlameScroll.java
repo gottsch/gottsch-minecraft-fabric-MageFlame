@@ -32,30 +32,30 @@ import java.util.List;
 
 /**
  * 
- * @author Mark Gottschling Jan 19, 2023
+ * @author Mark Gottschling Jan 18, 2025
  *
  */
-public class GreaterFlameScroll extends SummonFlyingScrollItem {
+public class BubbleFlameScroll extends SummonFlyingScrollItem {
 
-	public GreaterFlameScroll(Settings properties) {
+	public BubbleFlameScroll(Settings properties) {
 
 		super(properties);
 	}
 	
 	public EntityType<? extends MobEntity> getSummonFlameEntity() {
 
-		return Registration.GREATER_REVELATION_ENTITY;
+		return Registration.BUBBLE_FLAME_ENTITY;
 	}
 
 	@Override
 	public void appendBaseText(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
-		tooltip.add(Text.translatable(LangUtil.tooltip("greater_revelation.desc")).formatted(Formatting.YELLOW));
+		tooltip.add(Text.translatable(LangUtil.tooltip("bubble_flame.desc")).formatted(Formatting.YELLOW));
 		tooltip.add(Text.literal(" "));
 		tooltip.add(Text.translatable(LangUtil.tooltip("lifespan"), ticksToTime(MageFlame.CONFIG.mageFlameLifespan())));
 	}
 
 	@Override
 	public void appendAdvancedText(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
-		appendLore(stack, context, tooltip, "greater_revelation.lore");
+		appendLore(stack, context, tooltip, "bubble_flame.lore");
 	}
 }

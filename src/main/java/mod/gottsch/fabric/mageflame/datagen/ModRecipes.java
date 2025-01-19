@@ -89,7 +89,7 @@ public class ModRecipes extends RecipeProvider {
 					.criterion(hasItem(Items.BLAZE_POWDER), conditionsFromItem(Items.BLAZE_POWDER))
 					.offerTo(exporter, Identifier.of(MageFlame.MOD_ID, getRecipeName(Registration.WINGED_TORCH_SCROLL)));
 
-			ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, Registration.FIRE_WOLF_SCROLL)
+			ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, Registration.EMBER_HOUND_SCROLL)
 					.pattern(" x ")
 					.pattern("ltl")
 					.pattern("spb")
@@ -105,7 +105,7 @@ public class ModRecipes extends RecipeProvider {
 					.criterion(hasItem(Items.LAVA_BUCKET), conditionsFromItem(Items.LAVA_BUCKET))
 					.criterion(hasItem(Items.LEATHER), conditionsFromItem(Items.LEATHER))
 					.criterion(hasItem(Items.BLAZE_POWDER), conditionsFromItem(Items.BLAZE_POWDER))
-					.offerTo(exporter, Identifier.of(MageFlame.MOD_ID, getRecipeName(Registration.FIRE_WOLF_SCROLL)));
+					.offerTo(exporter, Identifier.of(MageFlame.MOD_ID, getRecipeName(Registration.EMBER_HOUND_SCROLL)));
 
 		}
 

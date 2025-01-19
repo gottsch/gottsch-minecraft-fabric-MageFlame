@@ -47,7 +47,8 @@ public class ModModelProvider extends FabricModelProvider {
 		itemModelGenerator.register(Registration.LESSER_REVELATION_SCROLL, Models.GENERATED);
 		itemModelGenerator.register(Registration.GREATER_REVELATION_SCROLL, Models.GENERATED);
 		itemModelGenerator.register(Registration.WINGED_TORCH_SCROLL, Models.GENERATED);
-		itemModelGenerator.register(Registration.FIRE_WOLF_SCROLL, Models.GENERATED);
+		itemModelGenerator.register(Registration.EMBER_HOUND_SCROLL, Models.GENERATED);
+		itemModelGenerator.register(Registration.BUBBLE_FLAME_SCROLL, Models.GENERATED);
 
 	}
 }

@@ -1,7 +1,23 @@
+/*
+ * This file is part of  Mage Flame.
+ * Copyright (c) 2025 Mark Gottschling (gottsch)
+ *
+ * Mage Flame is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Mage Flame is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with Mage Flame.  If not, see <http://www.gnu.org/licenses/lgpl>.
+ */
 package mod.gottsch.fabric.mageflame.core.event;
 
 import mod.gottsch.fabric.gottschcore.spatial.Coords;
-import mod.gottsch.fabric.mageflame.MageFlame;
 import mod.gottsch.fabric.mageflame.core.entity.creature.ISummonedEntity;
 import mod.gottsch.fabric.mageflame.core.peristence.PlayerData;
 import mod.gottsch.fabric.mageflame.core.peristence.StateSaverAndLoader;
@@ -23,31 +39,24 @@ public class MageFlameServerWorldUnloadHandler implements ServerEntityEvents.Unl
         }
 
         if (entity instanceof PlayerEntity player) {
-            MageFlame.LOGGER.info("player entity leaving world -> {}", entity.getName().getString());
             PlayerData playerData = StateSaverAndLoader.getPlayerState((LivingEntity) entity);
-            MageFlame.LOGGER.info("unload playerData -> {}", playerData);
             playerData.getKeys().forEach(modId -> {
-                MageFlame.LOGGER.info("saving player -> {}", player.getUuid());
                 // get the entity from the world
                 Entity mob = world.getEntity(modId);
                 if (mob instanceof ISummonedEntity lightSourceEntity) {
-                    MageFlame.LOGGER.info("got world mob");
                     // update player's entities
                     playerData.get(modId).ifPresent(data -> {
                         data.setLifespan(lightSourceEntity.getLifespan());
                         data.setCoords(Coords.of(mob.getBlockPos()));
-                        MageFlame.LOGGER.info("saving mob leaving world  -> {}", data);
 
                     });
                     // kill mob
                     mob.kill();
                 } else {
-                    MageFlame.LOGGER.info("unregistering mob -> {}", modId);
                     // can't find mob so unregister
                     playerData.unregister(modId);
                 }
             });
-            MageFlame.LOGGER.info("unload playerData end state -> {}", playerData);
             StateSaverAndLoader.getServerState(world.getServer()).markDirty();
         }
     }

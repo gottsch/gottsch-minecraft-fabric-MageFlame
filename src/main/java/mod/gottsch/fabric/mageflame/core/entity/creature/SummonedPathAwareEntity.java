@@ -47,14 +47,8 @@ import java.util.UUID;
 public abstract class SummonedPathAwareEntity extends PathAwareEntity implements ISummonedEntity {
     private static final TrackedData<Optional<UUID>> DATA_OWNER_UUID;
 
-//    private static final int MAX_BUFFER_TIME = 1200;
-
-//    private long birthTime;
-//    private int lifespan;
-//    private int bufferTime;
-
     // entity for composite inheritance
-    private final SummonedBaseHandler<SummonedPathAwareEntity> summonedBaseHandler;
+    private final SummonedEntityBaseHandler<SummonedPathAwareEntity> summonedEntityBaseHandler;
 
     static {
         DATA_OWNER_UUID = DataTracker.registerData(SummonedPathAwareEntity.class, TrackedDataHandlerRegistry.OPTIONAL_UUID);
@@ -62,9 +56,7 @@ public abstract class SummonedPathAwareEntity extends PathAwareEntity implements
 
     protected SummonedPathAwareEntity(EntityType<? extends PathAwareEntity> entityType, World world, int lifespan) {
         super(entityType, world);
-        this.summonedBaseHandler = new SummonedBaseHandler<>(world.getTime(), lifespan);
-//        this.birthTime = world.getTime();
-//        this.lifespan = lifespan;
+        this.summonedEntityBaseHandler = new SummonedEntityBaseHandler<>(world.getTime(), lifespan);
     }
 
     @Override
@@ -98,75 +90,24 @@ public abstract class SummonedPathAwareEntity extends PathAwareEntity implements
 
     @Override
     public double updateLifespan() {
-        return this.summonedBaseHandler.updateLifespan();
+        return this.summonedEntityBaseHandler.updateLifespan();
     }
 
     @Override
     public void doDeathEffects() {
-        this.summonedBaseHandler.doDeathEffects(this);
+        this.summonedEntityBaseHandler.doDeathEffects(this);
     }
 
     @Override
     public void tick() {
         super.tick();
-        this.summonedBaseHandler.tick(this, getOwner());
-//        if (!this.getWorld().isClient) {
-//            if (updateLifespan() < 0) {
-//                unregister();
-//                kill(getWorld().getDamageSources().generic());
-//            }
-//        }
+        this.summonedEntityBaseHandler.tick(this, getOwner());
     }
-
-//    public void unregister() {
-//        if (getOwner() != null) {
-//            PlayerData playerData = StateSaverAndLoader.getPlayerState(getOwner());
-//            playerData.unregister(getUuid());
-//        }
-//    }
-
-    /**
-     *
-     */
-//    protected double updateLifespan() {
-//        return --this.lifespan;
-//    }
 
     @Override
     public void tickMovement() {
         super.tickMovement();
-        this.summonedBaseHandler.tickMovement(this);
-//        if (this.getWorld().isClient) {
-//            if (this.getWorld().getTime() % 10 == 0) {
-//                BlockState state = this.getWorld().getBlockState(this.getBlockPos());
-//                if (state.getFluidState().isEmpty() || canLiveInFluid()) {
-//                    doLivingEffects();
-//                }
-//            }
-//        }
-//        else {
-//            // check for death scenarios ie no owner, if in water
-//            // NOTE the entity will join the world BEFORE the player
-//            // in single player and therefor will have no owner
-//            // and will call kill(). use bufferTime to delay this action.
-//            if (this.getWorld().getTime() % 10 == 0) {
-//                BlockState state = this.getWorld().getBlockState(this.getBlockPos());
-//                if (this.getOwner() == null) {
-//                    bufferTime += 10;
-//                    if (bufferTime > MAX_BUFFER_TIME) {
-//                        kill();
-//                    }
-//                    return;
-//                } else if (!state.getFluidState().isEmpty() && !canLiveInFluid()) {
-//                    // kill self
-//                    unregister();
-//                    kill();
-//
-//                    return;
-//                }
-//                if (bufferTime > 0) bufferTime = 0;
-//            }
-//        }
+        this.summonedEntityBaseHandler.tickMovement(this);
     }
 
 //    protected boolean testPlacement(BlockPos pos) {
@@ -190,9 +131,7 @@ public abstract class SummonedPathAwareEntity extends PathAwareEntity implements
      */
     @Override
     public void kill() {
-        this.summonedBaseHandler.kill(this);
-//        this.summonedBaseHandler.killAndUnregister(this, this.getOwner(), getWorld().getDamageSources().generic());
-//        kill(getWorld().getDamageSources().generic());
+        this.summonedEntityBaseHandler.kill(this);
     }
 
     /**
@@ -201,14 +140,8 @@ public abstract class SummonedPathAwareEntity extends PathAwareEntity implements
      */
     @Override
     public void kill(DamageSource damageSource) {
-        this.summonedBaseHandler.kill(this, damageSource);
-//        this.damage(damageSource, Float.MAX_VALUE);
-//
-//        doDeathEffects();
-//
-//        // hide the entity
-//        setInvisible(true);
-//
+        this.summonedEntityBaseHandler.kill(this, damageSource);
+
         // set dead
         this.dead = true;
 //
@@ -246,22 +179,6 @@ public abstract class SummonedPathAwareEntity extends PathAwareEntity implements
         }
     }
 
-    // TEMP until GottschCore for Fabric exists
-//    public static NbtCompound saveCoords(BlockPos pos) {
-//        NbtCompound tag = new NbtCompound();
-//        tag.putInt("x", pos.getX());
-//        tag.putInt("y", pos.getY());
-//        tag.putInt("z", pos.getZ());
-//        return tag;
-//    }
-//
-//    public static BlockPos loadCoords(NbtCompound tag) {
-//        if (tag.contains("x") && tag.contains("y") && tag.contains("z")) {
-//            return new BlockPos(tag.getInt("x"), tag.getInt("y"), tag.getInt("z"));
-//        }
-//        return null;
-//    }
-
     @Override
     public void checkDespawn() {
         // does NOT despawn
@@ -271,16 +188,6 @@ public abstract class SummonedPathAwareEntity extends PathAwareEntity implements
     public boolean cannotDespawn() {
         return true;
     }
-
-//    @Override
-//    public void setOwner(LivingEntity entity) {
-//        if (entity == null) {
-//            setOwnerUUID(null);
-//        }
-//        else {
-//            setOwnerUUID(entity.getUuid());
-//        }
-//    }
 
     @Override
     public UUID getOwnerUUID() {
@@ -295,25 +202,25 @@ public abstract class SummonedPathAwareEntity extends PathAwareEntity implements
     @Override
     public long getBirthTime() {
 //        return birthTime;
-        return this.summonedBaseHandler.getBirthTime();
+        return this.summonedEntityBaseHandler.getBirthTime();
     }
 
     @Override
     public void setBirthTime(long birthTime) {
 //        this.birthTime = birthTime;
-        this.summonedBaseHandler.setBirthTime(birthTime);
+        this.summonedEntityBaseHandler.setBirthTime(birthTime);
     }
 
     @Override
     public int getLifespan() {
 //        return lifespan;
-        return this.summonedBaseHandler.getLifespan();
+        return this.summonedEntityBaseHandler.getLifespan();
     }
 
     @Override
     public void setLifespan(int lifespan) {
 //        this.lifespan =lifespan;
-        this.summonedBaseHandler.setLifespan(lifespan);
+        this.summonedEntityBaseHandler.setLifespan(lifespan);
     }
 
     ///// from TameableEntity /////

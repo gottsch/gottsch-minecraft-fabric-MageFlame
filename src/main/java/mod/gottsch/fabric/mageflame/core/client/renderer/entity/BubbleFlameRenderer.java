@@ -1,5 +1,5 @@
 /*
- * This file is part of  Mage Flame.
+ * This file is part of Mage Flame.
  * Copyright (c) 2025 Mark Gottschling (gottsch)
  *
  * Mage Flame is free software: you can redistribute it and/or modify
@@ -9,7 +9,7 @@
  *
  * Mage Flame is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURCoordsE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
@@ -17,26 +17,26 @@
  */
 package mod.gottsch.fabric.mageflame.core.client.renderer.entity;
 
-import mod.gottsch.fabric.mageflame.core.client.model.entity.FireWolfModel;
-import mod.gottsch.fabric.mageflame.core.client.renderer.entity.layer.FireWolfFlameFeatureRenderer;
-import mod.gottsch.fabric.mageflame.core.entity.creature.FireWolfEntity;
+import mod.gottsch.fabric.mageflame.core.client.model.entity.BubbleFlameModel;
+import mod.gottsch.fabric.mageflame.core.entity.creature.BubbleFlameEntity;
 import mod.gottsch.fabric.mageflame.core.setup.ClientSetup;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.util.Identifier;
 
-/*
- * A renderer is used to provide an entity model, shadow size, and texture.
+/**
+ *
+ * @author Mark Gottschling Jan 18, 2025
+ *
  */
-public class FireWolfRenderer<T extends FireWolfEntity> extends MobEntityRenderer<T, FireWolfModel<T>> {
+public class BubbleFlameRenderer<T extends BubbleFlameEntity> extends MobEntityRenderer<T, BubbleFlameModel<T>> {
 
-    public FireWolfRenderer(EntityRendererFactory.Context context) {
-        super(context, new FireWolfModel<>(context.getPart(ClientSetup.FIRE_WOLF_LAYER)), 0);
-//        this.addFeature(new FireWolfFlameFeatureRenderer<>(this));
+    public BubbleFlameRenderer(EntityRendererFactory.Context context) {
+        super(context, new BubbleFlameModel<>(context.getPart(ClientSetup.BUBBLE_FLAME_LAYER)), 0);
     }
 
     @Override
-    public Identifier getTexture(FireWolfEntity entity) {
-        return Identifier.of("mageflame", "textures/entity/fire_wolf.png");
+    public Identifier getTexture(BubbleFlameEntity entity) {
+        return Identifier.of("mageflame", "textures/entity/bubble_flame.png");
     }
 }

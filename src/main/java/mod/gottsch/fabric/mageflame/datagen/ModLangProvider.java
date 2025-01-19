@@ -41,14 +41,16 @@ public class ModLangProvider extends FabricLanguageProvider {
         translationBuilder.add(Registration.LESSER_REVELATION_SCROLL, "Lesser Revelation Scroll");
         translationBuilder.add(Registration.GREATER_REVELATION_SCROLL, "Greater Revelation Scroll");
         translationBuilder.add(Registration.WINGED_TORCH_SCROLL, "Winged Torch Scroll");
-        translationBuilder.add(Registration.FIRE_WOLF_SCROLL, "Ember Hound Scroll");
+        translationBuilder.add(Registration.EMBER_HOUND_SCROLL, "Ember Hound Scroll");
+        translationBuilder.add(Registration.BUBBLE_FLAME_SCROLL, "Bubble Flame Scroll");
 
         // entities
         translationBuilder.add(Registration.MAGE_FLAME_ENTITY, "Mage Flame");
         translationBuilder.add(Registration.LESSER_REVELATION_ENTITY, "Lesser Revelation");
         translationBuilder.add(Registration.GREATER_REVELATION_ENTITY, "Greater Revelation");
         translationBuilder.add(Registration.WINGED_TORCH_ENTITY, "Winged Torch");
-        translationBuilder.add(Registration.FIRE_WOLF_ENTITY, "Ember Hound");
+        translationBuilder.add(Registration.EMBER_HOUND_ENTITY, "Ember Hound");
+        translationBuilder.add(Registration.BUBBLE_FLAME_ENTITY, "Bubble Flame");
 
         /*
          *  Util.tooltips
@@ -64,29 +66,33 @@ public class ModLangProvider extends FabricLanguageProvider {
         translationBuilder.add(LangUtil.tooltip("light_level"), "Light Level: %s");
 
         translationBuilder.add(LangUtil.tooltip("mage_flame.desc"), "Allows the spellcaster to create a small ball of flames.");
-        translationBuilder.add(LangUtil.tooltip("mage_flame.lore"), "The weakest of the summoned flames,~well-suited for the apprentice spellcaster.~It will allow you to see, but not as bright~as a regular torch. It is not strong enough~to navigate through vines and other~replaceable blocks, and will extinguish if~it is unable to follow its owner.");
+        translationBuilder.add(LangUtil.tooltip("mage_flame.lore"), "The weakest of the summoned flames,~well-suited for the apprentice spellcaster.~It will allow you to see, but not as bright~as a regular torch.");
 
         translationBuilder.add(LangUtil.tooltip("lesser_revelation.desc"), "A more powerful version of Mage Flame.");
-        translationBuilder.add(LangUtil.tooltip("lesser_revelation.lore"), "A ball of magic-green fire. It has a more~powerful light and increased lifespan.");
+        translationBuilder.add(LangUtil.tooltip("lesser_revelation.lore"), "A ball of magic-green fire. It has a more~powerful light and increased lifespan than Mage Flame.");
 
         translationBuilder.add(LangUtil.tooltip("greater_revelation.desc"), "The most powerful of the magical flames.");
-        translationBuilder.add(LangUtil.tooltip("greater_revelation.lore"), "The spellcaster is able to channel a great~amount of power to generate a large ball~of magic-green fire. Brighter than a torch~and has staying power. It also has enough~power to destroy replaceable blocks.");
+        translationBuilder.add(LangUtil.tooltip("greater_revelation.lore"), "The spellcaster is able to channel a great~amount of power to generate a large ball~of magic-blue fire. Brighter than a torch~and has staying power.");
 
         translationBuilder.add(LangUtil.tooltip("winged_torch.desc"), "Allows the spellcaster to summon a Winged Torch.");
-        translationBuilder.add(LangUtil.tooltip("winged_torch.lore"), "The spellcaster is able reach into the nether~plane and summon a Winged Torch. The torch~will remain under your charge until you~release it or it perishes.");
+        translationBuilder.add(LangUtil.tooltip("winged_torch.lore"), "The spellcaster is able reach into the astral~plane and summon a Winged Torch. The torch~will remain under your charge until you~release it or it perishes.");
 
-        translationBuilder.add(LangUtil.tooltip("fire_wolf.desc"), "Allows the spellcaster to summon an Ember Hound.");
-        translationBuilder.add(LangUtil.tooltip("fire_wolf.lore"), "The spellcaster is able reach into the nether~plane and summon an Ember Hound....");
+        translationBuilder.add(LangUtil.tooltip("ember_hound.desc"), "Allows the spellcaster to summon an Ember Hound.");
+        translationBuilder.add(LangUtil.tooltip("ember_hound.lore"), "The spellcaster is able reach into the nether~plane and summon an Ember Hound.~Ember Hounds have a long lifespan.");
+
+        translationBuilder.add(LangUtil.tooltip("bubble_flame.desc"), "Allows the spellcaster to summon a Bubble Flame.");
+        translationBuilder.add(LangUtil.tooltip("bubble_flame.lore"), "A bright flame within its own air bubble.~Able to travel underwater.");
 
         /*
          * modmenu integration
          */
         translationBuilder.add("text.config.mageflame.title",  "Mage Flame Configuration");
-                translationBuilder.add("text.config.mageflame.section.flameProperties", "Flame / Torch Entity Properties");
-                translationBuilder.add("text.config.mageflame.option.mageFlameLifespan", "Mage Flame Lifespan");
-                translationBuilder.add("text.config.mageflame.option.lesserRevelationLifespan", "Lesser Revelation Lifespan");
-                translationBuilder.add("text.config.mageflame.option.greaterRevelationLifespan", "Greater Revelation Lifespan");
-                translationBuilder.add("text.config.mageflame.option.updateLightTicks", "Update Light Delay in Ticks");
+        translationBuilder.add("text.config.mageflame.section.flameProperties", "Flame / Torch Entity Properties");
+        translationBuilder.add("text.config.mageflame.option.mageFlameLifespan", "Mage Flame Lifespan");
+        translationBuilder.add("text.config.mageflame.option.lesserRevelationLifespan", "Lesser Revelation Lifespan");
+        translationBuilder.add("text.config.mageflame.option.greaterRevelationLifespan", "Greater Revelation Lifespan");
+        translationBuilder.add("text.config.mageflame.option.updateLightTicks", "Update Light Delay in Ticks");
+        translationBuilder.add("text.config.mageflame.option.maxSummonedEntitiesPerPlayer", "Max Entities Per Player");
 
     }
 

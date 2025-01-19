@@ -26,19 +26,22 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.AbstractSkeletonEntity;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 /**
  * Created by Mark Gottschling on 1/9/2025
  */
-public class FireWolfEntity extends SummonedPathAwareEntity {
+public class EmberHoundEntity extends SummonedPathAwareEntity {
 
-    public FireWolfEntity(EntityType<? extends PathAwareEntity> entityType, World world) {
+    public EmberHoundEntity(EntityType<? extends PathAwareEntity> entityType, World world) {
         super(entityType, world, MageFlame.CONFIG.emberHoundLifespan());
     }
 
@@ -62,6 +65,27 @@ public class FireWolfEntity extends SummonedPathAwareEntity {
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3F)
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 40.0)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 8.0);
+    }
+
+    protected void playStepSound(BlockPos pos, BlockState state) {
+        this.playSound(SoundEvents.ENTITY_WOLF_STEP, 0.15F, 1.0F);
+    }
+
+    protected SoundEvent getAmbientSound() {
+        int i = this.random.nextInt(10);
+        if (i < 2) {
+            return SoundEvents.ENTITY_WOLF_GROWL;
+        } else if (i < 5) {
+            return SoundEvents.ENTITY_WOLF_PANT;
+        } else if (i < 7) {
+            return SoundEvents.ENTITY_WOLF_AMBIENT;
+        } else {
+            return super.getAmbientSound();
+        }
+    }
+
+    protected SoundEvent getHurtSound(DamageSource source) {
+        return SoundEvents.ENTITY_WOLF_HURT;
     }
 
     @Override

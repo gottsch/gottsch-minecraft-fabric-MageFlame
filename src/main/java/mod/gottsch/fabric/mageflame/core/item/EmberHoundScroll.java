@@ -35,9 +35,9 @@ import java.util.List;
  * @author Mark Gottschling Jan 11, 2025
  *
  */
-public class FireWolfScroll extends SummonPathAwareScrollItem {
+public class EmberHoundScroll extends SummonPathAwareScrollItem {
 
-	public FireWolfScroll(Settings properties) {
+	public EmberHoundScroll(Settings properties) {
 
 		super(properties);
 	}
@@ -45,7 +45,7 @@ public class FireWolfScroll extends SummonPathAwareScrollItem {
 	@Override
 	public EntityType<? extends MobEntity> getSummonFlameEntity() {
 
-		return Registration.FIRE_WOLF_ENTITY;
+		return Registration.EMBER_HOUND_ENTITY;
 	}
 
 //	@Override
@@ -65,13 +65,13 @@ public class FireWolfScroll extends SummonPathAwareScrollItem {
 	@Override
 	public void appendBaseText(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
 
-		tooltip.add(Text.translatable(LangUtil.tooltip("fire_wolf.desc")).formatted(Formatting.YELLOW));
+		tooltip.add(Text.translatable(LangUtil.tooltip("ember_hound.desc")).formatted(Formatting.YELLOW));
 		tooltip.add(Text.literal(" "));
 		tooltip.add(Text.translatable(LangUtil.tooltip("light_level"), ticksToTime(MageFlame.CONFIG.emberHoundLifespan())));
 	}
 
 	@Override
 	public void appendAdvancedText(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
-		appendLore(stack, context, tooltip, "fire_wolf.lore");
+		appendLore(stack, context, tooltip, "ember_hound.lore");
 	}
 }
