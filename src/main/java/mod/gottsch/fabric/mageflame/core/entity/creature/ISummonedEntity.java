@@ -1,5 +1,5 @@
 /*
- * This file is part of  Mage Flame.
+ * This file is part of Mage Flame.
  * Copyright (c) 2023 Mark Gottschling (gottsch)
  *
  * Mage Flame is free software: you can redistribute it and/or modify

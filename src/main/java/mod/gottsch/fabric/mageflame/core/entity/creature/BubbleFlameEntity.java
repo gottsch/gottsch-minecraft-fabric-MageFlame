@@ -35,7 +35,7 @@ import net.minecraft.world.World;
 public class BubbleFlameEntity extends SummonedFlyingEntity {
 
     public BubbleFlameEntity(EntityType<? extends FlyingEntity> entityType, World level) {
-        super(entityType, level, MageFlame.CONFIG.greaterRevelationLifespan());
+        super(entityType, level, MageFlame.CONFIG.bubbleFlameLifespan());
     }
 
     public static DefaultAttributeContainer.Builder createMobAttributes() {

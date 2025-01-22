@@ -103,57 +103,7 @@ public interface ISummonScrollItem {
 	 */
 
 	default public <T extends MobEntity & ISummonedEntity> Optional<?> spawn(ServerWorld level, Random random, LivingEntity owner, EntityType<T> entityType, ICoords coords) {
-
 		return SpawnUtil.spawnAtPos(level, random, owner, entityType, coords);
-
-		//		Direction direction = owner.getMovementDirection();
-//
-//		if (!level.isClient) {
-//			// select the first available spawn pos from origin (coords)
-//			Vec3d spawnVec3 = selectSpawnPos(level, coords, direction);
-//			BlockPos spawnPos = new BlockPos((int)spawnVec3.x, (int)spawnVec3.y, (int)spawnVec3.z);
-//			// MageFlame.LOGGER.info("attempting to spawn summon flame at -> {} ...", spawnPos);
-//
-//
-//			// determine if the entity can spawn
-//			if(SpawnRestriction.canSpawn(entityType, level, SpawnReason.SPAWNER, spawnPos, level.getRandom())) {
-//				// MageFlame.LOGGER.info("placement is good");
-//				// create entity
-//				MobEntity mob = entityType.create(level);
-//				if (mob != null) {
-//					// MageFlame.LOGGER.info("new entity is created -> {}", mob.getUuidAsString());
-//					mob.setPos(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
-//					((ISummonedLightSourceEntity)mob).setOwner(owner);
-//
-//					// MageFlame.LOGGER.info("is owner registered -> {}", SummonFlameRegistry.isRegistered(owner.getUuid()));
-//					// check and remove existing owner's entity, regardless if existing entity is located
-//					if (SummonedLightSourceRegistry.isRegistered(owner.getUuid())) {
-//						// unregister existing entity for player
-//						UUID existingUuid = SummonedLightSourceRegistry.unregister(owner.getUuid());
-//						// MageFlame.LOGGER.info("owner is registered to entity -> {}", existingUuid.toString());
-//						Entity existingMob = level.getEntity(existingUuid);
-//						if (existingMob != null) {
-//							// MageFlame.LOGGER.info("located and killing exisiting entity -> {}", existingUuid.toString());
-//							((ISummonedLightSourceEntity)existingMob).kill();
-//						}
-//					}
-//
-//					// registry entity
-//					// MageFlame.LOGGER.info("registering entity -> {} to owner -> {}", mob.getUuidAsString(), owner.getUuidAsString());
-//					SummonedLightSourceRegistry.register(owner.getUuid(), mob.getUuid());
-//					StateSaverAndLoader.getServerState(level.getServer()).markDirty();
-//
-//					// add entity into the level (ie EntityJoinWorldEvent)
-//					level.spawnEntityAndPassengers(mob);
-//
-//					// cast effects
-//					doCastEffects(level, owner);
-//
-//					return Optional.of(mob);
-//				}
-//			}
-//		}
-//		return Optional.empty();
 	}
 
 	default public void doCastEffects(World world, LivingEntity owner) {

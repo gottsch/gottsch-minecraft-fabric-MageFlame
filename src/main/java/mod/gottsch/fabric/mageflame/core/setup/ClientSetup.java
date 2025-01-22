@@ -38,6 +38,9 @@ public class ClientSetup implements ClientModInitializer {
     public static final EntityModelLayer WINGED_TORCH_LAYER = new EntityModelLayer(Identifier.of("mageflame", "winged_torch"), "main");
     public static final EntityModelLayer EMBER_HOUND_LAYER = new EntityModelLayer(Identifier.of("mageflame", "ember_hound"), "main");
     public static final EntityModelLayer BUBBLE_FLAME_LAYER = new EntityModelLayer(Identifier.of("mageflame", "bubble_flame_layer"), "main");
+    public static final EntityModelLayer GLOWGLOB_LAYER = new EntityModelLayer(Identifier.of(MageFlame.MOD_ID, "glowglob_layer"), "main");
+
+
     @Override
     public void onInitializeClient() {
 
@@ -47,13 +50,14 @@ public class ClientSetup implements ClientModInitializer {
         EntityRendererRegistry.register(Registration.WINGED_TORCH_ENTITY, WingedTorchRenderer::new);
         EntityRendererRegistry.register(Registration.EMBER_HOUND_ENTITY, EmberHoundRenderer::new);
         EntityRendererRegistry.register(Registration.BUBBLE_FLAME_ENTITY, BubbleFlameRenderer::new);
+        EntityRendererRegistry.register(Registration.GLOWGLOB_ENTITY, GlowglobRenderer::new);
 
         EntityModelLayerRegistry.registerModelLayer(FLAME_BALL_LAYER, FlameBallModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(LARGE_FLAME_BALL_LAYER, LargeFlameBallModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(WINGED_TORCH_LAYER, WingedTorchModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(EMBER_HOUND_LAYER, EmberHoundModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(BUBBLE_FLAME_LAYER, BubbleFlameModel::getTexturedModelData);
-
+        EntityModelLayerRegistry.registerModelLayer(GLOWGLOB_LAYER, GlowglobModel::getTexturedModelData);
         /* Adds our particle textures to vanilla's Texture Atlas so it can be shown properly.
          * Modify the namespace and particle id accordingly.
          *

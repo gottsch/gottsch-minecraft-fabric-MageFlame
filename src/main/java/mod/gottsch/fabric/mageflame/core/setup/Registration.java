@@ -1,5 +1,5 @@
 /*
- * This file is part of  Mage Flame.
+ * This file is part of Mage Flame.
  * Copyright (c) 2023 Mark Gottschling (gottsch)
  *
  * Mage Flame is free software: you can redistribute it and/or modify
@@ -48,6 +48,7 @@ public class Registration {
     public static final String WINGED_TORCH = "winged_torch";
     public static final String EMBER_HOUND= "ember_hound";
     public static final String BUBBLE_FLAME = "bubble_flame";
+    public static final String GLOWGLOB = "glowglob";
 
     // items
     public static final Item MAGE_FLAME_SCROLL = new MageFlameScroll(new Item.Settings());
@@ -56,6 +57,7 @@ public class Registration {
     public static final Item WINGED_TORCH_SCROLL = new WingedTorchScroll(new Item.Settings());
     public static final Item EMBER_HOUND_SCROLL = new EmberHoundScroll(new Item.Settings());
     public static final Item BUBBLE_FLAME_SCROLL = new BubbleFlameScroll(new Item.Settings());
+    public static final Item GLOWGLOB_SCROLL = new GlowglobScroll(new Item.Settings());
 
     // entities
     public static final EntityType<MageFlameEntity> MAGE_FLAME_ENTITY = Registry.register(
@@ -113,7 +115,17 @@ public class Registration {
             Identifier.of(MageFlame.MOD_ID, BUBBLE_FLAME),
             FabricEntityTypeBuilder.create(
                             SpawnGroup.CREATURE, BubbleFlameEntity::new)
-                    .dimensions(EntityDimensions.fixed(0.6F, 0.85F))
+                    .dimensions(EntityDimensions.fixed(0.25F, 0.25F))
+                    .fireImmune()
+                    .build()
+    );
+
+    public static final EntityType<GlowglobEntity> GLOWGLOB_ENTITY = Registry.register(
+            Registries.ENTITY_TYPE,
+            Identifier.of(MageFlame.MOD_ID, GLOWGLOB),
+            FabricEntityTypeBuilder.create(
+                            SpawnGroup.CREATURE, GlowglobEntity::new)
+                    .dimensions(EntityDimensions.fixed(0.55F, 0.55F))
                     .fireImmune()
                     .build()
     );
@@ -136,6 +148,7 @@ public class Registration {
             content.add(Registration.WINGED_TORCH_SCROLL);
             content.add(Registration.EMBER_HOUND_SCROLL);
             content.add(Registration.BUBBLE_FLAME_SCROLL);
+            content.add(Registration.GLOWGLOB_SCROLL);
         });
 
         // register items
@@ -145,6 +158,7 @@ public class Registration {
         Registry.register(Registries.ITEM, Identifier.of(MageFlame.MOD_ID, "winged_torch_scroll"), WINGED_TORCH_SCROLL);
         Registry.register(Registries.ITEM, Identifier.of(MageFlame.MOD_ID, "ember_hound_scroll"), EMBER_HOUND_SCROLL);
         Registry.register(Registries.ITEM, Identifier.of(MageFlame.MOD_ID, "bubble_flame_scroll"), BUBBLE_FLAME_SCROLL);
+        Registry.register(Registries.ITEM, Identifier.of(MageFlame.MOD_ID, "glowglob_scroll"), GLOWGLOB_SCROLL);
 
         // register entity attributes
         FabricDefaultAttributeRegistry.register(MAGE_FLAME_ENTITY, MageFlameEntity.createMobAttributes());
@@ -153,6 +167,7 @@ public class Registration {
         FabricDefaultAttributeRegistry.register(WINGED_TORCH_ENTITY, WingedTorchEntity.createMobAttributes());
         FabricDefaultAttributeRegistry.register(EMBER_HOUND_ENTITY, EmberHoundEntity.createWolfAttributes());
         FabricDefaultAttributeRegistry.register(BUBBLE_FLAME_ENTITY, BubbleFlameEntity.createMobAttributes());
+        FabricDefaultAttributeRegistry.register(GLOWGLOB_ENTITY, GlowglobEntity.createGlobAttributes());
 
         // particles
         Registry.register(Registries.PARTICLE_TYPE, Identifier.of(MageFlame.MOD_ID, "revelation_particle"), REVELATION_PARTICLE);

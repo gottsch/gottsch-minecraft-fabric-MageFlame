@@ -131,7 +131,10 @@ public abstract class SummonedPathAwareEntity extends PathAwareEntity implements
      */
     @Override
     public void kill() {
-        this.summonedEntityBaseHandler.kill(this);
+        MageFlame.LOGGER.info("killing entity -> {}", this.getUuid().toString());
+        this.summonedEntityBaseHandler.killAndUnregister(this);
+        // set dead
+        this.dead = true;
     }
 
     /**
@@ -140,12 +143,10 @@ public abstract class SummonedPathAwareEntity extends PathAwareEntity implements
      */
     @Override
     public void kill(DamageSource damageSource) {
-        this.summonedEntityBaseHandler.kill(this, damageSource);
+        this.summonedEntityBaseHandler.killAndUnregister(this, damageSource);
 
         // set dead
         this.dead = true;
-//
-//        // MageFlame.LOGGER.info("kill - current light coords -> {}, last light coords -> {}", getCurrentLightCoords(), getLastLightCoords());
     }
 
     @Override
@@ -213,7 +214,6 @@ public abstract class SummonedPathAwareEntity extends PathAwareEntity implements
 
     @Override
     public int getLifespan() {
-//        return lifespan;
         return this.summonedEntityBaseHandler.getLifespan();
     }
 

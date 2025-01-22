@@ -43,6 +43,7 @@ public class ModLangProvider extends FabricLanguageProvider {
         translationBuilder.add(Registration.WINGED_TORCH_SCROLL, "Winged Torch Scroll");
         translationBuilder.add(Registration.EMBER_HOUND_SCROLL, "Ember Hound Scroll");
         translationBuilder.add(Registration.BUBBLE_FLAME_SCROLL, "Bubble Flame Scroll");
+        translationBuilder.add(Registration.GLOWGLOB_SCROLL, "Glowglob Scroll");
 
         // entities
         translationBuilder.add(Registration.MAGE_FLAME_ENTITY, "Mage Flame");
@@ -51,6 +52,7 @@ public class ModLangProvider extends FabricLanguageProvider {
         translationBuilder.add(Registration.WINGED_TORCH_ENTITY, "Winged Torch");
         translationBuilder.add(Registration.EMBER_HOUND_ENTITY, "Ember Hound");
         translationBuilder.add(Registration.BUBBLE_FLAME_ENTITY, "Bubble Flame");
+        translationBuilder.add(Registration.GLOWGLOB_ENTITY, "Glowglob");
 
         /*
          *  Util.tooltips
@@ -80,8 +82,11 @@ public class ModLangProvider extends FabricLanguageProvider {
         translationBuilder.add(LangUtil.tooltip("ember_hound.desc"), "Allows the spellcaster to summon an Ember Hound.");
         translationBuilder.add(LangUtil.tooltip("ember_hound.lore"), "The spellcaster is able reach into the nether~plane and summon an Ember Hound.~Ember Hounds have a long lifespan.");
 
-        translationBuilder.add(LangUtil.tooltip("bubble_flame.desc"), "Allows the spellcaster to summon a Bubble Flame.");
+        translationBuilder.add(LangUtil.tooltip("bubble_flame.desc"), "Allows the spellcaster to conjure a Bubble Flame.");
         translationBuilder.add(LangUtil.tooltip("bubble_flame.lore"), "A bright flame within its own air bubble.~Able to travel underwater.");
+
+        translationBuilder.add(LangUtil.tooltip("glowglob.desc"), "Allows the spellcaster to create a glowglob.");
+        translationBuilder.add(LangUtil.tooltip("glowglob.lore"), "A weak stationary source of light.");
 
         /*
          * modmenu integration
@@ -91,7 +96,9 @@ public class ModLangProvider extends FabricLanguageProvider {
         translationBuilder.add("text.config.mageflame.option.mageFlameLifespan", "Mage Flame Lifespan");
         translationBuilder.add("text.config.mageflame.option.lesserRevelationLifespan", "Lesser Revelation Lifespan");
         translationBuilder.add("text.config.mageflame.option.greaterRevelationLifespan", "Greater Revelation Lifespan");
-        translationBuilder.add("text.config.mageflame.option.updateLightTicks", "Update Light Delay in Ticks");
+        translationBuilder.add("text.config.mageflame.option.isEmberHoundLifespanInfinite", "Is Ember Hound Lifespan Infinite?");
+        translationBuilder.add("text.config.mageflame.option.emberHoundLifespan", "Ember Hound Lifespan");
+        translationBuilder.add("text.config.mageflame.option.glowglobLifespan", "Glowglob Lifespan");
         translationBuilder.add("text.config.mageflame.option.maxSummonedEntitiesPerPlayer", "Max Entities Per Player");
 
     }

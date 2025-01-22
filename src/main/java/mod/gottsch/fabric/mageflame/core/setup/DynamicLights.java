@@ -59,5 +59,9 @@ public class DynamicLights implements DynamicLightsInitializer {
         registerDynamicLightHandler(Registration.BUBBLE_FLAME_ENTITY,
                 DynamicLightHandler.makeHandler(entity -> 14, entity -> false)
         );
+
+        registerDynamicLightHandler(Registration.GLOWGLOB_ENTITY,
+                DynamicLightHandler.makeHandler(entity -> 9, entity -> true)
+        );
     }
 }

@@ -5,19 +5,18 @@
   "sortnum": 1,
   "pages": [
     {
-      "type": "patchouli:spotlight",
-      "title": "Bubble Flame",
-      "item": {
-        "item": "mageflame:bubble_flame_scroll"
-      },
-      "text": "$(o)The spellcaster is able to channel a great amount of power to generate a large ball of magic-green fire. Brighter than a torch and has staying power. It also has enough power to destroy replaceable blocks.",
+      "type": "patchouli:entity",
+      "entity": "mageflame:bubble_flame",
+      "name": "Bubble Flame",
+      "scale": 1,
+      "text": "$(o)Allows the spellcaster to conjure a Bubble Flame.",
       "anchor": "bubble_flame"
     },
     {
       "type": "patchouli:crafting",
       "title": "Bubble Flame Recipe",
-      "recipe": "mageflame:greater_revelation_scroll",
-      "text": "The most powerful of the magical flames.$(br)Brightness = 15$(br)Duration = 30 minutes"
+      "recipe": "mageflame:bubble_flame_scroll",
+      "text": "A bright flame within its own air bubble. Able to travel underwater.$(br)Brightness = 14$(br)Duration = 45 minutes"
     }
   ]
 }

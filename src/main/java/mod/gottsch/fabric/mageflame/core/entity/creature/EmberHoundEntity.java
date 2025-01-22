@@ -89,6 +89,19 @@ public class EmberHoundEntity extends SummonedPathAwareEntity {
     }
 
     @Override
+    public double updateLifespan() {
+        return getLifespan();
+    }
+
+    @Override
+    public int getLifespan() {
+        if (MageFlame.CONFIG.isEmberHoundLifespanInfinite()) {
+            return Integer.MAX_VALUE;
+        }
+        return super.getLifespan();
+    }
+
+    @Override
     public void doLivingEffects() {
         double d1 = this.getRandomBodyY();
         for (int i=0; i < 3; i++) {
@@ -123,13 +136,4 @@ public class EmberHoundEntity extends SummonedPathAwareEntity {
         return this.getZ((2.0D * this.random.nextDouble() - 1.0D) * factor);
     }
 
-//    @Override
-//    protected boolean testPlacement(BlockPos pos) {
-//        BlockState state = this.getWorld().getBlockState(pos);
-//        // check block
-//        if (state.isAir() || (state.isReplaceable()) && state.getFluidState().isEmpty()) {
-//            return true;
-//        }
-//        return false;
-//    }
 }

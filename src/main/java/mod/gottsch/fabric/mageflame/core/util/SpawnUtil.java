@@ -34,6 +34,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -102,6 +103,15 @@ public class SpawnUtil {
         StateSaverAndLoader.getServerState(world.getServer()).markDirty();
     }
 
+    public static List<EntityType<?>> getAllSummonedEntities(ServerWorld world, PlayerEntity player) {
+        List<SummonedEntityData> entities = StateSaverAndLoader.getPlayerState(player).getValues();
+        List<EntityType<?>> list = new ArrayList<>();
+        entities.forEach(summonedEntityData -> {
+            list.add(summonedEntityData.getEntityType());
+        });
+        return list;
+    }
+
     public static void killAllSummonedEntities(ServerWorld world, PlayerEntity player) {
         killAllSummonedEntities(world, StateSaverAndLoader.getPlayerState(player));
     }
@@ -114,6 +124,35 @@ public class SpawnUtil {
             }
             playerData.unregister(summonedEntityData.getId());
         });
+    }
+
+    public static void killSummonedEntity(ServerWorld world, PlayerEntity player, String entityName) {
+        PlayerData playerData = StateSaverAndLoader.getPlayerState(player);
+
+        List<SummonedEntityData> summonedEntityDataList = playerData.getValues();
+        // update data with lifespan of actual in game entities
+        summonedEntityDataList.forEach(summonedEntityData -> {
+            ISummonedEntity worldEntity = (ISummonedEntity) world.getEntity(summonedEntityData.getId());
+            if (worldEntity != null) {
+                summonedEntityData.setLifespan(worldEntity.getLifespan());
+            }
+        });
+        // sort the data
+        summonedEntityDataList.sort(SummonedEntityData.lifespanComparator);
+
+        List<SummonedEntityData> toRemove = new ArrayList<>();
+        for(SummonedEntityData data : summonedEntityDataList) {
+            if (data.getEntityType().getName().getString().equals(entityName)) {
+                Entity worldEntity = world.getEntity(summonedEntityDataList.getFirst().getId());
+                if (worldEntity != null) {
+                    worldEntity.kill();
+                }
+                toRemove.add(data);
+                break;
+            }
+        }
+
+        toRemove.forEach(summonedEntityDataList::remove);
     }
 
     public static void cullSummonedEntities(ServerWorld world, PlayerData playerData) {
@@ -230,6 +269,5 @@ public class SpawnUtil {
             default -> eyePos.add(new Vec3d(0.5, 0, 0.35));
         };
     }
-
 
 }
