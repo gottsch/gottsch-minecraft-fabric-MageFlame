@@ -27,6 +27,8 @@ import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.client.particle.FlameParticle;
+import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
+import net.minecraft.client.render.entity.ProjectileEntityRenderer;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.util.Identifier;
@@ -51,6 +53,7 @@ public class ClientSetup implements ClientModInitializer {
         EntityRendererRegistry.register(Registration.EMBER_HOUND_ENTITY, EmberHoundRenderer::new);
         EntityRendererRegistry.register(Registration.BUBBLE_FLAME_ENTITY, BubbleFlameRenderer::new);
         EntityRendererRegistry.register(Registration.GLOWGLOB_ENTITY, GlowglobRenderer::new);
+        EntityRendererRegistry.register(Registration.GLOWGLOB_BALL_ENTITY, FlyingItemEntityRenderer::new);
 
         EntityModelLayerRegistry.registerModelLayer(FLAME_BALL_LAYER, FlameBallModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(LARGE_FLAME_BALL_LAYER, LargeFlameBallModel::getTexturedModelData);

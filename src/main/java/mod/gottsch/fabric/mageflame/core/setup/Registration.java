@@ -19,20 +19,19 @@ package mod.gottsch.fabric.mageflame.core.setup;
 
 import mod.gottsch.fabric.mageflame.MageFlame;
 import mod.gottsch.fabric.mageflame.core.entity.creature.*;
+import mod.gottsch.fabric.mageflame.core.entity.projectile.thrown.GlowglobBallEntity;
 import mod.gottsch.fabric.mageflame.core.event.MageFlameServerWorldLoadHandler;
 import mod.gottsch.fabric.mageflame.core.event.MageFlameServerWorldUnloadHandler;
 import mod.gottsch.fabric.mageflame.core.item.*;
 import mod.gottsch.fabric.mageflame.core.loot.ModLootTableModifiers;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroups;
 import net.minecraft.particle.SimpleParticleType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -51,13 +50,13 @@ public class Registration {
     public static final String GLOWGLOB = "glowglob";
 
     // items
-    public static final Item MAGE_FLAME_SCROLL = new MageFlameScroll(new Item.Settings());
-    public static final Item LESSER_REVELATION_SCROLL = new LesserFlameScroll(new Item.Settings());
-    public static final Item GREATER_REVELATION_SCROLL = new GreaterFlameScroll(new Item.Settings());
-    public static final Item WINGED_TORCH_SCROLL = new WingedTorchScroll(new Item.Settings());
-    public static final Item EMBER_HOUND_SCROLL = new EmberHoundScroll(new Item.Settings());
-    public static final Item BUBBLE_FLAME_SCROLL = new BubbleFlameScroll(new Item.Settings());
-    public static final Item GLOWGLOB_SCROLL = new GlowglobScroll(new Item.Settings());
+//    public static final Item MAGE_FLAME_SCROLL = new MageFlameScroll(new Item.Settings());
+//    public static final Item LESSER_REVELATION_SCROLL = new LesserFlameScroll(new Item.Settings());
+//    public static final Item GREATER_REVELATION_SCROLL = new GreaterFlameScroll(new Item.Settings());
+//    public static final Item WINGED_TORCH_SCROLL = new WingedTorchScroll(new Item.Settings());
+//    public static final Item EMBER_HOUND_SCROLL = new EmberHoundScroll(new Item.Settings());
+//    public static final Item BUBBLE_FLAME_SCROLL = new BubbleFlameScroll(new Item.Settings());
+//    public static final Item GLOWGLOB_SCROLL = new GlowglobScroll(new Item.Settings());
 
     // entities
     public static final EntityType<MageFlameEntity> MAGE_FLAME_ENTITY = Registry.register(
@@ -130,6 +129,15 @@ public class Registration {
                     .build()
     );
 
+    public static final EntityType<GlowglobBallEntity> GLOWGLOB_BALL_ENTITY = Registry.register(Registries.ENTITY_TYPE,
+            Identifier.of(MageFlame.MOD_ID, "glowglob_ball"),
+//            EntityType.Builder.<GlowglobBallEntity>create(GlowglobBallEntity::new, SpawnGroup.MISC)
+//                    .dimensions(0.25F, 0.25F)
+//                    .makeFireImmune()
+//                    .build());
+        FabricEntityTypeBuilder.<GlowglobBallEntity>create(SpawnGroup.MISC, GlowglobBallEntity::new)
+                .dimensions(EntityDimensions.fixed(0.25f, 0.25f)).build());
+
     // particles
     public static final SimpleParticleType REVELATION_PARTICLE = FabricParticleTypes.simple();
     public static final SimpleParticleType GREATER_REVELATION_PARTICLE = FabricParticleTypes.simple();
@@ -140,25 +148,7 @@ public class Registration {
      */
     public static void register() {
 
-        // register item groups
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register(content -> {
-            content.add(Registration.MAGE_FLAME_SCROLL);
-            content.add(Registration.LESSER_REVELATION_SCROLL);
-            content.add(Registration.GREATER_REVELATION_SCROLL);
-            content.add(Registration.WINGED_TORCH_SCROLL);
-            content.add(Registration.EMBER_HOUND_SCROLL);
-            content.add(Registration.BUBBLE_FLAME_SCROLL);
-            content.add(Registration.GLOWGLOB_SCROLL);
-        });
-
-        // register items
-        Registry.register(Registries.ITEM, Identifier.of(MageFlame.MOD_ID, "mage_flame_scroll"), MAGE_FLAME_SCROLL);
-        Registry.register(Registries.ITEM, Identifier.of(MageFlame.MOD_ID, "lesser_revelation_scroll"), LESSER_REVELATION_SCROLL);
-        Registry.register(Registries.ITEM, Identifier.of(MageFlame.MOD_ID, "greater_revelation_scroll"), GREATER_REVELATION_SCROLL);
-        Registry.register(Registries.ITEM, Identifier.of(MageFlame.MOD_ID, "winged_torch_scroll"), WINGED_TORCH_SCROLL);
-        Registry.register(Registries.ITEM, Identifier.of(MageFlame.MOD_ID, "ember_hound_scroll"), EMBER_HOUND_SCROLL);
-        Registry.register(Registries.ITEM, Identifier.of(MageFlame.MOD_ID, "bubble_flame_scroll"), BUBBLE_FLAME_SCROLL);
-        Registry.register(Registries.ITEM, Identifier.of(MageFlame.MOD_ID, "glowglob_scroll"), GLOWGLOB_SCROLL);
+        ModItems.register();
 
         // register entity attributes
         FabricDefaultAttributeRegistry.register(MAGE_FLAME_ENTITY, MageFlameEntity.createMobAttributes());
@@ -187,5 +177,16 @@ public class Registration {
         ModLootTableModifiers.modifyLootTables();
 
         // MageFlame.LOGGER.info("Hello Fabric world!");
+    }
+
+    /**
+     * register entity convenience method
+     * @param id
+     * @param type
+     * @return
+     * @param <T>
+     */
+    private static <T extends Entity> EntityType<T> register(String id, EntityType.Builder<T> type) {
+        return Registry.register(Registries.ENTITY_TYPE, Identifier.of(MageFlame.MOD_ID, id), type.build(id));
     }
 }

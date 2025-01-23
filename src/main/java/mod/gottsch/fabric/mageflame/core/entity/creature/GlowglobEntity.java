@@ -1,5 +1,5 @@
 /*
- * This file is part of  Mage Flame.
+ * This file is part of Mage Flame.
  * Copyright (c) 2025 Mark Gottschling (gottsch)
  *
  * Mage Flame is free software: you can redistribute it and/or modify
@@ -29,6 +29,8 @@ import net.minecraft.entity.mob.FlyingEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
@@ -76,9 +78,9 @@ public class GlowglobEntity extends FlyingEntity implements ILifespanEntity {
 
     @Override
     public void doLivingEffects() {
-        double d0 = this.getRandomX(0.5);
-        double d1 = this.getY() + 0.25;
-        double d2 = this.getRandomZ(0.5);
+        double d0 = this.getRandomX(0.25);
+        double d1 = this.getY() + 0.35;
+        double d2 = this.getRandomZ(0.25);
         this.getWorld().addParticle(ParticleTypes.SMOKE, d0, d1, d2, 0.0D, 0.0D, 0.0D);
         this.getWorld().addParticle(ParticleTypes.FLAME, d0, d1, d2, 0.0D, 0.0D, 0.0D);
 //        this.getWorld().addParticle(ParticleTypes.LAVA, d0, d1, d2, 0.0, 0.0, 0.0);
@@ -113,7 +115,7 @@ public class GlowglobEntity extends FlyingEntity implements ILifespanEntity {
                 BlockState state = getWorld().getBlockState(getBlockPos());
                 if (!state.getFluidState().isEmpty() && !canLiveInFluid()) {
                     // kill self
-                    kill();
+                    kill(); // TODO discard() instead of kill?
                 }
             }
         }
@@ -131,6 +133,15 @@ public class GlowglobEntity extends FlyingEntity implements ILifespanEntity {
 
     @Override
     protected void playHurtSound(DamageSource source) {
+    }
+
+    @Override
+    protected void playStepSound(BlockPos pos, BlockState state) {
+    }
+
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return SoundEvents.BLOCK_CAMPFIRE_CRACKLE;
     }
 
     @Override

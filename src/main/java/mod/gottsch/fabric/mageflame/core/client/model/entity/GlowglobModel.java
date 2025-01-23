@@ -67,9 +67,9 @@ public class GlowglobModel<T extends MobEntity> extends EntityModel<T> {
 
 	@Override
 	public void setAngles(MobEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		bob(this.main, 0.15F, 0.25F, ageInTicks);
-		pulse(this.main, 0.075F, 0.1F, ageInTicks);
-		rotate(this.main, 0.05F, 0.08F);
+		bob(this.main, 0.15F, 0.125F, ageInTicks);
+		pulse(this.main, 0.075F, 0.05F, ageInTicks);
+		rotate(this.main, 0.025F, 0.04F);
 	}
 
 	public void bob(ModelPart part, float bobAmount, float speed, float age) {

@@ -57,6 +57,7 @@ import java.util.Objects;
  * @author Mark Gottschling Jan 21, 2025
  *
  */
+@Deprecated
 public class GlowglobScroll extends Item {
 
 	public GlowglobScroll(Settings properties) {

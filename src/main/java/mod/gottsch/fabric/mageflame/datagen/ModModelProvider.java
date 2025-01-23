@@ -17,6 +17,7 @@
  */
 package mod.gottsch.fabric.mageflame.datagen;
 
+import mod.gottsch.fabric.mageflame.core.item.ModItems;
 import mod.gottsch.fabric.mageflame.core.setup.Registration;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
@@ -43,13 +44,14 @@ public class ModModelProvider extends FabricModelProvider {
 	@Override
 	public void generateItemModels(ItemModelGenerator itemModelGenerator) {
 		// scrolls
-		itemModelGenerator.register(Registration.MAGE_FLAME_SCROLL, Models.GENERATED);
-		itemModelGenerator.register(Registration.LESSER_REVELATION_SCROLL, Models.GENERATED);
-		itemModelGenerator.register(Registration.GREATER_REVELATION_SCROLL, Models.GENERATED);
-		itemModelGenerator.register(Registration.WINGED_TORCH_SCROLL, Models.GENERATED);
-		itemModelGenerator.register(Registration.EMBER_HOUND_SCROLL, Models.GENERATED);
-		itemModelGenerator.register(Registration.BUBBLE_FLAME_SCROLL, Models.GENERATED);
-		itemModelGenerator.register(Registration.GLOWGLOB_SCROLL, Models.GENERATED);
+		itemModelGenerator.register(ModItems.MAGE_FLAME_SCROLL, Models.GENERATED);
+		itemModelGenerator.register(ModItems.LESSER_REVELATION_SCROLL, Models.GENERATED);
+		itemModelGenerator.register(ModItems.GREATER_REVELATION_SCROLL, Models.GENERATED);
+		itemModelGenerator.register(ModItems.WINGED_TORCH_SCROLL, Models.GENERATED);
+		itemModelGenerator.register(ModItems.EMBER_HOUND_SCROLL, Models.GENERATED);
+		itemModelGenerator.register(ModItems.BUBBLE_FLAME_SCROLL, Models.GENERATED);
+//		itemModelGenerator.register(ModItems.GLOWGLOB_SCROLL, Models.GENERATED);
+		itemModelGenerator.register(ModItems.GLOWGLOB_BALL, Models.GENERATED);
 
 	}
 }

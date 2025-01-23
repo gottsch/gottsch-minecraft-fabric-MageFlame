@@ -1,11 +1,11 @@
-// 1.21.1	2025-01-22T00:46:11.3361225	Mage Flame/Recipes
+// 1.21.1	2025-01-23T11:25:23.4113363	Mage Flame/Recipes
 b67c98fdb349a99f12715c28e0d9ce95ef4edb1a data\mageflame\advancement\recipes\misc\lesser_revelation_scroll.json
 124e48779e93efa0224bae83bd967999b9effb7e data\mageflame\recipe\bubble_flame_scroll.json
-58c731fbf055d728f1dc31b63b06aca6193a84e9 data\mageflame\advancement\recipes\misc\glowglob_scroll.json
+da3250158d89f4a165ccd99dc43df4219b8a321e data\mageflame\advancement\recipes\misc\glowglob_ball.json
 b62bd2dfe5c5270ec504efc935b243a4bee08e4e data\mageflame\recipe\mage_flame_scroll.json
 cf7ae8afe4ec8ed403d1084d88dcd35bf150be59 data\mageflame\recipe\winged_torch_scroll.json
-81c26030675824dbbfa44c2ee4f2203294c38abd data\mageflame\recipe\glowglob_scroll.json
 6f2364fea7cb5cca2c631bec9c4556e0f88e565e data\mageflame\advancement\recipes\misc\ember_hound_scroll.json
+1bbb7ae8fd6bd80405bd6375e28e98daad2d33e8 data\mageflame\recipe\glowglob_ball.json
 de33f3e9ee64b3ac8781767c300738b29f090b3f data\mageflame\advancement\recipes\misc\bubble_flame_scroll.json
 94377781572505528de980ab9bb2c99760c98162 data\mageflame\advancement\recipes\misc\mage_flame_scroll.json
 7414e9ea997f512e7d2bd3816c2f63c054247866 data\mageflame\advancement\recipes\misc\winged_torch_scroll.json

@@ -18,6 +18,7 @@
 package mod.gottsch.fabric.mageflame.datagen;
 
 import mod.gottsch.fabric.mageflame.MageFlame;
+import mod.gottsch.fabric.mageflame.core.item.ModItems;
 import mod.gottsch.fabric.mageflame.core.setup.Registration;
 import net.minecraft.data.DataOutput;
 import net.minecraft.data.server.recipe.RecipeExporter;
@@ -44,32 +45,32 @@ public class ModRecipes extends RecipeProvider {
 
 		@Override
 		public void generate(RecipeExporter exporter) {
-			ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, Registration.GLOWGLOB_SCROLL, 1)
+			ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.GLOWGLOB_BALL, 4)
 					.input(Items.GUNPOWDER)
-					.input(Items.DIRT)
+					.input(Items.MUD)
 					.input(Items.PAPER)
 					.criterion(hasItem(Items.GUNPOWDER), conditionsFromItem(Items.GUNPOWDER))
-					.criterion(hasItem(Items.DIRT), conditionsFromItem(Items.DIRT))
+					.criterion(hasItem(Items.MUD), conditionsFromItem(Items.MUD))
 					.criterion(hasItem(Items.PAPER), conditionsFromItem(Items.PAPER))
-					.offerTo(exporter, Identifier.of(MageFlame.MOD_ID, getRecipeName(Registration.GLOWGLOB_SCROLL)));
+					.offerTo(exporter, Identifier.of(MageFlame.MOD_ID, getRecipeName(ModItems.GLOWGLOB_BALL)));
 
-			ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, Registration.MAGE_FLAME_SCROLL, 1)
+			ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.MAGE_FLAME_SCROLL, 1)
 					.input(Items.TORCH)
 					.input(Items.PAPER)
 					.criterion(hasItem(Items.TORCH), conditionsFromItem(Items.TORCH))
 					.criterion(hasItem(Items.PAPER), conditionsFromItem(Items.PAPER))
-					.offerTo(exporter, Identifier.of(MageFlame.MOD_ID, getRecipeName(Registration.MAGE_FLAME_SCROLL)));
+					.offerTo(exporter, Identifier.of(MageFlame.MOD_ID, getRecipeName(ModItems.MAGE_FLAME_SCROLL)));
 
-			ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, Registration.LESSER_REVELATION_SCROLL, 1)
+			ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.LESSER_REVELATION_SCROLL, 1)
 					.input(Items.TORCH)
 					.input(Items.PAPER)
 					.input(Items.FLINT_AND_STEEL)
 					.criterion(hasItem(Items.TORCH), conditionsFromItem(Items.TORCH))
 					.criterion(hasItem(Items.PAPER), conditionsFromItem(Items.PAPER))
 					.criterion(hasItem(Items.FLINT_AND_STEEL), conditionsFromItem(Items.FLINT_AND_STEEL))
-					.offerTo(exporter, Identifier.of(MageFlame.MOD_ID, getRecipeName(Registration.LESSER_REVELATION_SCROLL)));
+					.offerTo(exporter, Identifier.of(MageFlame.MOD_ID, getRecipeName(ModItems.LESSER_REVELATION_SCROLL)));
 
-			ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, Registration.GREATER_REVELATION_SCROLL, 1)
+			ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.GREATER_REVELATION_SCROLL, 1)
 					.input(Items.TORCH)
 					.input(Items.PAPER)
 					.input(Items.FLINT_AND_STEEL)
@@ -78,9 +79,9 @@ public class ModRecipes extends RecipeProvider {
 					.criterion(hasItem(Items.PAPER), conditionsFromItem(Items.PAPER))
 					.criterion(hasItem(Items.FLINT_AND_STEEL), conditionsFromItem(Items.FLINT_AND_STEEL))
 					.criterion(hasItem(Items.GLOWSTONE_DUST), conditionsFromItem(Items.GLOWSTONE_DUST))
-					.offerTo(exporter, Identifier.of(MageFlame.MOD_ID, getRecipeName(Registration.GREATER_REVELATION_SCROLL)));
+					.offerTo(exporter, Identifier.of(MageFlame.MOD_ID, getRecipeName(ModItems.GREATER_REVELATION_SCROLL)));
 
-			ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, Registration.WINGED_TORCH_SCROLL)
+			ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.WINGED_TORCH_SCROLL)
 					.pattern(" e ")
 					.pattern("ftf")
 					.pattern("spb")
@@ -96,9 +97,9 @@ public class ModRecipes extends RecipeProvider {
 					.criterion(hasItem(Items.SPIDER_EYE), conditionsFromItem(Items.SPIDER_EYE))
 					.criterion(hasItem(Items.FEATHER), conditionsFromItem(Items.FEATHER))
 					.criterion(hasItem(Items.BLAZE_POWDER), conditionsFromItem(Items.BLAZE_POWDER))
-					.offerTo(exporter, Identifier.of(MageFlame.MOD_ID, getRecipeName(Registration.WINGED_TORCH_SCROLL)));
+					.offerTo(exporter, Identifier.of(MageFlame.MOD_ID, getRecipeName(ModItems.WINGED_TORCH_SCROLL)));
 
-			ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, Registration.EMBER_HOUND_SCROLL)
+			ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.EMBER_HOUND_SCROLL)
 					.pattern(" d ")
 					.pattern("ltl")
 					.pattern("spb")
@@ -114,10 +115,10 @@ public class ModRecipes extends RecipeProvider {
 					.criterion(hasItem(Items.DIAMOND), conditionsFromItem(Items.DIAMOND))
 					.criterion(hasItem(Items.LEATHER), conditionsFromItem(Items.LEATHER))
 					.criterion(hasItem(Items.BLAZE_POWDER), conditionsFromItem(Items.BLAZE_POWDER))
-					.offerTo(exporter, Identifier.of(MageFlame.MOD_ID, getRecipeName(Registration.EMBER_HOUND_SCROLL)));
+					.offerTo(exporter, Identifier.of(MageFlame.MOD_ID, getRecipeName(ModItems.EMBER_HOUND_SCROLL)));
 
 			// bubble flame
-			ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, Registration.BUBBLE_FLAME_SCROLL, 1)
+			ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.BUBBLE_FLAME_SCROLL, 1)
 					.input(Items.TORCH)
 					.input(Items.PAPER)
 					.input(Items.FLINT_AND_STEEL)
@@ -128,7 +129,7 @@ public class ModRecipes extends RecipeProvider {
 					.criterion(hasItem(Items.FLINT_AND_STEEL), conditionsFromItem(Items.FLINT_AND_STEEL))
 					.criterion(hasItem(Items.GLOWSTONE_DUST), conditionsFromItem(Items.GLOWSTONE_DUST))
 					.criterion(hasItem(Items.TURTLE_SCUTE), conditionsFromItem(Items.TURTLE_SCUTE))
-					.offerTo(exporter, Identifier.of(MageFlame.MOD_ID, getRecipeName(Registration.BUBBLE_FLAME_SCROLL)));
+					.offerTo(exporter, Identifier.of(MageFlame.MOD_ID, getRecipeName(ModItems.BUBBLE_FLAME_SCROLL)));
 
 		}
 

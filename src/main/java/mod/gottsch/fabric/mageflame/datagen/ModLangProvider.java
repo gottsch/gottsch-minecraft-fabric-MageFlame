@@ -17,6 +17,7 @@
  */
 package mod.gottsch.fabric.mageflame.datagen;
 
+import mod.gottsch.fabric.mageflame.core.item.ModItems;
 import mod.gottsch.fabric.mageflame.core.setup.Registration;
 import mod.gottsch.fabric.mageflame.core.util.LangUtil;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
@@ -36,14 +37,15 @@ public class ModLangProvider extends FabricLanguageProvider {
     @Override
     public void generateTranslations(RegistryWrapper.WrapperLookup wrapperLookup, TranslationBuilder translationBuilder) {
 
-        // scrolls
-        translationBuilder.add(Registration.MAGE_FLAME_SCROLL, "Mage Flame Scroll");
-        translationBuilder.add(Registration.LESSER_REVELATION_SCROLL, "Lesser Revelation Scroll");
-        translationBuilder.add(Registration.GREATER_REVELATION_SCROLL, "Greater Revelation Scroll");
-        translationBuilder.add(Registration.WINGED_TORCH_SCROLL, "Winged Torch Scroll");
-        translationBuilder.add(Registration.EMBER_HOUND_SCROLL, "Ember Hound Scroll");
-        translationBuilder.add(Registration.BUBBLE_FLAME_SCROLL, "Bubble Flame Scroll");
-        translationBuilder.add(Registration.GLOWGLOB_SCROLL, "Glowglob Scroll");
+        // items
+        translationBuilder.add(ModItems.MAGE_FLAME_SCROLL, "Mage Flame Scroll");
+        translationBuilder.add(ModItems.LESSER_REVELATION_SCROLL, "Lesser Revelation Scroll");
+        translationBuilder.add(ModItems.GREATER_REVELATION_SCROLL, "Greater Revelation Scroll");
+        translationBuilder.add(ModItems.WINGED_TORCH_SCROLL, "Winged Torch Scroll");
+        translationBuilder.add(ModItems.EMBER_HOUND_SCROLL, "Ember Hound Scroll");
+        translationBuilder.add(ModItems.BUBBLE_FLAME_SCROLL, "Bubble Flame Scroll");
+//        translationBuilder.add(ModItems.GLOWGLOB_SCROLL, "Glowglob Scroll");
+        translationBuilder.add(ModItems.GLOWGLOB_BALL, "Glowglob Ball");
 
         // entities
         translationBuilder.add(Registration.MAGE_FLAME_ENTITY, "Mage Flame");
@@ -53,6 +55,7 @@ public class ModLangProvider extends FabricLanguageProvider {
         translationBuilder.add(Registration.EMBER_HOUND_ENTITY, "Ember Hound");
         translationBuilder.add(Registration.BUBBLE_FLAME_ENTITY, "Bubble Flame");
         translationBuilder.add(Registration.GLOWGLOB_ENTITY, "Glowglob");
+        translationBuilder.add(Registration.GLOWGLOB_BALL_ENTITY, "Glowglob Ball");
 
         /*
          *  Util.tooltips
