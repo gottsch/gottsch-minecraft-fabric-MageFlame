@@ -32,8 +32,13 @@ import net.minecraft.util.math.MathHelper;
  */
 public class GlowglobModel<T extends MobEntity> extends EntityModel<T> {
 	private final ModelPart main;
+//	private final ModelPart one;
+//	private final ModelPart two;
+//	private final ModelPart three;
+//	private final ModelPart four;
 	private final float bodyY;
 	private final float scale;
+	private final float yaw;
 
 	/**
 	 *
@@ -41,8 +46,10 @@ public class GlowglobModel<T extends MobEntity> extends EntityModel<T> {
 	 */
 	public GlowglobModel(ModelPart root) {
 		this.main = root.getChild("main");
+
 		this.bodyY = main.pivotY;
 		this.scale = main.xScale;
+		this.yaw = main.yaw;
 	}
 
 	/**
@@ -60,19 +67,24 @@ public class GlowglobModel<T extends MobEntity> extends EntityModel<T> {
 
 	@Override
 	public void setAngles(MobEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		bob(this.main, 0.15F, ageInTicks);
-		pulse(this.main, 0.05F, ageInTicks);
+		bob(this.main, 0.15F, 0.25F, ageInTicks);
+		pulse(this.main, 0.075F, 0.1F, ageInTicks);
+		rotate(this.main, 0.05F, 0.08F);
 	}
 
-	public void bob(ModelPart part, float bobAmount, float age) {
-		part.pivotY = this.bodyY + (MathHelper.cos(age * 0.25F) * bobAmount + 0.05F);
+	public void bob(ModelPart part, float bobAmount, float speed, float age) {
+		part.pivotY = this.bodyY + (MathHelper.cos(age * speed) * bobAmount); // + 0.05F);
 	}
 
-	public void pulse(ModelPart part, float scale, float age) {
-		float changeScale = MathHelper.cos(age * 0.1F) * scale + 0.05F;
+	public void pulse(ModelPart part, float scale, float speed, float age) {
+		float changeScale = MathHelper.cos(age * speed) * scale; // + 0.05F;
 		part.xScale = this.scale + changeScale;
 		part.zScale = this.scale + changeScale;
 		part.yScale = this.scale + changeScale;
+	}
+
+	public void rotate(ModelPart part, float radians, float speed) {
+		part.yaw = part.yaw + (speed * radians); // + 0.05F);
 	}
 
 	@Override
