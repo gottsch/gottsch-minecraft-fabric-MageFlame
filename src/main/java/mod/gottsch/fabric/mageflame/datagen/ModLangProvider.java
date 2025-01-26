@@ -82,7 +82,7 @@ public class ModLangProvider extends FabricLanguageProvider {
         translationBuilder.add(LangUtil.tooltip("winged_torch.lore"), "The spellcaster is able reach into the astral~plane and summon a Winged Torch. The torch~will remain under your charge until you~release it or it perishes.");
 
         translationBuilder.add(LangUtil.tooltip("ember_hound.desc"), "Allows the spellcaster to summon an Ember Hound.");
-        translationBuilder.add(LangUtil.tooltip("ember_hound.lore"), "The spellcaster is able reach into the nether~plane and summon an Ember Hound.~Ember Hounds have a long lifespan.");
+        translationBuilder.add(LangUtil.tooltip("ember_hound.lore"), "The spellcaster is able reach into the nether~plane and summon an Ember Hound.~The Ember Hound will remain under your charge until~you release it or it perishes (default).");
 
         translationBuilder.add(LangUtil.tooltip("bubble_flame.desc"), "Allows the spellcaster to conjure a Bubble Flame.");
         translationBuilder.add(LangUtil.tooltip("bubble_flame.lore"), "A bright flame within its own air bubble.~Able to travel underwater.");
@@ -94,10 +94,12 @@ public class ModLangProvider extends FabricLanguageProvider {
          * modmenu integration
          */
         translationBuilder.add("text.config.mageflame.title",  "Mage Flame Configuration");
-        translationBuilder.add("text.config.mageflame.section.flameProperties", "Flame / Torch Entity Properties");
+        translationBuilder.add("text.config.mageflame.section.clientProperties", "Client Entity Properties");
+        translationBuilder.add("text.config.mageflame.section.flameProperties", "Entity Properties");
         translationBuilder.add("text.config.mageflame.option.mageFlameLifespan", "Mage Flame Lifespan");
         translationBuilder.add("text.config.mageflame.option.lesserRevelationLifespan", "Lesser Revelation Lifespan");
         translationBuilder.add("text.config.mageflame.option.greaterRevelationLifespan", "Greater Revelation Lifespan");
+        translationBuilder.add("text.config.mageflame.option.bubbleFlameLifespan", "Bubble Flame Lifespan");
         translationBuilder.add("text.config.mageflame.option.isEmberHoundLifespanInfinite", "Is Ember Hound Lifespan Infinite?");
         translationBuilder.add("text.config.mageflame.option.emberHoundLifespan", "Ember Hound Lifespan");
         translationBuilder.add("text.config.mageflame.option.glowglobLifespan", "Glowglob Lifespan");

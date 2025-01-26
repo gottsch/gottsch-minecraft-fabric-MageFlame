@@ -55,7 +55,9 @@ public class EmberHoundScroll extends SummonPathAwareScrollItem {
 		tooltip.add(Text.translatable(LangUtil.tooltip("ember_hound.desc")).formatted(Formatting.YELLOW));
 		tooltip.add(Text.literal(" "));
 		tooltip.add(Text.translatable(LangUtil.tooltip("light_level"), DynamicLights.EMBER_HOUND_LUMINANCE));
-		tooltip.add(Text.translatable(LangUtil.tooltip("light_level"), ticksToTime(MageFlame.CONFIG.emberHoundLifespan())));
+		if (!MageFlame.CONFIG.isEmberHoundLifespanInfinite()) {
+			tooltip.add(Text.translatable(LangUtil.tooltip("lifespan"), ticksToTime(MageFlame.CONFIG.emberHoundLifespan())));
+		}
 	}
 
 	@Override
