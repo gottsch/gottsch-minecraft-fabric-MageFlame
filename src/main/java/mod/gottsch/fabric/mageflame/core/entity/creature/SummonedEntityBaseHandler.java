@@ -66,14 +66,16 @@ public class SummonedEntityBaseHandler<T extends MobEntity & ISummonedEntity> {
     public void tick(T entity, LivingEntity owner) {
 
         if (entity.getWorld().isClient) {
-            lifespanClientUpdateCooldown--;
-            if (lifespanClientUpdateCooldown <= 0) {
-                // update the client
-                LifespanUpdateC2S payload = new LifespanUpdateC2S(entity.getUuidAsString(), entity.getId());
-                ClientPlayNetworking.send(payload);
+            if (getLifespan() != Integer.MAX_VALUE) {
+                lifespanClientUpdateCooldown--;
+                if (lifespanClientUpdateCooldown <= 0) {
+                    // update the client
+                    LifespanUpdateC2S payload = new LifespanUpdateC2S(entity.getUuidAsString(), entity.getId());
+                    ClientPlayNetworking.send(payload);
 
-                // reset the cooldown
-                lifespanClientUpdateCooldown = CLIENT_UPDATE_COOLDOWN_TIME;
+                    // reset the cooldown
+                    lifespanClientUpdateCooldown = CLIENT_UPDATE_COOLDOWN_TIME;
+                }
             }
         } else {
             if (entity.updateLifespan() < 0) {

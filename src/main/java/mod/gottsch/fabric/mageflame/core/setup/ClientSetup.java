@@ -20,6 +20,7 @@ package mod.gottsch.fabric.mageflame.core.setup;
 import mod.gottsch.fabric.mageflame.MageFlame;
 import mod.gottsch.fabric.mageflame.core.client.model.entity.*;
 import mod.gottsch.fabric.mageflame.core.client.renderer.entity.*;
+import mod.gottsch.fabric.mageflame.core.event.ClientHudHandler;
 import mod.gottsch.fabric.mageflame.core.network.LifespanUpdateC2S;
 import mod.gottsch.fabric.mageflame.core.network.LifespanUpdateS2C;
 import net.fabricmc.api.ClientModInitializer;
@@ -29,6 +30,7 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.client.particle.FlameParticle;
@@ -73,6 +75,9 @@ public class ClientSetup implements ClientModInitializer {
 //        ClientSpriteRegistryCallback.event(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE).register(((atlasTexture, registry) -> {
 //            registry.register(new Identifier(MageFlame.MOD_ID, "particle/revelation_particle"));
 //        }));
+
+        // events
+        HudRenderCallback.EVENT.register(new ClientHudHandler());
 
         /* Registers our particle client-side.
          * First argument is our particle's instance, created previously on ExampleMod.

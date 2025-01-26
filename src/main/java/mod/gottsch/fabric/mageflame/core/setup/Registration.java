@@ -181,7 +181,6 @@ public class Registration {
         ServerEntityEvents.ENTITY_LOAD.register(new MageFlameServerWorldLoadHandler());
         ServerEntityEvents.ENTITY_UNLOAD.register(new MageFlameServerWorldUnloadHandler());
         ServerLivingEntityEvents.AFTER_DEATH.register(new MageFlameServerPlayerDeathHandler());
-        HudRenderCallback.EVENT.register(new ClientHudHandler());
 
         // loot table modifiers
         ModLootTableModifiers.modifyLootTables();

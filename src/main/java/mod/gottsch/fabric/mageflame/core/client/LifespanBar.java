@@ -32,26 +32,29 @@ import java.awt.*;
 public class LifespanBar {
     private static final int HUD_OFFSET_WIDTH = 0;
     private static final int HUD_OFFSET_HEIGHT = 0;
-//    private static final Identifier HUD_BG = new Identifier(EEchelons.MODID, "textures/gui/echelon_hud_bg.png");
-//    private static final Identifier HUD_DARK_BG = new Identifier(EEchelons.MODID, "textures/gui/echelon_hud_dark_bg.png");
-
 
     public static boolean renderLevelBar(DrawContext drawContext, final LivingEntity livingEntity) {
 
-            MinecraftClient client = MinecraftClient.getInstance();
-            int clientWidth = client.getWindow().getScaledWidth();
-            int clientHeight = client.getWindow().getScaledHeight();
+        // ensure the entity displays lifespan
+        // ie entities with infinte lifespans don't display
+        if (((ISummonedEntity)livingEntity).getLifespan() == Integer.MAX_VALUE) {
+            return false;
+        }
 
-            // middle of the screen
-            int centerWidth = clientWidth / 2 - HUD_OFFSET_WIDTH;
-            int centerHeight = clientHeight / 2 - HUD_OFFSET_HEIGHT;
+        MinecraftClient client = MinecraftClient.getInstance();
+        int clientWidth = client.getWindow().getScaledWidth();
+        int clientHeight = client.getWindow().getScaledHeight();
+
+        // middle of the screen
+        int centerWidth = clientWidth / 2 - HUD_OFFSET_WIDTH;
+        int centerHeight = clientHeight / 2 - HUD_OFFSET_HEIGHT;
 
 //            int xOffset = ClientConfig.hudXOffset;
 //            int yOffset = ClientConfig.hudYOffset;
 
-            /*
-             * only recalc offsets for integration if the config offsets are still default values
-             */
+        /*
+         * only recalc offsets for integration if the config offsets are still default values
+         */
 //            int integrationXOffset = 0;
 //            int integrationYOffset = 0;
 //            if (xOffset == 0 && yOffset == 0) {
@@ -60,7 +63,7 @@ public class LifespanBar {
 //                }
 //            }
 
-            // update static variable in the event handler
+        // update static variable in the event handler
 //            HudEventHandler.startX = xOffset + centerWidth + integrationXOffset;
 //            HudEventHandler.startY = yOffset + 1 + integrationYOffset;
 
@@ -71,8 +74,8 @@ public class LifespanBar {
 //			drawContext.drawTexture(ClientConfig.useDarkHud ? HUD_DARK_BG : HUD_BG, ii, jj, 0, 0, 64, 20, 64, 20);
 //			drawContext.getMatrices().pop();
 
-            // draw bg texture
-            // 0 = startx, 0 = starty, 64 = endx, 20 = endy, 64 = width of image, 20 = height of image
+        // draw bg texture
+        // 0 = startx, 0 = starty, 64 = endx, 20 = endy, 64 = width of image, 20 = height of image
 //            drawContext.drawTexture(ClientConfig.useDarkHud ? HUD_DARK_BG : HUD_BG,
 //                    xOffset + centerWidth + integrationXOffset, yOffset + centerHeight + integrationYOffset, 0, 0, 64, 20, 64, 20);
 
@@ -81,25 +84,25 @@ public class LifespanBar {
         long milliseconds = (ticks / 2) * 100L; // divide by 2 and multiple by 100 instead of 20 & 1000
 
         // display the level text
-            String text = DurationFormatUtils.formatDuration(milliseconds, "mm:ss"); //.getName().getString();
-            int textWidth = client.textRenderer.getWidth(text);
-            int fontHeight = client.textRenderer.fontHeight;
-            int xPos = centerWidth - textWidth / 2;
-            int yPos = centerHeight + fontHeight -3;
+        String text = DurationFormatUtils.formatDuration(milliseconds, "mm:ss"); //.getName().getString();
+        int textWidth = client.textRenderer.getWidth(text);
+        int fontHeight = client.textRenderer.fontHeight;
+        int xPos = centerWidth - textWidth / 2;
+        int yPos = centerHeight + fontHeight -3;
 
-            drawContext.drawTextWithShadow
-                    (client.textRenderer,
-                            text,
+        drawContext.drawTextWithShadow
+                (client.textRenderer,
+                        text,
 //                            xPos + xOffset + integrationXOffset,
 //                            yPos + yOffset + integrationYOffset,
-                            xPos,
-                            yPos,
-                            Color.WHITE.getRGB());
+                        xPos,
+                        yPos,
+                        Color.WHITE.getRGB());
 
-            // TODO convert lifespan to minutes
-            // TODO divide by 2 (each hourglass = 2 minutes, half = 1 minute)
-            // TODO if less than 1 minute, round to half hourglass
-            // TODO render hourglasses
+        // TODO convert lifespan to minutes
+        // TODO divide by 2 (each hourglass = 2 minutes, half = 1 minute)
+        // TODO if less than 1 minute, round to half hourglass
+        // TODO render hourglasses
 
         return true;
     }
