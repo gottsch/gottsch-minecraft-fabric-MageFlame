@@ -17,7 +17,7 @@
  */
 package mod.gottsch.fabric.mageflame.core.client.model.entity;
 
-import mod.gottsch.fabric.mageflame.core.entity.creature.SummonFlameBaseEntity;
+import mod.gottsch.fabric.mageflame.core.entity.creature.SummonedFlyingEntity;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
@@ -28,7 +28,7 @@ import net.minecraft.util.math.MathHelper;
 /**
  *
  */
-public class WingedTorchModel<T extends SummonFlameBaseEntity> extends EntityModel<T> {
+public class WingedTorchModel<T extends SummonedFlyingEntity> extends EntityModel<T> {
 	private static final String RIGHT_WING_TIP = "rightWingTip";
 
 	private final ModelPart main;
@@ -87,7 +87,7 @@ public class WingedTorchModel<T extends SummonFlameBaseEntity> extends EntityMod
 	 * @param headPitch
 	 */
 	@Override
-	public void setAngles(SummonFlameBaseEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+	public void setAngles(SummonedFlyingEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		// flag wings
 		float armSpeed = 0.35F;
 		this.rightWing.yaw = /*0.47123894F + */MathHelper.cos(ageInTicks * armSpeed) * (float)Math.PI * 0.05F;

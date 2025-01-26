@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '1.6-SNAPSHOT'
+	id 'fabric-loom' version '1.8-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -16,20 +16,30 @@ repositories {
 	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
+	mavenLocal()
 	maven {
 		url "${project.projectDir}/../../maven"
-		maven { url 'https://maven.wispforest.io' }
-		maven {
-			name = "CurseMaven"
-			url = "https://www.cursemaven.com"
+	}
+	maven { url 'https://maven.wispforest.io' }
+	maven {
+		name = "CurseMaven"
+		url = "https://www.cursemaven.com"
+	}
+	maven {
+		name = "Modrinth"
+		url = "https://api.modrinth.com/maven"
+		content {
+			includeGroup "maven.modrinth"
 		}
-		maven {
-			name = "Modrinth"
-			url = "https://api.modrinth.com/maven"
-			content {
-				includeGroup "maven.modrinth"
-			}
-		}
+	}
+	maven {
+		name = "Gegy"
+		url = uri("https://maven.gegy.dev")
+	}
+	maven { url 'https://maven.blamejared.com' }
+	maven {
+		name = "Terraformers"
+		url = "https://maven.terraformersmc.com/"
 	}
     mavenCentral()
 }
@@ -49,14 +59,25 @@ dependencies {
 	include "io.wispforest:owo-sentinel:${project.owo_version}"
 	annotationProcessor modImplementation("io.wispforest:owo-lib:${project.owo_version}")
 
-	//modImplementation "curse.maven:modmenu-308702:4159524"
-	//modImplementation "maven.modrinth:modmenu:7.2.2"
-
+	modImplementation "gottsch:gottschcore-fabric:1.21.1-2.3.0"
+//	modImplementation "curse.maven:modmenu-308702:5810603"//5454251"//5454251"
+//	modImplementation "maven.modrinth:modmenu:11.0.1"
+	modImplementation "vazkii.patchouli:Patchouli:1.21-87-FABRIC"
 
 	// Uncomment the following line to enable the deprecated Fabric API modules. 
 	// These are included in the Fabric API production distribution and allow you to update your mod to the latest modules at a later more convenient time.
 
 	// modImplementation "net.fabricmc.fabric-api:fabric-api-deprecated:${project.fabric_version}"
+
+	modImplementation("com.terraformersmc:modmenu:11.0.1")
+	// The API of LambDynamicLights.
+	// This is only required for compilation if you're using the Java API.
+//	modImplementation("dev.lambdaurora.lambdynamiclights:lambdynamiclights-api:${project.lamb_version}")
+	modImplementation("dev.lambdaurora.lambdynamiclights:lambdynamiclights-runtime:${project.lamb_version}")
+	// For runtime of LambDynamicLights.
+	// Include only if you need to test in your dev env compatibility with LambDynamicLights.
+	// Replace with modRuntimeOnly if you want the dependency to be transitive.
+	//modImplementation("dev.lambdaurora.lambdynamiclights:lambdynamiclights-runtime:${project.lamb_version}")
 }
 
 processResources {
@@ -99,5 +120,9 @@ publishing {
 		// Notice: This block does NOT have the same function as the block in the top level.
 		// The repositories here will be used for publishing your artifact, not for
 		// retrieving dependencies.
+	}
+
+	fabricApi {
+		configureDataGeneration()
 	}
 }

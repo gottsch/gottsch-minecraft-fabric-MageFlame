@@ -17,6 +17,7 @@
  */
 package mod.gottsch.fabric.mageflame;
 
+import mod.gottsch.fabric.mageflame.core.command.Commands;
 import mod.gottsch.fabric.mageflame.core.config.MyConfig;
 import mod.gottsch.fabric.mageflame.core.setup.Registration;
 import net.fabricmc.api.ModInitializer;
@@ -36,5 +37,6 @@ public class MageFlame implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		Registration.register();
+		Commands.register();
 	}
 }

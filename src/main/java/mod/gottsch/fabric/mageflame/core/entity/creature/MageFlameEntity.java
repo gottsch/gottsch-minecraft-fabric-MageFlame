@@ -1,26 +1,18 @@
 package mod.gottsch.fabric.mageflame.core.entity.creature;
 
 import mod.gottsch.fabric.mageflame.MageFlame;
-import mod.gottsch.fabric.mageflame.core.setup.Registration;
-import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.FlyingEntity;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.NotNull;
 
 /**
  *
  */
-public class MageFlameEntity extends SummonFlameBaseEntity {
+public class MageFlameEntity extends SummonedFlyingEntity {
 
     public MageFlameEntity(EntityType<? extends FlyingEntity> entityType, World level) {
-        super(entityType, level,  MageFlame.CONFIG.mageFlameLifespan());
-    }
-
-    @Override
-    public @NotNull Block getFlameBlock() {
-        return Registration.MAGE_FLAME_BLOCK;
+        super(entityType, level, MageFlame.CONFIG.mageFlameLifespan());
     }
 
     @Override

@@ -17,20 +17,20 @@
  */
 package mod.gottsch.fabric.mageflame.core.client.model.entity;
 
-import mod.gottsch.fabric.mageflame.core.entity.creature.SummonFlameBaseEntity;
+import mod.gottsch.fabric.mageflame.core.entity.creature.SummonedFlyingEntity;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 
 /**
  *
  */
-public class LargeFlameBallModel<T extends SummonFlameBaseEntity> extends EntityModel<T> {
+public class LargeFlameBallModel<T extends SummonedFlyingEntity> extends EntityModel<T> {
 	private final ModelPart main;
 	private final float bodyY;
+	private final float scale;
 
 	/**
 	 *
@@ -39,6 +39,7 @@ public class LargeFlameBallModel<T extends SummonFlameBaseEntity> extends Entity
 	public LargeFlameBallModel(ModelPart root) {
 		this.main = root.getChild("main");
 		this.bodyY = main.pivotY;
+		this.scale = main.xScale;
 	}
 
 	/**
@@ -53,12 +54,20 @@ public class LargeFlameBallModel<T extends SummonFlameBaseEntity> extends Entity
 	}
 
 	@Override
-	public void setAngles(SummonFlameBaseEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+	public void setAngles(SummonedFlyingEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 		bob(this.main, bodyY, ageInTicks);
+		pulse(this.main, scale, ageInTicks);
 	}
 
 	public static void bob(ModelPart part, float originY, float age) {
 		part.pivotY = originY + (MathHelper.cos(age * 0.25F) * 0.5F + 0.05F);
+	}
+
+	public static void pulse(ModelPart part, float scale, float age) {
+		float changeScale = MathHelper.cos(age * 0.1F) * 0.25F + 0.05F;
+		part.xScale = scale + changeScale;
+		part.zScale = scale + changeScale;
+		part.yScale = scale + changeScale;
 	}
 
 	@Override
