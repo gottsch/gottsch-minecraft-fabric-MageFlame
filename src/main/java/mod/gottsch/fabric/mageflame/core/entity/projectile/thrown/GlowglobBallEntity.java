@@ -20,7 +20,6 @@ package mod.gottsch.fabric.mageflame.core.entity.projectile.thrown;
 import mod.gottsch.fabric.mageflame.core.entity.creature.GlowglobEntity;
 import mod.gottsch.fabric.mageflame.core.item.ModItems;
 import mod.gottsch.fabric.mageflame.core.setup.Registration;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityStatuses;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -40,10 +39,6 @@ import net.minecraft.world.World;
  * @author Mark Gottschling on 1/23/2025
  */
 public class GlowglobBallEntity extends ThrownItemEntity {
-
-//    public GlowglobBallEntity(EntityType<GlowglobBallEntity> entityType, World world) {
-//        super(entityType, world);
-//    }
 
     public GlowglobBallEntity(World world, LivingEntity owner) {
         super(Registration.GLOWGLOB_BALL_ENTITY, owner, world);

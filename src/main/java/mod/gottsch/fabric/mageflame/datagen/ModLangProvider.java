@@ -44,7 +44,6 @@ public class ModLangProvider extends FabricLanguageProvider {
         translationBuilder.add(ModItems.WINGED_TORCH_SCROLL, "Winged Torch Scroll");
         translationBuilder.add(ModItems.EMBER_HOUND_SCROLL, "Ember Hound Scroll");
         translationBuilder.add(ModItems.BUBBLE_FLAME_SCROLL, "Bubble Flame Scroll");
-//        translationBuilder.add(ModItems.GLOWGLOB_SCROLL, "Glowglob Scroll");
         translationBuilder.add(ModItems.GLOWGLOB_BALL, "Glowglob Ball");
 
         // entities
@@ -88,8 +87,8 @@ public class ModLangProvider extends FabricLanguageProvider {
         translationBuilder.add(LangUtil.tooltip("bubble_flame.desc"), "Allows the spellcaster to conjure a Bubble Flame.");
         translationBuilder.add(LangUtil.tooltip("bubble_flame.lore"), "A bright flame within its own air bubble.~Able to travel underwater.");
 
-        translationBuilder.add(LangUtil.tooltip("glowglob.desc"), "Allows the spellcaster to create a glowglob.");
-        translationBuilder.add(LangUtil.tooltip("glowglob.lore"), "A weak stationary source of light.");
+        translationBuilder.add(LangUtil.tooltip("glowglob.desc"), "Can be thrown to create a glowglob.");
+        translationBuilder.add(LangUtil.tooltip("glowglob.lore"), "Creates a weak stationary source of light.~A glowglob ball can be thrown to cast light in~hard to reach places.");
 
         /*
          * modmenu integration
@@ -103,6 +102,7 @@ public class ModLangProvider extends FabricLanguageProvider {
         translationBuilder.add("text.config.mageflame.option.emberHoundLifespan", "Ember Hound Lifespan");
         translationBuilder.add("text.config.mageflame.option.glowglobLifespan", "Glowglob Lifespan");
         translationBuilder.add("text.config.mageflame.option.maxSummonedEntitiesPerPlayer", "Max Entities Per Player");
+        translationBuilder.add("text.config.mageflame.option.enableLifespanDisplay", "Enable display of entity Lifespan");
 
     }
 

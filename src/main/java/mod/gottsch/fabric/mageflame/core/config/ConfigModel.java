@@ -9,11 +9,14 @@ import io.wispforest.owo.config.annotation.*;
 @Modmenu(modId = "mageflame")
 @Config(name = "mageflame", wrapperName = "MyConfig")
 public class ConfigModel {
+    @SectionHeader("clientProperties")
+    public boolean enableLifespanDisplay = true;
+
     @SectionHeader("flameProperties")
 
     @Sync(Option.SyncMode.OVERRIDE_CLIENT)
     @RangeConstraint(min = 1, max = 10)
-    public int maxSummonedEntitiesPerPlayer = 3;
+    public int maxSummonedEntitiesPerPlayer = 1;
 
     @Sync(Option.SyncMode.OVERRIDE_CLIENT)
     @RangeConstraint(min = 1200, max = 72000)

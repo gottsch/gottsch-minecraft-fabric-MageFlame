@@ -18,6 +18,8 @@
 package mod.gottsch.fabric.mageflame.core.client.renderer.entity;
 
 import mod.gottsch.fabric.mageflame.core.client.model.entity.GlowglobModel;
+import mod.gottsch.fabric.mageflame.core.client.renderer.entity.layer.GlowglobGlowFeatureRenderer;
+import mod.gottsch.fabric.mageflame.core.client.renderer.entity.layer.MageFlameGlowFeatureRenderer;
 import mod.gottsch.fabric.mageflame.core.entity.creature.GlowglobEntity;
 import mod.gottsch.fabric.mageflame.core.setup.ClientSetup;
 import net.minecraft.client.render.entity.EntityRendererFactory;
@@ -31,6 +33,8 @@ public class GlowglobRenderer extends MobEntityRenderer<GlowglobEntity, Glowglob
 
     public GlowglobRenderer(EntityRendererFactory.Context context) {
         super(context, new GlowglobModel<>(context.getPart(ClientSetup.GLOWGLOB_LAYER)), 0);
+        this.addFeature(new GlowglobGlowFeatureRenderer<>(this));
+
     }
 
     @Override

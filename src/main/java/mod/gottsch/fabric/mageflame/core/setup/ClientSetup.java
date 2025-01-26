@@ -20,12 +20,17 @@ package mod.gottsch.fabric.mageflame.core.setup;
 import mod.gottsch.fabric.mageflame.MageFlame;
 import mod.gottsch.fabric.mageflame.core.client.model.entity.*;
 import mod.gottsch.fabric.mageflame.core.client.renderer.entity.*;
+import mod.gottsch.fabric.mageflame.core.network.LifespanUpdateC2S;
+import mod.gottsch.fabric.mageflame.core.network.LifespanUpdateS2C;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.client.particle.FlameParticle;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 import net.minecraft.client.render.entity.ProjectileEntityRenderer;
@@ -77,5 +82,11 @@ public class ClientSetup implements ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(Registration.GREATER_REVELATION_PARTICLE, FlameParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(Registration.BUBBLE_FLAME_PARTICLE, FlameParticle.Factory::new);
 
+        // register receiver handling
+        ClientPlayNetworking.registerGlobalReceiver(LifespanUpdateS2C.ID, (payload, context) -> {
+            context.client().execute(() -> {
+                LifespanUpdateS2C.receive(context.player(), payload.entityId(), payload.lifespan());
+            });
+        });
     }
 }

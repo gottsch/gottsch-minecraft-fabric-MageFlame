@@ -53,7 +53,7 @@ public class GlowglobBall extends Item implements ProjectileItem {
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack itemStack = user.getStackInHand(hand);
         world.playSound(
-                null, user.getX(), user.getY(), user.getZ(), SoundEvents.ENTITY_EGG_THROW, SoundCategory.PLAYERS, 0.5F, 0.4F / (world.getRandom().nextFloat() * 0.4F + 0.8F)
+                null, user.getX(), user.getY(), user.getZ(), SoundEvents.ENTITY_LINGERING_POTION_THROW, SoundCategory.PLAYERS, 0.5F, 0.4F / (world.getRandom().nextFloat() * 0.4F + 0.8F)
         );
         if (!world.isClient) {
             GlowglobBallEntity entity = new GlowglobBallEntity(world, user);
@@ -84,10 +84,10 @@ public class GlowglobBall extends Item implements ProjectileItem {
 
     //	@Override
     public void appendBaseText(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
-
+        // TODO need to add luminance
         tooltip.add(Text.translatable(LangUtil.tooltip("glowglob.desc")).formatted(Formatting.YELLOW));
         tooltip.add(Text.literal(" "));
-        tooltip.add(Text.translatable(LangUtil.tooltip("light_level"), ticksToTime(MageFlame.CONFIG.glowglobLifespan())));
+        tooltip.add(Text.translatable(LangUtil.tooltip("lifespan"), ticksToTime(MageFlame.CONFIG.glowglobLifespan())));
     }
 
     //	@Override

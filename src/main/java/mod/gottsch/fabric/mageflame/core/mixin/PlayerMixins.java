@@ -42,6 +42,7 @@ import java.util.Objects;
 /**
  * @author Mark Gottschling on 1/17/2025
  */
+@Deprecated
 @Mixin(PlayerEntity.class)
 public abstract class PlayerMixins extends LivingEntity {
 

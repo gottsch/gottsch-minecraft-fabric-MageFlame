@@ -20,11 +20,19 @@ package mod.gottsch.fabric.mageflame.core.setup;
 import mod.gottsch.fabric.mageflame.MageFlame;
 import mod.gottsch.fabric.mageflame.core.entity.creature.*;
 import mod.gottsch.fabric.mageflame.core.entity.projectile.thrown.GlowglobBallEntity;
+import mod.gottsch.fabric.mageflame.core.event.ClientHudHandler;
+import mod.gottsch.fabric.mageflame.core.event.MageFlameServerPlayerDeathHandler;
 import mod.gottsch.fabric.mageflame.core.event.MageFlameServerWorldLoadHandler;
 import mod.gottsch.fabric.mageflame.core.event.MageFlameServerWorldUnloadHandler;
 import mod.gottsch.fabric.mageflame.core.item.*;
 import mod.gottsch.fabric.mageflame.core.loot.ModLootTableModifiers;
+import mod.gottsch.fabric.mageflame.core.network.LifespanUpdateC2S;
+import mod.gottsch.fabric.mageflame.core.network.LifespanUpdateS2C;
+import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
@@ -172,9 +180,22 @@ public class Registration {
 
         ServerEntityEvents.ENTITY_LOAD.register(new MageFlameServerWorldLoadHandler());
         ServerEntityEvents.ENTITY_UNLOAD.register(new MageFlameServerWorldUnloadHandler());
+        ServerLivingEntityEvents.AFTER_DEATH.register(new MageFlameServerPlayerDeathHandler());
+        HudRenderCallback.EVENT.register(new ClientHudHandler());
 
         // loot table modifiers
         ModLootTableModifiers.modifyLootTables();
+
+        // networking
+        PayloadTypeRegistry.playC2S().register(LifespanUpdateC2S.ID, LifespanUpdateC2S.CODEC);
+        PayloadTypeRegistry.playS2C().register(LifespanUpdateS2C.ID, LifespanUpdateS2C.CODEC);
+
+        // register receiver handling
+        ServerPlayNetworking.registerGlobalReceiver(LifespanUpdateC2S.ID, (payload, context) -> {
+            context.server().execute(() -> {
+                LifespanUpdateC2S.receive(context.player(), payload.uuid(), payload.id());
+            });
+        });
 
         // MageFlame.LOGGER.info("Hello Fabric world!");
     }

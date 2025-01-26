@@ -283,7 +283,7 @@ public class GlowglobEntity extends FlyingEntity implements ILifespanEntity {
             }
 
             // calculate target y
-            double y = pos.getY() + 2.6;
+            double y = pos.getY() + 3.5; // just above players head
 
             // calculate the vector between glowglob and floor on y-axis
             Vec3d vec3d = new Vec3d(0, y - glowglob.getY(), 0);

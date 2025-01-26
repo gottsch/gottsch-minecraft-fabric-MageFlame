@@ -17,13 +17,22 @@
  */
 package mod.gottsch.fabric.mageflame.core.entity.creature;
 
+import mod.gottsch.fabric.mageflame.MageFlame;
+import mod.gottsch.fabric.mageflame.core.network.LifespanUpdateC2S;
+import mod.gottsch.fabric.mageflame.core.network.ModNetwork;
 import mod.gottsch.fabric.mageflame.core.peristence.PlayerData;
 import mod.gottsch.fabric.mageflame.core.peristence.StateSaverAndLoader;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.network.ServerPlayerEntity;
 
 /**
  * this class is meant to be used in a composite parent class, like SummonedFlyingEntity
@@ -34,10 +43,18 @@ import net.minecraft.particle.ParticleTypes;
  */
 public class SummonedEntityBaseHandler<T extends MobEntity & ISummonedEntity> {
     private static final int MAX_BUFFER_TIME = 1200;
+    private static final int CLIENT_UPDATE_COOLDOWN_TIME = 60;
 
     private int lifespan;
     private long birthTime;
     private int bufferTime;
+
+    /*
+     * this is processed on the client. a message is sent to the server
+     * to request an update. the server will in turn send a message back
+     * to the client to with the entity's lifespan value
+     */
+    private int lifespanClientUpdateCooldown = 0;
 
     public SummonedEntityBaseHandler() {}
 
@@ -47,7 +64,18 @@ public class SummonedEntityBaseHandler<T extends MobEntity & ISummonedEntity> {
     }
 
     public void tick(T entity, LivingEntity owner) {
-        if (!entity.getWorld().isClient) {
+
+        if (entity.getWorld().isClient) {
+            lifespanClientUpdateCooldown--;
+            if (lifespanClientUpdateCooldown <= 0) {
+                // update the client
+                LifespanUpdateC2S payload = new LifespanUpdateC2S(entity.getUuidAsString(), entity.getId());
+                ClientPlayNetworking.send(payload);
+
+                // reset the cooldown
+                lifespanClientUpdateCooldown = CLIENT_UPDATE_COOLDOWN_TIME;
+            }
+        } else {
             if (entity.updateLifespan() < 0) {
                 killAndUnregister(entity, entity.getWorld().getDamageSources().generic());
             }
