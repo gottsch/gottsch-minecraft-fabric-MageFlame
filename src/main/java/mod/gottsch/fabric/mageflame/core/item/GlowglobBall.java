@@ -19,6 +19,7 @@ package mod.gottsch.fabric.mageflame.core.item;
 
 import mod.gottsch.fabric.mageflame.MageFlame;
 import mod.gottsch.fabric.mageflame.core.entity.projectile.thrown.GlowglobBallEntity;
+import mod.gottsch.fabric.mageflame.core.setup.DynamicLights;
 import mod.gottsch.fabric.mageflame.core.util.LangUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
@@ -87,6 +88,7 @@ public class GlowglobBall extends Item implements ProjectileItem {
         // TODO need to add luminance
         tooltip.add(Text.translatable(LangUtil.tooltip("glowglob.desc")).formatted(Formatting.YELLOW));
         tooltip.add(Text.literal(" "));
+        tooltip.add(Text.translatable(LangUtil.tooltip("light_level"), DynamicLights.GLOWGLOB_LUMINANCE));
         tooltip.add(Text.translatable(LangUtil.tooltip("lifespan"), ticksToTime(MageFlame.CONFIG.glowglobLifespan())));
     }
 

@@ -276,7 +276,6 @@ public abstract class SummonedFlyingEntity extends FlyingEntity implements ISumm
                     Vec3d offsetPos = this.lightSourceEntity.selectSummonOffsetPos(this.owner);
                     Vec3d wantedPos = this.lightSourceEntity.selectSpawnPos(this.lightSourceEntity.getWorld(), new Vec3d(offsetPos.x, offsetPos.y, offsetPos.z), this.lightSourceEntity.getMovementDirection());
                     this.lightSourceEntity.getMoveControl().moveTo(wantedPos.x, wantedPos.y, wantedPos.z, 1.0D);
-//                    this.flameBall.moveTo(wantedPos.x, wantedPos.y, wantedPos.z, this.flameBall.getYRot(), this.flameBall.getXRot());
                 }
             }
         }

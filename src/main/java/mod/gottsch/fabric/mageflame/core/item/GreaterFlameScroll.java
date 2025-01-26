@@ -18,6 +18,7 @@
 package mod.gottsch.fabric.mageflame.core.item;
 
 import mod.gottsch.fabric.mageflame.MageFlame;
+import mod.gottsch.fabric.mageflame.core.setup.DynamicLights;
 import mod.gottsch.fabric.mageflame.core.setup.Registration;
 import mod.gottsch.fabric.mageflame.core.util.LangUtil;
 import net.minecraft.entity.EntityType;
@@ -51,6 +52,7 @@ public class GreaterFlameScroll extends SummonFlyingScrollItem {
 	public void appendBaseText(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
 		tooltip.add(Text.translatable(LangUtil.tooltip("greater_revelation.desc")).formatted(Formatting.YELLOW));
 		tooltip.add(Text.literal(" "));
+		tooltip.add(Text.translatable(LangUtil.tooltip("light_level"), DynamicLights.GREATER_REVELATION_LUMINANCE));
 		tooltip.add(Text.translatable(LangUtil.tooltip("lifespan"), ticksToTime(MageFlame.CONFIG.mageFlameLifespan())));
 	}
 

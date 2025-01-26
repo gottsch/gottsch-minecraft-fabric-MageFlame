@@ -2,7 +2,7 @@
   "name": "Ember Hound",
   "icon": "mageflame:ember_hound_scroll",
   "category": "mageflame:manual",
-  "sortnum": 1,
+  "sortnum": 5,
   "pages": [
     {
       "type": "patchouli:entity",

@@ -1,8 +1,10 @@
 {
   "name": "Mage Flame",
   "landing_text": "Mage Flame is a small mod that adds the ability to create dynamic light sources that follow you wherever you go. This is executed by using scrolls crafted from vanilla ingredients. No mana, no spell points, no mage classes, no levels.$(br2)Just craft and use.",
-  "version": 1,
-
+  "version": 2,
+  "book_texture": "patchouli:textures/gui/book_blue.png",
+  "model": "patchouli:book_blue",
   "creative_tab": "minecraft:tools_and_utilities",
-  "use_resource_pack": true
+  "use_resource_pack": true,
+  "show_progress": false
 }

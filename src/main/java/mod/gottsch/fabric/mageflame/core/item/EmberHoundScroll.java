@@ -18,6 +18,7 @@
 package mod.gottsch.fabric.mageflame.core.item;
 
 import mod.gottsch.fabric.mageflame.MageFlame;
+import mod.gottsch.fabric.mageflame.core.setup.DynamicLights;
 import mod.gottsch.fabric.mageflame.core.setup.Registration;
 import mod.gottsch.fabric.mageflame.core.util.LangUtil;
 import net.minecraft.entity.EntityType;
@@ -48,25 +49,12 @@ public class EmberHoundScroll extends SummonPathAwareScrollItem {
 		return Registration.EMBER_HOUND_ENTITY;
 	}
 
-//	@Override
-//	public Vec3d selectSpawnPos(World level, Vec3d coords, Direction direction) {
-//		// TODO get the ground pos - look at EggItem
-//		BlockPos spawnPos = new BlockPos((int)coords.x, (int)coords.y, (int)coords.z);
-//		if (level.getBlockState(spawnPos.up()).isAir()) {
-//			coords = coords.add(0, 1, 0);
-//		} else {
-//			spawnPos.offset(direction.getOpposite());
-//			coords = new Vec3d(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
-//		}
-//
-//		return coords;
-//	}
-
 	@Override
 	public void appendBaseText(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
 
 		tooltip.add(Text.translatable(LangUtil.tooltip("ember_hound.desc")).formatted(Formatting.YELLOW));
 		tooltip.add(Text.literal(" "));
+		tooltip.add(Text.translatable(LangUtil.tooltip("light_level"), DynamicLights.EMBER_HOUND_LUMINANCE));
 		tooltip.add(Text.translatable(LangUtil.tooltip("light_level"), ticksToTime(MageFlame.CONFIG.emberHoundLifespan())));
 	}
 

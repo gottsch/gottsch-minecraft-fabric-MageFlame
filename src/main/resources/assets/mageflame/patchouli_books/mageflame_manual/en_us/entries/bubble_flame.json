@@ -2,7 +2,7 @@
   "name": "Bubble Flame",
   "icon": "mageflame:bubble_flame_scroll",
   "category": "mageflame:manual",
-  "sortnum": 1,
+  "sortnum": 3,
   "pages": [
     {
       "type": "patchouli:entity",

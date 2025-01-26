@@ -2,6 +2,7 @@
   "name": "Links and Info",
   "icon": "minecraft:book",
   "category": "mageflame:manual",
+  "sortnum": 9,
   "pages": [
       {
         "type": "patchouli:link",

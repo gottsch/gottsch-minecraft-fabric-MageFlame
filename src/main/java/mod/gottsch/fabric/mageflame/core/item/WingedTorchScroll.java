@@ -17,6 +17,7 @@
  */
 package mod.gottsch.fabric.mageflame.core.item;
 
+import mod.gottsch.fabric.mageflame.core.setup.DynamicLights;
 import mod.gottsch.fabric.mageflame.core.setup.Registration;
 import mod.gottsch.fabric.mageflame.core.util.LangUtil;
 import net.minecraft.entity.EntityType;
@@ -51,6 +52,7 @@ public class WingedTorchScroll extends SummonFlyingScrollItem {
 		
 		tooltip.add(Text.translatable(LangUtil.tooltip("winged_torch.desc")).formatted(Formatting.YELLOW));
 		tooltip.add(Text.literal(" "));
+		tooltip.add(Text.translatable(LangUtil.tooltip("light_level"), DynamicLights.WINGED_TORCH_LUMINANCE));
 	}
 
 	@Override

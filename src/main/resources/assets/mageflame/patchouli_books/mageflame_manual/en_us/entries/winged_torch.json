@@ -2,14 +2,13 @@
   "name": "Winged Torch",
   "icon": "mageflame:winged_torch_scroll",
   "category": "mageflame:manual",
-  "sortnum": 1,
+  "sortnum": 4,
   "pages": [
     {
-      "type": "patchouli:spotlight",
+      "type": "patchouli:entity",
+      "entity": "mageflame:winged_torch",
       "title": "Winged Torch",
-      "item": {
-        "item": "mageflame:winged_torch_scroll"
-      },
+      "scale": 0.85,
       "text": "$(o)The spellcaster is able reach into the astral plane and summon a winged torch. The torch will remain under your charge until you release it or it perishes.",
       "anchor": "winged_torch"
     },
