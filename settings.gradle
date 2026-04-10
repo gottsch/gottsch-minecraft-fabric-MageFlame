@@ -4,6 +4,10 @@ pluginManagement {
             name = 'Fabric'
             url = 'https://maven.fabricmc.net/'
         }
+        maven {
+            name = "Gegy"
+            url = uri("https://maven.gegy.dev")
+        }
         mavenCentral()
         gradlePluginPortal()
     }

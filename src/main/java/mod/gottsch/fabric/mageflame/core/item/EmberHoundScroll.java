@@ -18,6 +18,7 @@
 package mod.gottsch.fabric.mageflame.core.item;
 
 import mod.gottsch.fabric.mageflame.MageFlame;
+import mod.gottsch.fabric.mageflame.core.config.MageFlameDynamicLightsConfig;
 import mod.gottsch.fabric.mageflame.core.setup.DynamicLights;
 import mod.gottsch.fabric.mageflame.core.setup.Registration;
 import mod.gottsch.fabric.mageflame.core.util.LangUtil;
@@ -54,7 +55,7 @@ public class EmberHoundScroll extends SummonPathAwareScrollItem {
 
 		tooltip.add(Text.translatable(LangUtil.tooltip("ember_hound.desc")).formatted(Formatting.YELLOW));
 		tooltip.add(Text.literal(" "));
-		tooltip.add(Text.translatable(LangUtil.tooltip("light_level"), DynamicLights.EMBER_HOUND_LUMINANCE));
+		tooltip.add(Text.translatable(LangUtil.tooltip("light_level"), MageFlameDynamicLightsConfig.EMBER_HOUND_LUMINANCE));
 		if (!MageFlame.CONFIG.isEmberHoundLifespanInfinite()) {
 			tooltip.add(Text.translatable(LangUtil.tooltip("lifespan"), ticksToTime(MageFlame.CONFIG.emberHoundLifespan())));
 		}

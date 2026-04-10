@@ -139,10 +139,6 @@ public class Registration {
 
     public static final EntityType<GlowglobBallEntity> GLOWGLOB_BALL_ENTITY = Registry.register(Registries.ENTITY_TYPE,
             Identifier.of(MageFlame.MOD_ID, "glowglob_ball"),
-//            EntityType.Builder.<GlowglobBallEntity>create(GlowglobBallEntity::new, SpawnGroup.MISC)
-//                    .dimensions(0.25F, 0.25F)
-//                    .makeFireImmune()
-//                    .build());
         FabricEntityTypeBuilder.<GlowglobBallEntity>create(SpawnGroup.MISC, GlowglobBallEntity::new)
                 .dimensions(EntityDimensions.fixed(0.25f, 0.25f)).build());
 

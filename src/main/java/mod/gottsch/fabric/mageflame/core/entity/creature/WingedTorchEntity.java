@@ -41,18 +41,4 @@ public class WingedTorchEntity extends SummonedFlyingEntity {
         this.getWorld().addParticle(ParticleTypes.SMOKE, d0, d1, d2, 0.0D, 0.0D, 0.0D);
         this.getWorld().addParticle(ParticleTypes.FLAME, d0, d1, d2, 0.0D, 0.0D, 0.0D);
     }
-
-    /**
-     * Winged Torch is powerful enough to destroy replaceable blocks
-     */
-//    @Override
-//    protected boolean testPlacement(BlockPos pos) {
-//        BlockState state = this.getWorld().getBlockState(pos);
-//        // check block
-//        if (state.isAir() || (state.isReplaceable()) && state.getFluidState().isEmpty()) {
-//            return true;
-//        }
-//        return false;
-//    }
-
 }

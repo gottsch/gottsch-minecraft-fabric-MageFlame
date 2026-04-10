@@ -104,6 +104,7 @@ public class EmberHoundModel<T extends SummonedPathAwareEntity> extends EntityMo
 
 	@Override
 	public void setAngles(SummonedPathAwareEntity entity, float limbSwing, float limbSwingAmount, float age, float headYaw, float headPitch) {
+//		super.setAngles();
 		this.head.pitch = headPitch * ((float)Math.PI / 180F);
 		this.head.yaw = headYaw * ((float)Math.PI / 180F);
 //		this.tail.pitch = age;

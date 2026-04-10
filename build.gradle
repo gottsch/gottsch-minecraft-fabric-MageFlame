@@ -72,12 +72,13 @@ dependencies {
 	modImplementation("com.terraformersmc:modmenu:11.0.1")
 	// The API of LambDynamicLights.
 	// This is only required for compilation if you're using the Java API.
-//	modImplementation("dev.lambdaurora.lambdynamiclights:lambdynamiclights-api:${project.lamb_version}")
-	modImplementation("dev.lambdaurora.lambdynamiclights:lambdynamiclights-runtime:${project.lamb_version}")
+	modImplementation("dev.lambdaurora.lambdynamiclights:lambdynamiclights-api:${project.lamb_version}")
+//	modRuntimeOnly("dev.lambdaurora.lambdynamiclights:lambdynamiclights-runtime:${project.lamb_version}")
+//	modLocalRuntime "dev.lambdaurora.lambdynamiclights:lambdynamiclights-runtime:${project.lamb_version}"
 	// For runtime of LambDynamicLights.
 	// Include only if you need to test in your dev env compatibility with LambDynamicLights.
 	// Replace with modRuntimeOnly if you want the dependency to be transitive.
-	//modImplementation("dev.lambdaurora.lambdynamiclights:lambdynamiclights-runtime:${project.lamb_version}")
+	modImplementation("dev.lambdaurora.lambdynamiclights:lambdynamiclights-runtime:${project.lamb_version}")
 }
 
 processResources {

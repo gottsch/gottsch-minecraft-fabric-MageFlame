@@ -18,7 +18,7 @@
 package mod.gottsch.fabric.mageflame.core.item;
 
 import mod.gottsch.fabric.mageflame.MageFlame;
-import mod.gottsch.fabric.mageflame.core.setup.DynamicLights;
+import mod.gottsch.fabric.mageflame.core.config.MageFlameDynamicLightsConfig;
 import mod.gottsch.fabric.mageflame.core.setup.Registration;
 import mod.gottsch.fabric.mageflame.core.util.LangUtil;
 import net.minecraft.entity.EntityType;
@@ -53,7 +53,7 @@ public class LesserFlameScroll extends SummonFlyingScrollItem {
 		
 		tooltip.add(Text.translatable(LangUtil.tooltip("lesser_revelation.desc")).formatted(Formatting.YELLOW));
 		tooltip.add(Text.literal(" "));
-		tooltip.add(Text.translatable(LangUtil.tooltip("light_level"), DynamicLights.LESSER_REVELATION_LUMINANCE));
+		tooltip.add(Text.translatable(LangUtil.tooltip("light_level"), MageFlameDynamicLightsConfig.LESSER_REVELATION_LUMINANCE));
 		tooltip.add(Text.translatable(LangUtil.tooltip("lifespan"), ticksToTime(MageFlame.CONFIG.mageFlameLifespan())));
 	}
 

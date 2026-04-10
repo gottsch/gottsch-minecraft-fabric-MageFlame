@@ -20,7 +20,7 @@ package mod.gottsch.fabric.mageflame.core.setup;
 import dev.lambdaurora.lambdynlights.api.DynamicLightHandler;
 import dev.lambdaurora.lambdynlights.api.DynamicLightsInitializer;
 import dev.lambdaurora.lambdynlights.api.item.ItemLightSourceManager;
-import mod.gottsch.fabric.mageflame.MageFlame;
+import mod.gottsch.fabric.mageflame.core.config.MageFlameDynamicLightsConfig;
 
 import static dev.lambdaurora.lambdynlights.api.DynamicLightHandlers.registerDynamicLightHandler;
 
@@ -29,21 +29,14 @@ import static dev.lambdaurora.lambdynlights.api.DynamicLightHandlers.registerDyn
  * Created by Mark Gottschling on 1/11/2025
  */
 public class DynamicLights implements DynamicLightsInitializer {
-    public static int MAGE_FLAME_LUMINANCE = 9;
-    public static int LESSER_REVELATION_LUMINANCE = 11;
-    public static int GREATER_REVELATION_LUMINANCE = 13;
-    public static int WINGED_TORCH_LUMINANCE = 15;
-    public static int EMBER_HOUND_LUMINANCE = 15;
-    public static int BUBBLE_FLAME_LUMINANCE = 14;
-    public static int GLOWGLOB_LUMINANCE = 9;
 
     @Override
     public void onInitializeDynamicLights(ItemLightSourceManager itemLightSourceManager) {
         registerDynamicLightHandler(Registration.MAGE_FLAME_ENTITY,
                 entity -> {
-                    int luminance = MAGE_FLAME_LUMINANCE;
+                    int luminance = MageFlameDynamicLightsConfig.MAGE_FLAME_LUMINANCE;
                     if(entity.getLifespan() <= 1200F) {
-                        luminance = (entity.getLifespan() / 1200) * MAGE_FLAME_LUMINANCE;
+                        luminance = (entity.getLifespan() / 1200) * MageFlameDynamicLightsConfig.MAGE_FLAME_LUMINANCE;
                         if (luminance < 1) luminance = 1;
                     }
                     return luminance;
@@ -52,9 +45,9 @@ public class DynamicLights implements DynamicLightsInitializer {
 
         registerDynamicLightHandler(Registration.LESSER_REVELATION_ENTITY,
                 entity -> {
-                    int luminance = LESSER_REVELATION_LUMINANCE;
+                    int luminance = MageFlameDynamicLightsConfig.LESSER_REVELATION_LUMINANCE;
                     if(entity.getLifespan() <= 1200F) {
-                        luminance = (entity.getLifespan() / 1200) * LESSER_REVELATION_LUMINANCE;
+                        luminance = (entity.getLifespan() / 1200) * MageFlameDynamicLightsConfig.LESSER_REVELATION_LUMINANCE;
                         if (luminance < 1) luminance = 1;
                     }
                     return luminance;
@@ -63,22 +56,22 @@ public class DynamicLights implements DynamicLightsInitializer {
 
         registerDynamicLightHandler(Registration.GREATER_REVELATION_ENTITY,
                 entity -> {
-                    int luminance = GREATER_REVELATION_LUMINANCE;
+                    int luminance = MageFlameDynamicLightsConfig.GREATER_REVELATION_LUMINANCE;
                     if(entity.getLifespan() <= 1200F) {
-                        luminance = (entity.getLifespan() / 1200) * GREATER_REVELATION_LUMINANCE;
+                        luminance = (entity.getLifespan() / 1200) * MageFlameDynamicLightsConfig.GREATER_REVELATION_LUMINANCE;
                         if (luminance < 1) luminance = 1;
                     }
                     return luminance;
                 }
         );
         registerDynamicLightHandler(Registration.WINGED_TORCH_ENTITY,
-                DynamicLightHandler.makeHandler(entity -> WINGED_TORCH_LUMINANCE, entity -> true)
+                DynamicLightHandler.makeHandler(entity -> MageFlameDynamicLightsConfig.WINGED_TORCH_LUMINANCE, entity -> true)
         );
 
         registerDynamicLightHandler(Registration.EMBER_HOUND_ENTITY,
                 entity -> {
-                    int luminance = EMBER_HOUND_LUMINANCE;
-                    luminance = (int) (entity.getHealth() / entity.getMaxHealth()) * EMBER_HOUND_LUMINANCE;
+                    int luminance = MageFlameDynamicLightsConfig.EMBER_HOUND_LUMINANCE;
+                    luminance = (int) (entity.getHealth() / entity.getMaxHealth()) * MageFlameDynamicLightsConfig.EMBER_HOUND_LUMINANCE;
                     if (luminance < 1) luminance = 1;
                     return luminance;
                 }
@@ -86,9 +79,9 @@ public class DynamicLights implements DynamicLightsInitializer {
 
         registerDynamicLightHandler(Registration.BUBBLE_FLAME_ENTITY,
                 entity -> {
-                    int luminance = BUBBLE_FLAME_LUMINANCE;
+                    int luminance = MageFlameDynamicLightsConfig.BUBBLE_FLAME_LUMINANCE;
                     if(entity.getLifespan() <= 1200F) {
-                        luminance = (entity.getLifespan() / 1200) * BUBBLE_FLAME_LUMINANCE;
+                        luminance = (entity.getLifespan() / 1200) * MageFlameDynamicLightsConfig.BUBBLE_FLAME_LUMINANCE;
                         if (luminance < 1) luminance = 1;
                     }
                     return luminance;
@@ -97,9 +90,9 @@ public class DynamicLights implements DynamicLightsInitializer {
 
         registerDynamicLightHandler(Registration.GLOWGLOB_ENTITY,
                 entity -> {
-                    int luminance = GLOWGLOB_LUMINANCE;
+                    int luminance = MageFlameDynamicLightsConfig.GLOWGLOB_LUMINANCE;
                     if(entity.getLifespan() <= 1200F) {
-                        luminance = (entity.getLifespan() / 1200) * GLOWGLOB_LUMINANCE;
+                        luminance = (entity.getLifespan() / 1200) * MageFlameDynamicLightsConfig.GLOWGLOB_LUMINANCE;
                         if (luminance < 1) luminance = 1;
                     }
                     return luminance;

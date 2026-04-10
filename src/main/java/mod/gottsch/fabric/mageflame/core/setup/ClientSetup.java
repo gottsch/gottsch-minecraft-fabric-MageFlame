@@ -33,6 +33,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.particle.FlameParticle;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 import net.minecraft.client.render.entity.ProjectileEntityRenderer;
@@ -52,7 +53,6 @@ public class ClientSetup implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-
         EntityRendererRegistry.register(Registration.MAGE_FLAME_ENTITY, MageFlameRenderer::new);
         EntityRendererRegistry.register(Registration.LESSER_REVELATION_ENTITY, LesserRevelationRenderer::new);
         EntityRendererRegistry.register(Registration.GREATER_REVELATION_ENTITY, GreaterRevelationRenderer::new);
